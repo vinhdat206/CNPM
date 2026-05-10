@@ -1,0 +1,165 @@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Đăng ký tài khoản</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="~/css/user/register.css" />
+</head>
+
+<body>
+
+    <div class="register-container">
+
+        <div class="register-card">
+
+            <div class="logo-icon">
+                <i class="fa-solid fa-burger"></i>
+            </div>
+
+            <h2>Tạo tài khoản</h2>
+
+            <p class="subtitle">
+                Đăng ký để sử dụng hệ thống
+            </p>
+
+            <form method="post"
+                  asp-action="Register"
+                  asp-controller="Auth">
+
+                <div class="input-group">
+
+                    <label>Tên đăng nhập</label>
+
+                    <div class="input-box">
+
+                        <i class="fas fa-user"></i>
+
+                        <input type="text"
+                               name="Username"
+                               placeholder="Nhập tên đăng nhập"
+                               required />
+
+                    </div>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>Email</label>
+
+                    <div class="input-box">
+
+                        <i class="fas fa-envelope"></i>
+
+                        <input type="email"
+                               name="Email"
+                               placeholder="Nhập email" />
+
+                    </div>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>Mật khẩu</label>
+
+                    <div class="input-box">
+
+                        <i class="fas fa-lock"></i>
+
+                        <input type="password"
+                               name="Password"
+                               placeholder="Nhập mật khẩu"
+                               required
+                               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$"
+                               title="Ít nhất 8 ký tự, gồm chữ hoa, chữ thường và ký tự đặc biệt" />
+
+                    </div>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>Xác nhận mật khẩu</label>
+
+                    <div class="input-box">
+
+                        <i class="fas fa-lock"></i>
+
+                        <input type="password"
+                               name="ConfirmPassword"
+                               placeholder="Xác nhận mật khẩu"
+                               required />
+
+                    </div>
+
+                </div>
+
+                <div id="registerError"></div>
+
+                <button type="submit" class="register-btn">
+
+                    <i class="fas fa-user-plus"></i>
+
+                    Đăng ký
+
+                </button>
+
+            </form>
+
+            <div class="divider">
+                <span>Hoặc</span>
+            </div>
+
+            <div class="social-login">
+
+                <button class="facebook-btn">
+
+                    <i class="fab fa-facebook-f"></i>
+
+                    Facebook
+
+                </button>
+
+                <button class="google-btn">
+
+                    <i class="fab fa-google"></i>
+
+                    Google
+
+                </button>
+
+            </div>
+
+            <div class="login-link">
+
+                Đã có tài khoản?
+
+                <a href="/Auth/Login">
+                    Đăng nhập
+                </a>
+
+            </div>
+
+            <div class="footer-text">
+
+                © 2026 - Đồ án môn Công Nghệ Phần Mềm
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

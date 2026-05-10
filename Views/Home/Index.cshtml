@@ -1,0 +1,105 @@
+﻿@model List<CNPMFastFood.Models.Product>
+
+@section Styles{
+
+    <link rel="stylesheet"
+          href="~/css/user/home.css" />
+}
+
+<!-- ================= BANNER ================= -->
+
+<div class="banner mb-4">
+
+    <img src="~/images/banners/banner-new.png"
+         class="img-fluid w-100"
+         alt="Banner FastFood" />
+
+</div>
+
+<!-- ================= PRODUCT ================= -->
+
+<div class="container mt-5">
+
+    <h2 class="text-center mb-5 text-danger">
+
+        Sản phẩm nổi bật
+
+    </h2>
+
+    <div class="row">
+
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-3
+                        col-md-4
+                        col-6
+                        mb-4">
+
+                    <div class="card product-card shadow-sm">
+
+                        <!-- IMAGE -->
+
+                        <div class="product-img">
+
+                            <img src="@item.ImageUrl"
+                                 class="img-fluid"
+                                 alt="@item.Name" />
+
+                        </div>
+
+                        <hr />
+
+                        <!-- BODY -->
+
+                        <div class="card-body text-center">
+
+                            <!-- NAME -->
+
+                            <h6>
+
+                                @item.Name
+
+                            </h6>
+
+                            <!-- PRICE -->
+
+                            <p class="text-danger fw-bold">
+
+                                @item.Price.ToString("N0") đ
+
+                            </p>
+
+                            <!-- BUTTON -->
+
+                            <a asp-controller="Cart"
+                               asp-action="Add"
+
+                               asp-route-id="@item.Id"
+
+                               asp-route-name="@item.Name"
+
+                               asp-route-price="@(item.Price.ToString(
+                                                    System.Globalization.CultureInfo.InvariantCulture))"
+
+                               asp-route-imageUrl="@item.ImageUrl"
+
+                               class="buy-now-btn">
+
+                                <i class="fa-solid fa-cart-plus"></i>
+
+                                Thêm vào giỏ
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+        }
+    </div>
+
+</div>

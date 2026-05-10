@@ -1,0 +1,51 @@
+@model CNPMFastFood.Models.Product
+
+<h2>Thêm sản phẩm</h2>
+
+<form asp-action="Create"
+      method="post"
+
+      enctype="multipart/form-data">
+
+    <!-- NAME -->
+
+    <div class="mb-3">
+
+        <label>Tên sản phẩm</label>
+
+        <input asp-for="Name"
+               class="form-control" />
+
+    </div>
+
+    <!-- PRICE -->
+
+    <div class="mb-3">
+
+        <label>Giá</label>
+
+        <input asp-for="Price"
+               class="form-control" />
+
+    </div>
+
+    <!-- IMAGE -->
+
+    <div class="mb-3">
+
+        <label>Ảnh sản phẩm</label>
+
+        <input asp-for="ImageFile"
+               type="file"
+               class="form-control" />
+
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary">
+
+        Thêm sản phẩm
+
+    </button>
+
+</form>

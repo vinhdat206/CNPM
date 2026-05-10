@@ -1,0 +1,224 @@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>Đăng nhập hệ thống</title>
+
+    <!-- FAVICON -->
+    <link rel="icon"
+          type="image/png"
+          href="~/images/logo/logo.png" />
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- LOGIN CSS -->
+    <link rel="stylesheet"
+          href="~/css/user/login.css" />
+
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <div class="login-card">
+
+            <!-- LOGO -->
+            <div class="logo-icon">
+
+                <i class="fa-solid fa-burger"></i>
+
+            </div>
+
+            <!-- TITLE -->
+            <h2>
+
+                Đăng nhập hệ thống
+
+            </h2>
+
+            <p class="subtitle">
+
+                Vui lòng nhập tài khoản để tiếp tục
+
+            </p>
+
+            <!-- ================= FORM ================= -->
+
+            <form method="post"
+                  asp-controller="Auth"
+                  asp-action="Login">
+
+                <!-- VALIDATION -->
+                <div asp-validation-summary="All"
+                     class="text-danger mb-3">
+                </div>
+
+                <!-- USERNAME -->
+                <div class="input-group">
+
+                    <label>
+
+                        Tên đăng nhập
+
+                    </label>
+
+                    <div class="input-box">
+
+                        <i class="fas fa-user"></i>
+
+                        <input type="text"
+                               name="username"
+                               autocomplete="username"
+                               placeholder="Nhập tên đăng nhập"
+                               required />
+
+                    </div>
+
+                </div>
+
+                <!-- PASSWORD -->
+                <div class="input-group">
+
+                    <label>
+
+                        Mật khẩu
+
+                    </label>
+
+                    <div class="input-box">
+
+                        <i class="fas fa-lock"></i>
+
+                        <input type="password"
+                               name="password"
+                               autocomplete="current-password"
+                               placeholder="Nhập mật khẩu"
+                               required />
+
+                    </div>
+
+                </div>
+
+                <!-- ERROR -->
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger mt-3">
+
+                        @ViewBag.Error
+
+                    </div>
+                }
+
+                <!-- OPTIONS -->
+                <div class="options">
+
+                    <label>
+
+                        <input type="checkbox"
+                               name="RememberMe" />
+
+                        Ghi nhớ đăng nhập
+
+                    </label>
+
+                    <a href="javascript:void(0)">
+
+                        Quên mật khẩu?
+
+                    </a>
+
+                </div>
+
+                <!-- BUTTON -->
+                <button type="submit"
+                        class="login-btn">
+
+                    <i class="fas fa-sign-in-alt"></i>
+
+                    Đăng nhập
+
+                </button>
+
+            </form>
+
+            <!-- ================= DIVIDER ================= -->
+
+            <div class="divider">
+
+                <span>
+
+                    Hoặc
+
+                </span>
+
+            </div>
+
+            <!-- ================= SOCIAL LOGIN ================= -->
+
+            <div class="social-login">
+
+                <!-- FACEBOOK -->
+                <button type="button"
+                        class="facebook-btn">
+
+                    <i class="fab fa-facebook-f"></i>
+
+                    Facebook
+
+                </button>
+
+                <!-- GOOGLE -->
+                <button type="button"
+                        class="google-btn">
+
+                    <i class="fab fa-google"></i>
+
+                    Google
+
+                </button>
+
+            </div>
+
+            <!-- ================= REGISTER ================= -->
+
+            <div class="register-link">
+
+                Chưa có tài khoản?
+
+                <a asp-controller="Auth"
+                   asp-action="Register">
+
+                    Đăng ký ngay
+
+                </a>
+
+            </div>
+
+            <!-- ================= FOOTER ================= -->
+
+            <div class="footer-text">
+
+                © 2026 - Đồ án môn Công Nghệ Phần Mềm
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,261 @@
+@model List<CNPMFastFood.Models.CartItem>
+
+@{
+    ViewData["Title"] = "Thanh toán";
+}
+
+<!DOCTYPE html>
+
+<html lang="vi">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>
+
+        Thanh toán
+
+    </title>
+
+    <!-- FONT AWESOME -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CHECKOUT CSS -->
+
+    <link rel="stylesheet"
+          href="~/css/checkout.css" />
+
+</head>
+
+<body>
+
+<!-- =========================
+     CONTAINER
+========================= -->
+
+<div class="checkout-container">
+
+    <!-- =========================
+         TITLE
+    ========================= -->
+
+    <h2 class="checkout-title">
+
+        <i class="fa-solid fa-credit-card"></i>
+
+        Thanh toán đơn hàng
+
+    </h2>
+
+    <!-- =========================
+         FORM
+    ========================= -->
+
+    <!--
+    submit tới:
+
+    OrderController
+    -> PlaceOrder()
+    -->
+
+    <form method="post"
+          asp-action="PlaceOrder"
+          asp-controller="Order"
+          class="checkout-form">
+
+        <!-- =========================
+             CUSTOMER NAME
+        ========================= -->
+
+        <div>
+
+            <label>
+
+                Họ tên khách hàng
+
+            </label>
+
+            <input type="text"
+                   name="CustomerName"
+                   placeholder="Nhập họ tên"
+                   required />
+
+        </div>
+
+        <!-- =========================
+             PHONE
+        ========================= -->
+
+        <div>
+
+            <label>
+
+                Số điện thoại
+
+            </label>
+
+            <input type="text"
+                   name="Phone"
+                   placeholder="Nhập số điện thoại"
+                   required />
+
+        </div>
+
+        <!-- =========================
+             ADDRESS
+        ========================= -->
+
+        <div>
+
+            <label>
+
+                Địa chỉ giao hàng
+
+            </label>
+
+            <input type="text"
+                   name="Address"
+                   placeholder="Nhập địa chỉ"
+                   required />
+
+        </div>
+
+        <!-- =========================
+             PRODUCT TABLE
+        ========================= -->
+
+        <table class="checkout-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+
+                        Hình ảnh
+
+                    </th>
+
+                    <th>
+
+                        Sản phẩm
+
+                    </th>
+
+                    <th>
+
+                        Số lượng
+
+                    </th>
+
+                    <th>
+
+                        Giá
+
+                    </th>
+
+                    <th>
+
+                        Thành tiền
+
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <!-- IMAGE -->
+
+                        <td>
+
+                            <img src="@item.ImageUrl"
+                                 class="checkout-image" />
+
+                        </td>
+
+                        <!-- NAME -->
+
+                        <td>
+
+                            @item.Name
+
+                        </td>
+
+                        <!-- QUANTITY -->
+
+                        <td>
+
+                            @item.Quantity
+
+                        </td>
+
+                        <!-- PRICE -->
+
+                        <td>
+
+                            @(item.Price.ToString("N0")) ₫
+
+                        </td>
+
+                        <!-- TOTAL -->
+
+                        <td>
+
+                            @((item.Price * item.Quantity)
+                            .ToString("N0")) ₫
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+        <!-- =========================
+             TOTAL
+        ========================= -->
+
+        <div class="total-box">
+
+            Tổng tiền:
+
+            @(Model.Sum(x =>
+                x.Price * x.Quantity)
+                .ToString("N0")) ₫
+
+        </div>
+
+        <!-- =========================
+             BUTTON
+        ========================= -->
+
+        <button type="submit"
+                class="checkout-btn">
+
+            <i class="fa-solid fa-check"></i>
+
+            Đặt hàng ngay
+
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+
+</html>
