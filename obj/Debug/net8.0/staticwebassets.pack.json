@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets/css/cart.css"
     },
     {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/checkout.css",
+      "PackagePath": "staticwebassets/css/checkout.css"
+    },
+    {
       "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/site.css",
       "PackagePath": "staticwebassets/css/site.css"
     },

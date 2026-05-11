@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "l/Xv0igNV1zBpTo4wDCpTR6PaksMUrr/dam2pB64KgQ=",
+  "Hash": "Vvbn0r502kXYRZUxMdftU34Hu1gSkrUm1w/PGvUxBRA=",
   "Source": "CNPMFastFood",
   "BasePath": "_content/CNPMFastFood",
   "Mode": "Default",
@@ -1212,6 +1212,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/css/cart.css"
+    },
+    {
+      "Identity": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/checkout.css",
+      "SourceId": "CNPMFastFood",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/",
+      "BasePath": "_content/CNPMFastFood",
+      "RelativePath": "css/checkout.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/css/checkout.css"
     },
     {
       "Identity": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/site.css",
