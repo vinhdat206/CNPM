@@ -59,7 +59,8 @@ namespace CNPMFastFood.Controllers
             }
 
             // gọi service tạo order
-            _orderService.CreateOrder(order, cart);
+            var userId = int.Parse( User.FindFirst("UserId")!.Value); 
+            _orderService.CreateOrder( order, cart, userId);
 
             // xóa cart sau khi đặt hàng
             _cartService.Clear();
@@ -76,5 +77,45 @@ namespace CNPMFastFood.Controllers
         {
             return View();
         }
+        
+        
+        // ===============================
+        // ORDER HISTORY
+        // ===============================
+
+        public async Task<IActionResult> History()
+        {
+            // Kiểm tra login
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction(
+                    "Login",
+                    "Auth");
+            }
+
+            // Lấy UserId từ Claims
+            var userIdClaim =
+                User.FindFirst("UserId")?.Value;
+
+            if (string.IsNullOrEmpty(userIdClaim))
+            {
+                return RedirectToAction(
+                    "Login",
+                    "Auth");
+            }
+
+            // Convert sang int
+            int userId = int.Parse(userIdClaim);
+
+            // Lấy danh sách order
+            var orders =
+                await _orderService
+                    .GetOrderHistory(userId);
+
+            // Trả view
+            return View(orders);
+        }
+
+
     }
 }

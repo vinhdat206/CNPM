@@ -16,34 +16,47 @@ namespace CNPMFastFood.Services
 
         public void Register(User user)
         {
-            // hash password
-            user.Password =
-                BCrypt.Net.BCrypt.HashPassword(user.Password);
+            // Không cho user tự tạo role admin
+            // Dù form có gửi Role = "admin" thì vẫn ép thành "user"
+            user.Role = "user";
+
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
 
             _context.Users.Add(user);
-
             _context.SaveChanges();
         }
 
         // ================= LOGIN =================
 
-        public User Login(
-            string username,
-            string password)
+        public User? Login(string account, string password)
         {
             var user = _context.Users
                 .FirstOrDefault(x =>
-                    x.Username == username);
+                    x.Username == account ||
+                    x.Email == account);
 
             if (user == null)
                 return null;
 
-            bool check =
-                BCrypt.Net.BCrypt.Verify(
+            if (string.IsNullOrEmpty(user.Password))
+                return null;
+
+            try
+            {
+                bool check = BCrypt.Net.BCrypt.Verify(
                     password,
                     user.Password);
 
-            return check ? user : null;
+                return check ? user : null;
+            }
+            catch (BCrypt.Net.SaltParseException)
+            {
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         // ================= CHECK USERNAME =================
@@ -52,6 +65,14 @@ namespace CNPMFastFood.Services
         {
             return _context.Users
                 .Any(x => x.Username == username);
+        }
+
+        // ================= CHECK EMAIL =================
+
+        public bool EmailExists(string email)
+        {
+            return _context.Users
+                .Any(x => x.Email == email);
         }
     }
 }

@@ -2,6 +2,7 @@
 // Mô tả:
 // Điều hướng giỏ hàng
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using CNPMFastFood.Models;
@@ -9,15 +10,12 @@ using CNPMFastFood.Services;
 
 namespace CNPMFastFood.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
-        // Service cart
-        private readonly CartService
-            _cartService;
+        private readonly CartService _cartService;
 
-        // Constructor
-        public CartController(
-            CartService cartService)
+        public CartController(CartService cartService)
         {
             _cartService = cartService;
         }
@@ -28,11 +26,8 @@ namespace CNPMFastFood.Controllers
 
         public IActionResult Index()
         {
-            // lấy cart từ session
-            var cart =
-                _cartService.GetCart();
+            var cart = _cartService.GetCart();
 
-            // truyền sang view
             return View(cart);
         }
 
@@ -44,27 +39,21 @@ namespace CNPMFastFood.Controllers
             int id,
             string name,
             decimal price,
-            string imageUrl)
+            string imageUrl,
+            int quantity = 1)
         {
-            // tạo item mới
             var item = new CartItem
             {
                 Id = id,
-
                 Name = name,
-
                 Price = price,
-
-                ImageUrl = imageUrl
+                ImageUrl = imageUrl,
+                Quantity = quantity
             };
 
-            // thêm vào cart
             _cartService.AddToCart(item);
 
-            // chuyển sang cart
-            return RedirectToAction(
-                "Index",
-                "Cart");
+            return RedirectToAction("Index", "Cart");
         }
 
         // =========================
@@ -80,11 +69,8 @@ namespace CNPMFastFood.Controllers
             return Json(new
             {
                 success = true,
-
                 cart = _cartService.GetCart(),
-
                 total = _cartService.GetTotal(),
-
                 count = _cartService.GetCount()
             });
         }
@@ -102,11 +88,8 @@ namespace CNPMFastFood.Controllers
             return Json(new
             {
                 success = true,
-
                 cart = _cartService.GetCart(),
-
                 total = _cartService.GetTotal(),
-
                 count = _cartService.GetCount()
             });
         }
@@ -124,11 +107,8 @@ namespace CNPMFastFood.Controllers
             return Json(new
             {
                 success = true,
-
                 cart = _cartService.GetCart(),
-
                 total = _cartService.GetTotal(),
-
                 count = _cartService.GetCount()
             });
         }
@@ -139,11 +119,9 @@ namespace CNPMFastFood.Controllers
 
         public IActionResult Clear()
         {
-            // xóa session cart
-            HttpContext.Session.Remove("CART");
+            _cartService.Clear();
 
-            // reload cart
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Cart");
         }
     }
 }

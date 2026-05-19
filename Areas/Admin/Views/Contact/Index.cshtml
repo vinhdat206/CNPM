@@ -1,0 +1,68 @@
+@model IEnumerable<CNPMFastFood.Models.ContactMessage>
+
+@{
+    ViewData["Title"] = "Liên hệ";
+    ViewData["PageTitle"] = "Danh sách liên hệ";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin/contact.css" />
+}
+<div class="contact-table">
+    <table>
+        <thead>
+            <tr>
+                <th>Trạng thái</th>
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>Số điện thoại</th>
+                <th>Nội dung</th>
+                <th>Ngày gửi</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @if (item.IsRead)
+                        {
+                            <span class="badge-read">Đã đọc</span>
+                        }
+                        else
+                        {
+                            <span class="badge-unread">Chưa đọc</span>
+                        }
+                    </td>
+
+                    <td>@item.Name</td>
+                    <td>@item.Email</td>
+                    <td>@item.Phone</td>
+                    <td>@item.Message</td>
+                    <td>@item.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+
+                    <td>
+                        @if (!item.IsRead)
+                        {
+                            <a asp-area="Admin"
+                               asp-controller="Contact"
+                               asp-action="MarkAsRead"
+                               asp-route-id="@item.Id">
+                                Đã đọc
+                            </a>
+                        }
+
+                        <a asp-area="Admin"
+                           asp-controller="Contact"
+                           asp-action="Delete"
+                           asp-route-id="@item.Id"
+                           onclick="return confirm('Bạn có chắc muốn xóa liên hệ này?')">
+                            Xóa
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

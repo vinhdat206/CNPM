@@ -1,25 +1,26 @@
 // File: Controllers/HomeController.cs
 // Mô tả:
-// Điều hướng trang chủ
+// Điều hướng trang chủ, trang giới thiệu, trang liên hệ
 
 using Microsoft.AspNetCore.Mvc;
-
 using CNPMFastFood.Services;
+using CNPMFastFood.Models;
+using CNPMFastFood.Data;
 
 namespace CNPMFastFood.Controllers
 {
     public class HomeController : Controller
     {
-        // Service sản phẩm
-        private readonly ProductService
-            _productService;
+        private readonly ProductService _productService;
 
-        // Constructor
+        private readonly AppDbContext _context;
+
         public HomeController(
-            ProductService productService)
+            ProductService productService,
+            AppDbContext context)
         {
-            _productService =
-                productService;
+            _productService = productService;
+            _context = context;
         }
 
         // =========================
@@ -28,12 +29,66 @@ namespace CNPMFastFood.Controllers
 
         public IActionResult Index()
         {
-            // lấy danh sách sản phẩm
-            var products =
-                _productService.GetAll();
+            var products = _productService.GetAll();
 
-            // truyền sang view
             return View(products);
+        }
+
+        // =========================
+        // ABOUT PAGE
+        // =========================
+
+        public IActionResult About()
+        {
+            return View();
+        }
+
+        // =========================
+        // CONTACT PAGE - GET
+        // Hiển thị form liên hệ
+        // =========================
+
+        [HttpGet]
+        public IActionResult Contact()
+        {
+            return View(new ContactMessage());
+        }
+
+        // =========================
+        // CONTACT PAGE - POST
+        // Nhận dữ liệu user gửi và lưu database
+        // =========================
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Contact(ContactMessage model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            model.CreatedAt = DateTime.Now;
+            model.IsRead = false;
+
+            _context.ContactMessages.Add(model);
+
+            await _context.SaveChangesAsync();
+
+            ViewBag.Success = "Gửi liên hệ thành công!";
+
+            ModelState.Clear();
+
+            return View(new ContactMessage());
+        }
+
+        // =========================
+        // POLICY PAGE
+        // =========================
+
+        public IActionResult Policy()
+        {
+            return View();
         }
     }
 }

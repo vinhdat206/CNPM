@@ -1,0 +1,107 @@
+
+@using System.Linq
+
+
+@model List<CNPMFastFood.Models.Order>
+
+@{
+    ViewData["Title"] = "Lịch sử đơn hàng";
+}
+
+<div class="container py-5">
+
+    <h2 class="fw-bold text-danger mb-4">
+
+        <i class="fa-solid fa-clock-rotate-left"></i>
+
+        Lịch sử đơn hàng
+
+    </h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning">
+
+            Bạn chưa có đơn hàng nào.
+
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover">
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th>Mã đơn</th>
+
+                        <th>Ngày đặt</th>
+
+                        <th>Tổng tiền</th>
+
+                        <th>Trạng thái</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                #@item.Id
+                            </td>
+
+                            <td>
+                                @item.OrderDate
+                                    .ToString("dd/MM/yyyy HH:mm")
+                            </td>
+
+                            <td class="text-danger fw-bold">
+
+                                @item.TotalAmount
+                                    .ToString("N0") đ
+
+                            </td>
+
+                            <td>
+
+                                @if (item.Status == "pending")
+                                {
+                                    <span class="badge bg-warning">
+                                        Chờ xử lý
+                                    </span>
+                                }
+                                else if (item.Status == "completed")
+                                {
+                                    <span class="badge bg-success">
+                                        Hoàn thành
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">
+                                        @item.Status
+                                    </span>
+                                }
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+    }
+
+</div>
+

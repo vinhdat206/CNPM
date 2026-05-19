@@ -1,108 +1,107 @@
 // File: Program.cs
-// Mô tả:
-// Cấu hình hệ thống ASP.NET MVC
 
 using CNPMFastFood.Data;
+using CNPMFastFood.Helpers;
 using CNPMFastFood.Services;
 
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
-// FIX FORMAT TIỀN VIỆT NAM
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// =========================
 // SQL SERVER
-// =========================
-
 builder.Services.AddDbContext<AppDbContext>(
     options =>
-
         options.UseSqlServer(
-            builder.Configuration
-                .GetConnectionString(
-                    "DefaultConnection"))
-);
+            builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// =========================
 // MVC
-// =========================
-
 builder.Services.AddControllersWithViews();
 
-// =========================
+// COOKIE AUTHENTICATION
+builder.Services
+    .AddAuthentication(
+        CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Auth/Login";
+        options.LogoutPath = "/Auth/Logout";
+        options.AccessDeniedPath = "/Auth/Login";
+
+        options.Cookie.HttpOnly = true;
+        options.Cookie.IsEssential = true;
+
+        options.ExpireTimeSpan = TimeSpan.FromHours(1);
+        options.SlidingExpiration = false;
+
+        options.Events = new CookieAuthenticationEvents
+        {
+            OnValidatePrincipal = async context =>
+            {
+                var appStartId =
+                    context.Principal?.FindFirst("AppStartId")?.Value;
+
+                if (appStartId != AppRuntime.AppStartId)
+                {
+                    context.RejectPrincipal();
+
+                    await context.HttpContext.SignOutAsync(
+                        CookieAuthenticationDefaults.AuthenticationScheme);
+                }
+            }
+        };
+    });
+
+// AUTHORIZATION
+builder.Services.AddAuthorization();
+
 // SESSION
-// =========================
-
 builder.Services.AddSession();
-
 builder.Services.AddHttpContextAccessor();
 
-// =========================
 // SERVICES
-// =========================
-
-// Product
 builder.Services.AddScoped<ProductService>();
-
-// Cart
 builder.Services.AddScoped<CartService>();
-
-// Order
 builder.Services.AddScoped<OrderService>();
-
-// Auth
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<DashboardService>();
+builder.Services.AddScoped<ReportService>();
+builder.Services.AddScoped<SettingService>();
 
-// =========================
-// FORMAT TIỀN VIỆT NAM
-// =========================
-
+// VIETNAM CULTURE
 var culture = new CultureInfo("vi-VN");
 
-CultureInfo.DefaultThreadCurrentCulture =
-    culture;
+CultureInfo.DefaultThreadCurrentCulture = culture;
+CultureInfo.DefaultThreadCurrentUICulture = culture;
 
-CultureInfo.DefaultThreadCurrentUICulture =
-    culture;
-
-// =========================
-// BUILD
-// =========================
-
+// BUILD APP
 var app = builder.Build();
 
-// =========================
 // MIDDLEWARE
-// =========================
-
 app.UseStaticFiles();
 
 app.UseRouting();
 
 app.UseSession();
 
-// =========================
-// AREA ROUTE
-// =========================
+app.UseAuthentication();
 
+app.UseAuthorization();
+
+// AREA ROUTE
 app.MapControllerRoute(
     name: "areas",
     pattern:
-    "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+        "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
 
-// =========================
 // DEFAULT ROUTE
-// =========================
-
 app.MapControllerRoute(
     name: "default",
     pattern:
-    "{controller=Home}/{action=Index}/{id?}");
+        "{controller=Home}/{action=Index}/{id?}");
 
-// =========================
 // RUN
-// =========================
-
 app.Run();

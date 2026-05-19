@@ -1,7 +1,10 @@
 using CNPMFastFood.Helpers;
 using CNPMFastFood.Models;
 using CNPMFastFood.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace CNPMFastFood.Controllers
 {
@@ -14,8 +17,6 @@ namespace CNPMFastFood.Controllers
             _authService = authService;
         }
 
-        // ================= LOGIN =================
-
         [HttpGet]
         public IActionResult Login()
         {
@@ -23,36 +24,58 @@ namespace CNPMFastFood.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(
-            string username,
-            string password)
+        public async Task<IActionResult> Login(
+            string account,
+            string password,
+            bool RememberMe)
         {
-            var user =
-                _authService.Login(username, password);
+            var user = _authService.Login(account, password);
 
             if (user == null)
             {
-                ViewBag.Error =
-                    "Sai tài khoản hoặc mật khẩu";
-
+                ViewBag.Error = "Sai tài khoản hoặc mật khẩu";
                 return View();
             }
 
-            HttpContext.Session.SetString(
-                "Username",
-                user.Username);
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Email, user.Email ?? ""),
+                new Claim(ClaimTypes.Role, user.Role),
+                new Claim("UserId", user.Id.ToString()),
+                new Claim("AppStartId", AppRuntime.AppStartId)
+            };
 
-            HttpContext.Session.SetString(
-                "Role",
-                user.Role);
+            var identity = new ClaimsIdentity(
+                claims,
+                CookieAuthenticationDefaults.AuthenticationScheme);
 
-            return RedirectToAction(
-                "Index",
-                "Home");
+            var principal = new ClaimsPrincipal(identity);
+
+            var authProperties = new AuthenticationProperties
+            {
+                IsPersistent = RememberMe,
+
+                ExpiresUtc = RememberMe
+                    ? DateTimeOffset.UtcNow.AddDays(7)
+                    : DateTimeOffset.UtcNow.AddHours(1)
+            };
+
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                principal,
+                authProperties);
+
+            if (user.Role == "admin")
+            {
+                return RedirectToAction(
+                    "Index",
+                    "Dashboard",
+                    new { area = "Admin" });
+            }
+
+            return RedirectToAction("Index", "Home");
         }
-
-
-        // ================= REGISTER =================
 
         [HttpGet]
         public IActionResult Register()
@@ -63,52 +86,50 @@ namespace CNPMFastFood.Controllers
         [HttpPost]
         public IActionResult Register(User model)
         {
-            // check username tồn tại
             if (_authService.UsernameExists(model.Username))
             {
-                ViewBag.Error =
-                    "Tên đăng nhập đã tồn tại";
-
+                ViewBag.Error = "Tên đăng nhập đã tồn tại";
                 return View();
             }
 
-            // check password mạnh
-            if (!PasswordHelper.IsStrongPassword(
-                    model.Password))
+            if (_authService.EmailExists(model.Email))
+            {
+                ViewBag.Error = "Email đã tồn tại";
+                return View();
+            }
+
+            if (!PasswordHelper.IsStrongPassword(model.Password))
             {
                 ViewBag.Error =
                     "Mật khẩu phải có chữ hoa, chữ thường, ký tự đặc biệt và tối thiểu 8 ký tự.";
-
                 return View();
             }
 
-            // check confirm password
             if (!PasswordHelper.IsMatch(
-                    model.Password,
-                    model.ConfirmPassword))
+                model.Password,
+                model.ConfirmPassword))
             {
-                ViewBag.Error =
-                    "Xác nhận mật khẩu không đúng";
-
+                ViewBag.Error = "Xác nhận mật khẩu không đúng";
                 return View();
             }
 
-            // đăng ký
+            model.Role = "user";
+
             _authService.Register(model);
 
             return RedirectToAction("Login");
         }
 
-
-        // ================= LOGOUT =================
-
-        public IActionResult Logout()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
         {
+            await HttpContext.SignOutAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme);
+
             HttpContext.Session.Clear();
 
-            return RedirectToAction(
-                "Login",
-                "Auth");
+            return RedirectToAction("Login", "Auth");
         }
     }
 }

@@ -1,0 +1,450 @@
+@model List<CNPMFastFood.Models.Product>
+
+@{
+    ViewData["Title"] = "Sản phẩm";
+    ViewData["PageTitle"] = "Quản lý sản phẩm";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin/product.css" />
+}
+
+<div class="product-page">
+
+    <div class="product-header">
+        <div>
+            <h3>Danh sách sản phẩm</h3>
+            <p>Quản lý thêm, sửa, xóa sản phẩm</p>
+        </div>
+
+        <button type="button"
+                class="btn-add"
+                data-bs-toggle="modal"
+                data-bs-target="#addProductModal">
+            <i class="fas fa-plus"></i>
+            Thêm sản phẩm
+        </button>
+    </div>
+
+    <div class="product-table-card">
+
+        <table class="product-table">
+
+            <thead>
+                <tr>
+                    <th>Ảnh</th>
+                    <th>Tên</th>
+                    <th>Slug</th>
+                    <th>Giá</th>
+                    <th>Tồn kho</th>
+                    <th>Nổi bật</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <img src="@item.ImageUrl"
+                                     alt="@item.Name"
+                                     class="product-img" />
+                            </td>
+
+                            <td>
+                                <strong>@item.Name</strong>
+                                <div class="product-desc">
+                                    @item.Description
+                                </div>
+                            </td>
+
+                            <td>
+                                <span class="slug-text">@item.Slug</span>
+                            </td>
+
+                            <td class="price">
+                                @item.Price.ToString("N0") ₫
+                            </td>
+
+                            <td>
+                                @item.Stock
+                            </td>
+
+                            <td>
+                                @if (item.Featured)
+                                {
+                                    <span class="badge-featured">Nổi bật</span>
+                                }
+                                else
+                                {
+                                    <span class="badge-normal">Thường</span>
+                                }
+                            </td>
+
+                            <td>
+                                <div class="action-group">
+                                    <button type="button"
+                                            class="btn-edit"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editProductModal-@item.Id">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+
+                                    <button type="button"
+                                            class="btn-delete"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteProductModal-@item.Id">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- EDIT MODAL -->
+                        <div class="modal fade" id="editProductModal-@item.Id" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content">
+
+                                    <form asp-area="Admin"
+                                          asp-controller="Product"
+                                          asp-action="Edit"
+                                          method="post"
+                                          enctype="multipart/form-data">
+
+                                        @Html.AntiForgeryToken()
+
+                                        <input type="hidden" name="Id" value="@item.Id" />
+
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Sửa sản phẩm</h5>
+                                            <button type="button"
+                                                    class="btn-close"
+                                                    data-bs-dismiss="modal">
+                                            </button>
+                                        </div>
+
+                                        <div class="modal-body">
+
+                                            <div class="row">
+
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Tên sản phẩm</label>
+                                                    <input type="text"
+                                                           name="Name"
+                                                           class="form-control"
+                                                           value="@item.Name"
+                                                           required />
+                                                </div>
+
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Slug</label>
+                                                    <input type="text"
+                                                           name="Slug"
+                                                           class="form-control"
+                                                           value="@item.Slug"
+                                                           required />
+                                                </div>
+
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">
+                                                        Giá hiện tại
+                                                    </label>
+
+                                                    <input type="text"
+                                                           class="form-control current-price"
+                                                           value='@item.Price.ToString("N0") ₫'
+                                                           readonly />
+                                                </div>
+
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">
+                                                        Giá cần sửa
+                                                    </label>
+
+                                                    <input type="number"
+                                                           name="Price"
+                                                           class="form-control"
+                                                           min="0"
+                                                           step="1000"
+                                                           value="@item.Price"
+                                                           required />
+                                                </div>
+
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Tồn kho</label>
+                                                    <input type="number"
+                                                           name="Stock"
+                                                           class="form-control"
+                                                           min="0"
+                                                           value="@item.Stock" />
+                                                </div>
+
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">CategoryId</label>
+                                                    <input type="number"
+                                                           name="CategoryId"
+                                                           class="form-control"
+                                                           value="@item.CategoryId" />
+                                                </div>
+
+                                                <div class="col-md-6 mb-3 d-flex align-items-end">
+                                                    <div class="form-check">
+                                                        <input type="hidden"
+                                                               name="Featured"
+                                                               value="false" />
+
+                                                        <input type="checkbox"
+                                                               name="Featured"
+                                                               class="form-check-input"
+                                                               value="true"
+                                                               @(item.Featured ? "checked" : "") />
+
+                                                        <label class="form-check-label">
+                                                            Sản phẩm nổi bật
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 mb-3">
+                                                    <label class="form-label">Mô tả</label>
+                                                    <textarea name="Description"
+                                                              class="form-control"
+                                                              rows="3">@item.Description</textarea>
+                                                </div>
+
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Ảnh mới</label>
+                                                    <input type="file"
+                                                           name="ImageFile"
+                                                           class="form-control"
+                                                           accept="image/*" />
+                                                </div>
+
+                                                <div class="col-md-6 mb-3 text-center">
+                                                    <label class="form-label d-block">Ảnh hiện tại</label>
+                                                    <img src="@item.ImageUrl"
+                                                         class="preview-img"
+                                                         alt="@item.Name" />
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-danger">
+                                                Cập nhật
+                                            </button>
+
+                                            <button type="button"
+                                                    class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">
+                                                Hủy
+                                            </button>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DELETE MODAL -->
+                        <div class="modal fade" id="deleteProductModal-@item.Id" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-danger">
+                                            Xóa sản phẩm
+                                        </h5>
+
+                                        <button type="button"
+                                                class="btn-close"
+                                                data-bs-dismiss="modal">
+                                        </button>
+                                    </div>
+
+                                    <div class="modal-body text-center">
+                                        <img src="@item.ImageUrl"
+                                             class="preview-img mb-3"
+                                             alt="@item.Name" />
+
+                                        <h5>@item.Name</h5>
+
+                                        <p class="text-muted">
+                                            Bạn có chắc muốn xóa sản phẩm này không?
+                                        </p>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <form asp-area="Admin"
+                                              asp-controller="Product"
+                                              asp-action="Delete"
+                                              asp-route-id="@item.Id"
+                                              method="post">
+
+                                            @Html.AntiForgeryToken()
+
+                                            <button type="submit"
+                                                    class="btn btn-danger">
+                                                Xóa
+                                            </button>
+                                        </form>
+
+                                        <button type="button"
+                                                class="btn btn-secondary"
+                                                data-bs-dismiss="modal">
+                                            Hủy
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="empty-text">
+                            Chưa có sản phẩm nào
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<!-- ADD MODAL -->
+<div class="modal fade" id="addProductModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+
+            <form asp-area="Admin"
+                  asp-controller="Product"
+                  asp-action="Create"
+                  method="post"
+                  enctype="multipart/form-data">
+
+                @Html.AntiForgeryToken()
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Thêm sản phẩm</h5>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal">
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Tên sản phẩm</label>
+                            <input type="text"
+                                   name="Name"
+                                   class="form-control"
+                                   required />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Slug</label>
+                            <input type="text"
+                                   name="Slug"
+                                   class="form-control"
+                                   placeholder="ga-ran-truyen-thong"
+                                   required />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Giá</label>
+                            <input type="number"
+                                   name="Price"
+                                   class="form-control"
+                                   min="0"
+                                   step="1000"
+                                   required />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Tồn kho</label>
+                            <input type="number"
+                                   name="Stock"
+                                   class="form-control"
+                                   min="0"
+                                   value="0" />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">CategoryId</label>
+                            <input type="number"
+                                   name="CategoryId"
+                                   class="form-control" />
+                        </div>
+
+                        <div class="col-md-6 mb-3 d-flex align-items-end">
+                            <div class="form-check">
+                                <input type="hidden"
+                                       name="Featured"
+                                       value="false" />
+
+                                <input type="checkbox"
+                                       name="Featured"
+                                       class="form-check-input"
+                                       value="true" />
+
+                                <label class="form-check-label">
+                                    Sản phẩm nổi bật
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Mô tả</label>
+                            <textarea name="Description"
+                                      class="form-control"
+                                      rows="3"></textarea>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Ảnh sản phẩm</label>
+                            <input type="file"
+                                   name="ImageFile"
+                                   class="form-control"
+                                   accept="image/*"
+                                   required />
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">
+                        Thêm sản phẩm
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Hủy
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

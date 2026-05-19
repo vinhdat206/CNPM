@@ -9,14 +9,17 @@ namespace CNPMFastFood.Models
         // Id đơn hàng
         public int Id { get; set; }
 
+        // Id người dùng
+        public int UserId { get; set; }
+
         // Tên khách hàng
-        public string CustomerName { get; set; }
+        public string CustomerName { get; set; } = string.Empty;
 
         // Số điện thoại khách
-        public string Phone { get; set; }
+        public string Phone { get; set; } = string.Empty;
 
         // Địa chỉ giao hàng
-        public string Address { get; set; }
+        public string Address { get; set; } = string.Empty;
 
         // Tổng tiền đơn hàng
         public decimal TotalAmount { get; set; }
@@ -25,14 +28,15 @@ namespace CNPMFastFood.Models
         public DateTime OrderDate { get; set; }
 
         // Trạng thái đơn hàng
-        // Ví dụ:
         // Pending
+        // Processing
         // Shipping
         // Completed
-        public string Status { get; set; }
+        // Cancelled
+        public string Status { get; set; } = "Pending";
 
         // Danh sách chi tiết đơn hàng
         // 1 Order có nhiều OrderDetail
-        public List<OrderDetail> OrderDetails { get; set; }
+        public List<OrderDetail> OrderDetails { get; set; } = new();
     }
 }

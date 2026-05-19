@@ -62,7 +62,15 @@ namespace CNPMFastFood.Data
         {
             get; set;
         }
+        
+        // =========================
+// CONTACT MESSAGE
+// =========================
 
+        public DbSet<ContactMessage> ContactMessages
+        {
+            get; set;
+        }
         // =========================
         // MODEL CONFIG
         // =========================
@@ -101,5 +109,6 @@ namespace CNPMFastFood.Data
 
                 .OnDelete(DeleteBehavior.NoAction);
         }
+        public DbSet<Review> Reviews { get; set; }
     }
 }

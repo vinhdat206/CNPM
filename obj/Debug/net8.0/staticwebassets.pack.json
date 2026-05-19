@@ -5,6 +5,30 @@
       "PackagePath": "staticwebassets/CNPMFastFood.bundle.scp.css"
     },
     {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/admin/contact.css",
+      "PackagePath": "staticwebassets/css/admin/contact.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/admin/dashboard.css",
+      "PackagePath": "staticwebassets/css/admin/dashboard.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/admin/order.css",
+      "PackagePath": "staticwebassets/css/admin/order.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/admin/product.css",
+      "PackagePath": "staticwebassets/css/admin/product.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/admin/report.css",
+      "PackagePath": "staticwebassets/css/admin/report.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/admin/setting.css",
+      "PackagePath": "staticwebassets/css/admin/setting.css"
+    },
+    {
       "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/cart.css",
       "PackagePath": "staticwebassets/css/cart.css"
     },
@@ -17,12 +41,24 @@
       "PackagePath": "staticwebassets/css/site.css"
     },
     {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/user/contact.css",
+      "PackagePath": "staticwebassets/css/user/contact.css"
+    },
+    {
       "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/user/home.css",
       "PackagePath": "staticwebassets/css/user/home.css"
     },
     {
       "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/user/login.css",
       "PackagePath": "staticwebassets/css/user/login.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/user/policy.css",
+      "PackagePath": "staticwebassets/css/user/policy.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/user/product.css",
+      "PackagePath": "staticwebassets/css/user/product.css"
     },
     {
       "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/user/register.css",
@@ -33,16 +69,104 @@
       "PackagePath": "staticwebassets/favicon.ico"
     },
     {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Abouts/about1.png",
+      "PackagePath": "staticwebassets/images/Abouts/about1.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Abouts/about2.png",
+      "PackagePath": "staticwebassets/images/Abouts/about2.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Abouts/about3.png",
+      "PackagePath": "staticwebassets/images/Abouts/about3.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Abouts/about4.png",
+      "PackagePath": "staticwebassets/images/Abouts/about4.png"
+    },
+    {
       "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Logo/Logo.png",
       "PackagePath": "staticwebassets/images/Logo/Logo.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Burger/BBQ Burger.png",
+      "PackagePath": "staticwebassets/images/Products/Burger/BBQ Burger.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Burger/Bacon Burger.png",
+      "PackagePath": "staticwebassets/images/Products/Burger/Bacon Burger.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Burger/Cheeseburger.png",
+      "PackagePath": "staticwebassets/images/Products/Burger/Cheeseburger.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Burger/Chicken Burger.png",
+      "PackagePath": "staticwebassets/images/Products/Burger/Chicken Burger.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Burger/Classic Burger.png",
+      "PackagePath": "staticwebassets/images/Products/Burger/Classic Burger.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Burger/Double Beef Burger.png",
+      "PackagePath": "staticwebassets/images/Products/Burger/Double Beef Burger.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Burger/Hawaiian Burger.png",
+      "PackagePath": "staticwebassets/images/Products/Burger/Hawaiian Burger.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Burger/Mushroom Swiss Burger.png",
+      "PackagePath": "staticwebassets/images/Products/Burger/Mushroom Swiss Burger.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Burger/Spicy Burger.png",
+      "PackagePath": "staticwebassets/images/Products/Burger/Spicy Burger.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Burger/Veggie Burger.png",
+      "PackagePath": "staticwebassets/images/Products/Burger/Veggie Burger.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Pizza/BBQ Chicken Pizza.png",
+      "PackagePath": "staticwebassets/images/Products/Pizza/BBQ Chicken Pizza.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Pizza/Hawaiian Pizza.png",
+      "PackagePath": "staticwebassets/images/Products/Pizza/Hawaiian Pizza.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Pizza/Margherita Pizza.png",
+      "PackagePath": "staticwebassets/images/Products/Pizza/Margherita Pizza.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Pizza/Pepperoni Pizza.png",
+      "PackagePath": "staticwebassets/images/Products/Pizza/Pepperoni Pizza.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Pizza/Seafood Pizza.png",
+      "PackagePath": "staticwebassets/images/Products/Pizza/Seafood Pizza.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/burger1.jpg",
+      "PackagePath": "staticwebassets/images/Products/burger1.jpg"
     },
     {
       "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/banners/banner-new.png",
       "PackagePath": "staticwebassets/images/banners/banner-new.png"
     },
     {
-      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/products/burger1.jpg",
-      "PackagePath": "staticwebassets/images/products/burger1.jpg"
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/js/admin/dashboard.js",
+      "PackagePath": "staticwebassets/js/admin/dashboard.js"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/js/admin/report.js",
+      "PackagePath": "staticwebassets/js/admin/report.js"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/js/admin/setting.js",
+      "PackagePath": "staticwebassets/js/admin/setting.js"
     },
     {
       "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/js/cart.js",

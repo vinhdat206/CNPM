@@ -16,16 +16,19 @@ namespace CNPMFastFood.Models
         public int ProductId { get; set; }
 
         // Tên sản phẩm
-        public string ProductName { get; set; }
+        public string ProductName { get; set; } = string.Empty;
 
         // Giá sản phẩm
         public decimal Price { get; set; }
+
+        // Ảnh sản phẩm
+        public string? ImageUrl { get; set; }
 
         // Số lượng sản phẩm
         public int Quantity { get; set; }
 
         // Navigation Property
         // dùng để liên kết với bảng Order
-        public Order Order { get; set; }
+        public Order? Order { get; set; }
     }
 }

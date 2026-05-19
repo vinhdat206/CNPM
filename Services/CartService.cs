@@ -1,5 +1,6 @@
 // File: Services/CartService.cs
-// Mô tả: Xử lý logic giỏ hàng
+// Mô tả:
+// Xử lý toàn bộ logic giỏ hàng
 
 using CNPMFastFood.Helpers;
 using CNPMFastFood.Models;
@@ -8,11 +9,23 @@ namespace CNPMFastFood.Services
 {
     public class CartService
     {
-        // dùng để lấy Session
+        // =========================
+        // SESSION KEY
+        // =========================
+
+        private const string CART_KEY = "cart";
+
+        // =========================
+        // HTTP CONTEXT
+        // =========================
+
         private readonly IHttpContextAccessor
             _httpContextAccessor;
 
-        // constructor
+        // =========================
+        // CONSTRUCTOR
+        // =========================
+
         public CartService(
             IHttpContextAccessor httpContextAccessor)
         {
@@ -20,23 +33,29 @@ namespace CNPMFastFood.Services
                 httpContextAccessor;
         }
 
-        // ================= GET SESSION =================
+        // =========================
+        // GET SESSION
+        // =========================
 
         private ISession Session =>
             _httpContextAccessor
-                .HttpContext
+                .HttpContext!
                 .Session;
 
-        // ================= GET CART =================
+        // =========================
+        // GET CART
+        // Lấy toàn bộ giỏ hàng
+        // =========================
 
         public List<CartItem> GetCart()
         {
-            // lấy cart từ session
             var cart =
                 Session.GetObject<List<CartItem>>(
-                    "cart");
+                    CART_KEY);
 
-            // nếu chưa có cart
+            // Nếu chưa có cart
+            // thì tạo mới
+
             if (cart == null)
             {
                 cart = new List<CartItem>();
@@ -45,45 +64,72 @@ namespace CNPMFastFood.Services
             return cart;
         }
 
-        // ================= SAVE CART =================
+        // =========================
+        // SAVE CART
+        // Lưu cart vào session
+        // =========================
 
         public void SaveCart(
             List<CartItem> cart)
         {
             Session.SetObject(
-                "cart",
+                CART_KEY,
                 cart);
         }
 
-        // ================= ADD TO CART =================
+        // =========================
+        // ADD TO CART
+        // Thêm sản phẩm vào giỏ
+        // =========================
 
         public void AddToCart(
             CartItem item)
         {
+            // Lấy cart hiện tại
+
             var cart = GetCart();
 
-            // tìm sản phẩm đã tồn tại chưa
+            // Kiểm tra sản phẩm đã tồn tại chưa
+
             var existingItem =
                 cart.FirstOrDefault(
                     x => x.Id == item.Id);
 
-            // nếu có rồi
+            // Nếu quantity <= 0
+            // mặc định = 1
+
+            int quantity =
+                item.Quantity <= 0
+                ? 1
+                : item.Quantity;
+
+            // Nếu sản phẩm đã tồn tại
+            // cộng thêm quantity
+
             if (existingItem != null)
             {
-                existingItem.Quantity++;
+                existingItem.Quantity += quantity;
             }
+
+            // Nếu chưa tồn tại
+            // thêm mới vào cart
+
             else
             {
-                // nếu chưa có
-                item.Quantity = 1;
+                item.Quantity = quantity;
 
                 cart.Add(item);
             }
 
+            // Lưu session
+
             SaveCart(cart);
         }
 
-        // ================= INCREASE =================
+        // =========================
+        // INCREASE
+        // Tăng số lượng
+        // =========================
 
         public void Increase(int id)
         {
@@ -101,7 +147,10 @@ namespace CNPMFastFood.Services
             SaveCart(cart);
         }
 
-        // ================= DECREASE =================
+        // =========================
+        // DECREASE
+        // Giảm số lượng
+        // =========================
 
         public void Decrease(int id)
         {
@@ -115,7 +164,9 @@ namespace CNPMFastFood.Services
             {
                 item.Quantity--;
 
-                // nếu quantity <= 0
+                // Nếu quantity <= 0
+                // xóa khỏi cart
+
                 if (item.Quantity <= 0)
                 {
                     cart.Remove(item);
@@ -125,7 +176,10 @@ namespace CNPMFastFood.Services
             SaveCart(cart);
         }
 
-        // ================= REMOVE =================
+        // =========================
+        // REMOVE
+        // Xóa sản phẩm
+        // =========================
 
         public void Remove(int id)
         {
@@ -143,7 +197,10 @@ namespace CNPMFastFood.Services
             SaveCart(cart);
         }
 
-        // ================= TOTAL =================
+        // =========================
+        // TOTAL
+        // Tổng tiền
+        // =========================
 
         public decimal GetTotal()
         {
@@ -152,24 +209,26 @@ namespace CNPMFastFood.Services
                     x.Price * x.Quantity);
         }
 
-        // ================= COUNT =================
+        // =========================
+        // COUNT
+        // Tổng số lượng sản phẩm
+        // =========================
 
         public int GetCount()
         {
             return GetCart()
                 .Sum(x => x.Quantity);
         }
-        // ================= CLEAR CART =================
 
-// xóa toàn bộ giỏ hàng
+        // =========================
+        // CLEAR
+        // Xóa toàn bộ cart
+        // =========================
+
         public void Clear()
         {
-            // tạo cart rỗng
-            var emptyCart =
-                new List<CartItem>();
-
-            // lưu cart rỗng vào session
-            SaveCart(emptyCart);
+            SaveCart(
+                new List<CartItem>());
         }
     }
 }

@@ -1,0 +1,147 @@
+/* =========================
+   PRODUCT PAGE
+========================= */
+
+.product-page{
+    padding:30px 0;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.product-header{
+    margin-bottom:40px;
+}
+
+.product-header h1{
+    color:#dc3545;
+    font-weight:700;
+}
+
+.product-header p{
+    color:#666;
+}
+
+/* =========================
+   PRODUCT CARD
+========================= */
+
+.product-card{
+    border:none;
+    border-radius:14px;
+    overflow:hidden;
+    transition:0.3s;
+    background:#fff;
+}
+
+/* hover animation */
+
+.product-card:hover{
+    transform:translateY(-6px);
+
+    box-shadow:0 12px 25px
+    rgba(0,0,0,0.15);
+}
+
+/* =========================
+   PRODUCT IMAGE
+========================= */
+
+.product-img{
+    width:100%;
+    height:220px;
+    overflow:hidden;
+}
+
+.product-img img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    transition:0.35s;
+}
+
+/* zoom image */
+
+.product-card:hover .product-img img{
+    transform:scale(1.06);
+}
+
+/* =========================
+   CARD BODY
+========================= */
+
+.card-body{
+    padding:16px;
+}
+
+/* product name */
+
+.card-body h6{
+    min-height:40px;
+
+    font-weight:600;
+}
+
+/* =========================
+   PRICE
+========================= */
+
+.price{
+    color:#dc3545;
+
+    font-weight:700;
+
+    margin-bottom:14px;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.buy-now-btn{
+    display:inline-block;
+
+    padding:8px 18px;
+
+    border:2px solid #198754;
+
+    border-radius:25px;
+
+    color:#198754;
+
+    background:#fff;
+
+    font-weight:600;
+
+    text-decoration:none;
+
+    transition:0.25s;
+}
+
+/* hover button */
+
+.buy-now-btn:hover{
+    background:#198754;
+
+    color:white;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:576px){
+
+    .product-img{
+        height:160px;
+    }
+
+    .buy-now-btn{
+        font-size:13px;
+
+        padding:7px 12px;
+    }
+}

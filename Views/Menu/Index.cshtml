@@ -1,0 +1,409 @@
+@using System.Linq
+@model List<CNPMFastFood.Models.Product>
+
+@{
+    ViewData["Title"] = "Sản phẩm";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/user/product.css" />
+}
+
+<div class="product-page">
+
+    <div class="product-header text-center">
+        <h1>Sản phẩm</h1>
+        <p>Khám phá các món ăn hấp dẫn tại FastFood</p>
+    </div>
+
+    <div class="row">
+
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                double avgRating = item.Reviews != null && item.Reviews.Any()
+                    ? item.Reviews.Average(r => r.Rating)
+                    : 0;
+
+                int reviewCount = item.Reviews != null
+                    ? item.Reviews.Count
+                    : 0;
+
+                string imageUrl = string.IsNullOrEmpty(item.ImageUrl)
+                    ? "/images/no-image.png"
+                    : item.ImageUrl;
+
+                <div class="col-lg-3 col-md-4 col-6 mb-4">
+
+                    <div class="card product-card shadow-sm">
+
+                        <div class="product-img"
+                             data-bs-toggle="modal"
+                             data-bs-target="#productModal-@item.Id"
+                             style="cursor:pointer;">
+                            <img src="@imageUrl"
+                                 alt="@item.Name"
+                                 class="img-fluid" />
+                        </div>
+
+                        <div class="card-body text-center">
+
+                            <h6>@item.Name</h6>
+
+                            <p class="price">
+                                @item.Price.ToString("N0") đ
+                            </p>
+
+                            <button type="button"
+                                    class="buy-now-btn border-0"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#productModal-@item.Id">
+                                <i class="fa-solid fa-cart-plus"></i>
+                                Thêm vào giỏ
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- PRODUCT DETAIL MODAL -->
+                <div class="modal fade" id="productModal-@item.Id" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content border-0 shadow">
+
+                            <div class="modal-header border-0">
+                                <h5 class="modal-title fw-bold text-danger">
+                                    @item.Name
+                                </h5>
+
+                                <button type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="modal">
+                                </button>
+                            </div>
+
+                            <div class="modal-body text-center">
+
+                                <img src="@imageUrl"
+                                     class="img-fluid rounded mb-3"
+                                     style="max-height:250px;"
+                                     alt="@item.Name" />
+
+                                <h4 class="fw-bold">@item.Name</h4>
+
+                                <div class="mb-2 text-warning">
+
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        if (i <= Math.Round(avgRating))
+                                        {
+                                            <i class="fa-solid fa-star"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="fa-regular fa-star"></i>
+                                        }
+                                    }
+
+                                    <span class="text-dark ms-1">
+                                        @avgRating.ToString("0.0")
+                                        (@reviewCount đánh giá)
+                                    </span>
+
+                                </div>
+
+                                <h5 class="text-danger fw-bold mb-3">
+                                    @item.Price.ToString("N0") đ
+                                </h5>
+
+                                <p class="text-muted">
+                                    @(string.IsNullOrEmpty(item.Description)
+                                        ? "Chưa có mô tả sản phẩm"
+                                        : item.Description)
+                                </p>
+
+                                @if (item.Reviews != null && item.Reviews.Any())
+                                {
+                                    <div class="mt-4 text-start">
+
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+
+                                            <h6 class="fw-bold mb-0">
+                                                Feedback khách hàng
+                                            </h6>
+
+                                            <button type="button"
+                                                    class="btn btn-sm btn-outline-danger"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#allReviewsModal-@item.Id">
+                                                Xem tất cả
+                                            </button>
+
+                                        </div>
+
+                                        @foreach (var review in item.Reviews
+                                            .OrderByDescending(r => r.CreatedAt)
+                                            .Take(2))
+                                        {
+                                            <div class="border rounded p-3 mb-3 bg-light">
+
+                                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                                    <strong>@review.UserName</strong>
+
+                                                    <small class="text-muted">
+                                                        @review.CreatedAt.ToString("dd/MM/yyyy")
+                                                    </small>
+                                                </div>
+
+                                                <div class="text-warning mb-2">
+                                                    @for (int i = 1; i <= 5; i++)
+                                                    {
+                                                        if (i <= review.Rating)
+                                                        {
+                                                            <i class="fa-solid fa-star"></i>
+                                                        }
+                                                        else
+                                                        {
+                                                            <i class="fa-regular fa-star"></i>
+                                                        }
+                                                    }
+                                                </div>
+
+                                                <p class="mb-0 text-muted">
+                                                    @review.Comment
+                                                </p>
+
+                                            </div>
+                                        }
+
+                                    </div>
+                                }
+                                else
+                                {
+                                    <p class="text-muted mt-4">
+                                        Chưa có feedback nào.
+                                    </p>
+                                }
+
+                                <div class="d-flex justify-content-center align-items-center gap-2 mt-4">
+
+                                    <button type="button"
+                                            class="btn btn-outline-secondary"
+                                            onclick="decreaseQty(@item.Id, @item.Price)">
+                                        -
+                                    </button>
+
+                                    <input type="number"
+                                           id="qty-@item.Id"
+                                           value="1"
+                                           min="1"
+                                           class="form-control text-center"
+                                           style="width:80px;"
+                                           onchange="updateTotal(@item.Id, @item.Price)" />
+
+                                    <button type="button"
+                                            class="btn btn-outline-secondary"
+                                            onclick="increaseQty(@item.Id, @item.Price)">
+                                        +
+                                    </button>
+
+                                </div>
+
+                                <div class="mt-4">
+                                    <h5>
+                                        Tổng tiền:
+                                        <span class="text-danger fw-bold"
+                                              id="total-@item.Id">
+                                            @item.Price.ToString("N0") đ
+                                        </span>
+                                    </h5>
+                                </div>
+
+                            </div>
+
+                            <div class="modal-footer border-0">
+
+                                <a id="addCartBtn-@item.Id"
+                                   asp-controller="Cart"
+                                   asp-action="Add"
+                                   asp-route-id="@item.Id"
+                                   asp-route-name="@item.Name"
+                                   asp-route-price="@(item.Price.ToString(System.Globalization.CultureInfo.InvariantCulture))"
+                                   asp-route-imageUrl="@imageUrl"
+                                   asp-route-quantity="1"
+                                   class="btn btn-danger w-100">
+                                    <i class="fa-solid fa-cart-plus"></i>
+                                    Xác nhận thêm vào giỏ
+                                </a>
+
+                                <button type="button"
+                                        class="btn btn-secondary w-100"
+                                        data-bs-dismiss="modal">
+                                    Hủy
+                                </button>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ALL REVIEWS MODAL -->
+                <div class="modal fade"
+                     id="allReviewsModal-@item.Id"
+                     tabindex="-1">
+
+                    <div class="modal-dialog modal-dialog-scrollable">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title">
+                                    Tất cả đánh giá - @item.Name
+                                </h5>
+
+                                <button type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="modal"
+                                        onclick="showProductModal('@item.Id')">
+                                </button>
+                            </div>
+
+                            <div class="modal-body">
+
+                                @if (item.Reviews != null && item.Reviews.Any())
+                                {
+                                    @foreach (var review in item.Reviews
+                                        .OrderByDescending(r => r.CreatedAt))
+                                    {
+                                        <div class="border rounded p-3 mb-3">
+
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <strong>@review.UserName</strong>
+
+                                                <small class="text-muted">
+                                                    @review.CreatedAt.ToString("dd/MM/yyyy")
+                                                </small>
+                                            </div>
+
+                                            <div class="text-warning mb-2">
+                                                @for (int i = 1; i <= 5; i++)
+                                                {
+                                                    if (i <= review.Rating)
+                                                    {
+                                                        <i class="fa-solid fa-star"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fa-regular fa-star"></i>
+                                                    }
+                                                }
+                                            </div>
+
+                                            <p class="mb-0">
+                                                @review.Comment
+                                            </p>
+
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <p class="text-muted">
+                                        Chưa có đánh giá nào.
+                                    </p>
+                                }
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center">
+                <p>Chưa có sản phẩm</p>
+            </div>
+        }
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        function increaseQty(id, price) {
+            let qtyInput = document.getElementById("qty-" + id);
+
+            qtyInput.value = parseInt(qtyInput.value) + 1;
+
+            updateTotal(id, price);
+        }
+
+        function decreaseQty(id, price) {
+            let qtyInput = document.getElementById("qty-" + id);
+
+            let currentQty = parseInt(qtyInput.value);
+
+            if (currentQty > 1) {
+                qtyInput.value = currentQty - 1;
+            }
+
+            updateTotal(id, price);
+        }
+
+        function updateTotal(id, price) {
+            let qtyInput = document.getElementById("qty-" + id);
+            let totalBox = document.getElementById("total-" + id);
+            let addCartBtn = document.getElementById("addCartBtn-" + id);
+
+            let qty = parseInt(qtyInput.value);
+
+            if (isNaN(qty) || qty < 1) {
+                qty = 1;
+                qtyInput.value = 1;
+            }
+
+            let total = qty * price;
+
+            totalBox.innerText = total.toLocaleString("vi-VN") + " đ";
+
+            let url = addCartBtn.getAttribute("href");
+
+            url = updateQueryStringParameter(url, "quantity", qty);
+
+            addCartBtn.setAttribute("href", url);
+        }
+
+        function updateQueryStringParameter(uri, key, value) {
+            let re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+            let separator = uri.indexOf("?") !== -1 ? "&" : "?";
+
+            if (uri.match(re)) {
+                return uri.replace(re, "$1" + key + "=" + value + "$2");
+            }
+            else {
+                return uri + separator + key + "=" + value;
+            }
+        }
+
+        function showProductModal(id) {
+            setTimeout(() => {
+                let productModal =
+                    new bootstrap.Modal(
+                        document.getElementById(
+                            "productModal-" + id
+                        )
+                    );
+
+                productModal.show();
+
+            }, 200);
+        }
+    </script>
+}

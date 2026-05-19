@@ -1,0 +1,212 @@
+@using System.Text.Json
+
+@{
+    ViewData["Title"] = "Dashboard";
+    ViewData["PageTitle"] = "Tổng Quan Dashboard";
+
+    var revenueDataJson = JsonSerializer.Serialize(ViewBag.MonthlyRevenue);
+}
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon blue">
+            <i class="fas fa-dollar-sign"></i>
+        </div>
+
+        <div class="stat-value">
+            @ViewBag.TotalRevenue.ToString("N0") ₫
+        </div>
+
+        <div class="stat-label">Doanh thu tháng</div>
+
+        <div class="stat-change positive">
+            <i class="fas fa-arrow-up"></i>
+            +12.5% so với tháng trước
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon green">
+            <i class="fas fa-shopping-bag"></i>
+        </div>
+
+        <div class="stat-value">
+            @ViewBag.TotalOrders
+        </div>
+
+        <div class="stat-label">Đơn hàng</div>
+
+        <div class="stat-change positive">
+            <i class="fas fa-arrow-up"></i>
+            +8.2% so với tháng trước
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon orange">
+            <i class="fas fa-user-plus"></i>
+        </div>
+
+        <div class="stat-value">
+            @ViewBag.TotalCustomers
+        </div>
+
+        <div class="stat-label">Khách hàng mới</div>
+
+        <div class="stat-change negative">
+            <i class="fas fa-arrow-down"></i>
+            -2.4% so với tháng trước
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon red">
+            <i class="fas fa-heart"></i>
+        </div>
+
+        <div class="stat-value">89%</div>
+        <div class="stat-label">Tỷ lệ hài lòng</div>
+
+        <div class="stat-change positive">
+            <i class="fas fa-arrow-up"></i>
+            +5.1% so với tháng trước
+        </div>
+    </div>
+</div>
+
+<div class="charts-grid">
+    <div class="chart-card">
+        <div class="chart-header">
+            <h3>Doanh thu theo tháng</h3>
+
+            <select id="revenueYearFilter" class="year-filter">
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026" selected>2026</option>
+            </select>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="revenueChart"></canvas>
+        </div>
+    </div>
+
+    <div class="chart-card">
+        <div class="chart-header">
+            <h3>Tỷ lệ bán hàng</h3>
+        </div>
+
+        <div class="donut-chart"></div>
+
+        <div class="chart-legend">
+            <div class="legend-item">
+                <div class="legend-dot" style="background: var(--primary);"></div>
+                <span>Combo 40%</span>
+            </div>
+
+            <div class="legend-item">
+                <div class="legend-dot" style="background: var(--success);"></div>
+                <span>Gà rán 25%</span>
+            </div>
+
+            <div class="legend-item">
+                <div class="legend-dot" style="background: var(--warning);"></div>
+                <span>Nước uống 20%</span>
+            </div>
+
+            <div class="legend-item">
+                <div class="legend-dot" style="background: var(--danger);"></div>
+                <span>Khác 15%</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="chart-card" style="margin-bottom: 24px;">
+    <div class="chart-header">
+        <h3>Số đơn hàng theo tháng</h3>
+    </div>
+
+    <canvas id="ordersLineChart"></canvas>
+</div>
+<div class="table-card">
+    <div class="chart-header">
+        <h3>Đơn hàng gần đây</h3>
+
+        <button class="btn-primary">
+            Xem tất cả
+        </button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Mã đơn</th>
+                <th>Khách hàng</th>
+                <th>Sản phẩm</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+                <th>Ngày đặt</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>#DH001</td>
+                <td>Nguyễn Văn A</td>
+                <td>Combo gà rán</td>
+                <td>150,000 ₫</td>
+                <td>
+                    <span class="status completed">Hoàn thành</span>
+                </td>
+                <td>20/01/2024</td>
+            </tr>
+
+            <tr>
+                <td>#DH002</td>
+                <td>Trần Thị B</td>
+                <td>Burger bò</td>
+                <td>95,000 ₫</td>
+                <td>
+                    <span class="status processing">Đang xử lý</span>
+                </td>
+                <td>21/01/2024</td>
+            </tr>
+
+            <tr>
+                <td>#DH003</td>
+                <td>Lê Văn C</td>
+                <td>Pizza hải sản</td>
+                <td>220,000 ₫</td>
+                <td>
+                    <span class="status pending">Chờ xác nhận</span>
+                </td>
+                <td>22/01/2024</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script>
+        window.revenueData = @Html.Raw(revenueDataJson);
+    </script>
+    <script>
+    window.revenueData = @Html.Raw(revenueDataJson);
+
+    window.ordersLineData = [
+        { month: "T1", orders: 120 },
+        { month: "T2", orders: 150 },
+        { month: "T3", orders: 180 },
+        { month: "T4", orders: 140 },
+        { month: "T5", orders: 210 },
+        { month: "T6", orders: 260 },
+        { month: "T7", orders: 300 },
+        { month: "T8", orders: 280 },
+        { month: "T9", orders: 320 },
+        { month: "T10", orders: 350 },
+        { month: "T11", orders: 400 },
+        { month: "T12", orders: 450 }
+    ];
+</script>
+    <script src="~/admin/js/dashboard.js"></script>
+}

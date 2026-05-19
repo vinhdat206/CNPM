@@ -29,4 +29,21 @@
         <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Product\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Product\Menu.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="wwwroot\images\Products\BanhMi\" />
+      <Folder Include="wwwroot\images\Products\Burger\" />
+      <Folder Include="wwwroot\images\Products\FrenchFries\" />
+      <Folder Include="wwwroot\images\Products\FriedChicken\" />
+      <Folder Include="wwwroot\images\Products\GaRan\" />
+      <Folder Include="wwwroot\images\Products\HotDog\" />
+      <Folder Include="wwwroot\images\Products\MiLy\" />
+      <Folder Include="wwwroot\images\Products\Pizza\" />
+      <Folder Include="wwwroot\images\Products\Sandwich\" />
+    </ItemGroup>
+
 </Project>

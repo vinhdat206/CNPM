@@ -1,0 +1,514 @@
+@model List<CNPMFastFood.Models.Order>
+
+@{
+    ViewData["Title"] = "Quản lý đơn hàng";
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/admin/order.css" />
+}
+
+<h2 class="mb-4">Quản lý đơn hàng</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show">
+        @TempData["Success"]
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert">
+        </button>
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show">
+        @TempData["Error"]
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert">
+        </button>
+    </div>
+}
+
+<table class="table table-bordered table-hover align-middle">
+
+    <thead class="table-dark">
+
+        <tr>
+            <th>Mã đơn</th>
+            <th>Khách hàng</th>
+            <th>Ngày đặt</th>
+            <th>Tổng tiền</th>
+            <th>Trạng thái</th>
+            <th width="320">Chức năng</th>
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        @foreach (var order in Model)
+        {
+            <tr>
+
+                <td>
+                    #@order.Id
+                </td>
+
+                <td>
+                    @order.CustomerName
+                </td>
+
+                <td>
+                    @order.OrderDate.ToString("dd/MM/yyyy HH:mm")
+                </td>
+
+                <td>
+                    @order.TotalAmount.ToString("N0") đ
+                </td>
+
+                <td>
+
+                    @switch (order.Status)
+                    {
+                        case "Pending":
+
+                            <span class="badge bg-warning text-dark">
+                                Chờ xử lý
+                            </span>
+
+                            break;
+
+                        case "Processing":
+
+                            <span class="badge bg-primary">
+                                Đang xử lý
+                            </span>
+
+                            break;
+
+                        case "Shipping":
+
+                            <span class="badge bg-info text-dark">
+                                Đang giao
+                            </span>
+
+                            break;
+
+                        case "Completed":
+
+                            <span class="badge bg-success">
+                                Hoàn thành
+                            </span>
+
+                            break;
+
+                        case "Cancelled":
+
+                            <span class="badge bg-danger">
+                                Đã hủy
+                            </span>
+
+                            break;
+
+                        default:
+
+                            <span class="badge bg-secondary">
+                                @order.Status
+                            </span>
+
+                            break;
+                    }
+
+                </td>
+
+                <td>
+
+                    <button class="btn btn-info btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#detailModal-@order.Id">
+                        Chi tiết
+                    </button>
+
+                    <button class="btn btn-warning btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#statusModal-@order.Id">
+                        Trạng thái
+                    </button>
+
+                    <button class="btn btn-danger btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#cancelModal-@order.Id">
+                        Hủy
+                    </button>
+
+                    <button class="btn btn-dark btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#deleteModal-@order.Id">
+                        Xóa
+                    </button>
+
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+
+@foreach (var order in Model)
+{
+    <!-- DETAIL MODAL -->
+
+    <div class="modal fade"
+         id="detailModal-@order.Id"
+         tabindex="-1">
+
+        <div class="modal-dialog modal-lg">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title">
+                        Chi tiết đơn hàng #@order.Id
+                    </h5>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <p>
+                        <b>Khách hàng:</b>
+                        @order.CustomerName
+                    </p>
+
+                    <p>
+                        <b>SĐT:</b>
+                        @order.Phone
+                    </p>
+
+                    <p>
+                        <b>Địa chỉ:</b>
+                        @order.Address
+                    </p>
+
+                    <p>
+                        <b>Ngày đặt:</b>
+                        @order.OrderDate.ToString("dd/MM/yyyy HH:mm")
+                    </p>
+
+                    <p>
+                        <b>Tổng tiền:</b>
+                        @order.TotalAmount.ToString("N0") đ
+                    </p>
+
+                    <p>
+                        <b>Trạng thái:</b>
+                        @order.Status
+                    </p>
+
+                    <hr />
+
+                    <h5>Sản phẩm</h5>
+
+                    @if (order.OrderDetails != null &&
+                   order.OrderDetails.Any())
+                    {
+                        <table class="table table-bordered">
+
+                            <thead>
+
+                                <tr>
+                                    <th>Ảnh</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Giá</th>
+                                    <th>SL</th>
+                                    <th>Thành tiền</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                @foreach (var item in order.OrderDetails)
+                                {
+                                    <tr>
+
+                                        <td width="80">
+
+                                            @if (!string.IsNullOrEmpty(item.ImageUrl))
+                                            {
+                                                <img src="@item.ImageUrl"
+                                                     class="product-image" />
+                                            }
+                                            else
+                                            {
+                                                <span>Không có ảnh</span>
+                                            }
+
+                                        </td>
+
+                                        <td>
+                                            @item.ProductName
+                                        </td>
+
+                                        <td>
+                                            @item.Price.ToString("N0") đ
+                                        </td>
+
+                                        <td>
+                                            @item.Quantity
+                                        </td>
+
+                                        <td>
+                                            @((item.Price * item.Quantity)
+                                                .ToString("N0")) đ
+                                        </td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+                    }
+                    else
+                    {
+                        <p class="text-muted">
+                            Không có sản phẩm
+                        </p>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- STATUS MODAL -->
+
+    <div class="modal fade"
+         id="statusModal-@order.Id"
+         tabindex="-1">
+
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+
+                <form asp-area="Admin"
+                      asp-controller="Order"
+                      asp-action="UpdateStatus"
+                      method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <div class="modal-header">
+
+                        <h5>
+                            Cập nhật trạng thái
+                        </h5>
+
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal">
+                        </button>
+
+                    </div>
+
+                    <div class="modal-body">
+
+                        <input type="hidden"
+                               name="id"
+                               value="@order.Id" />
+
+                        <select name="status"
+                                class="form-select">
+
+                            <option value="Pending">
+                                Chờ xử lý
+                            </option>
+
+                            <option value="Processing">
+                                Đang xử lý
+                            </option>
+
+                            <option value="Shipping">
+                                Đang giao
+                            </option>
+
+                            <option value="Completed">
+                                Hoàn thành
+                            </option>
+
+                            <option value="Cancelled">
+                                Đã hủy
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button type="button"
+                                class="btn btn-secondary"
+                                data-bs-dismiss="modal">
+                            Đóng
+                        </button>
+
+                        <button type="submit"
+                                class="btn btn-primary">
+                            Lưu
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- CANCEL MODAL -->
+
+    <div class="modal fade"
+         id="cancelModal-@order.Id"
+         tabindex="-1">
+
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+
+                <form asp-area="Admin"
+                      asp-controller="Order"
+                      asp-action="Cancel"
+                      method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <div class="modal-header">
+
+                        <h5>
+                            Hủy đơn hàng
+                        </h5>
+
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal">
+                        </button>
+
+                    </div>
+
+                    <div class="modal-body">
+
+                        <input type="hidden"
+                               name="id"
+                               value="@order.Id" />
+
+                        Bạn có chắc muốn hủy đơn hàng
+                        <b>#@order.Id</b> ?
+
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button type="button"
+                                class="btn btn-secondary"
+                                data-bs-dismiss="modal">
+                            Không
+                        </button>
+
+                        <button type="submit"
+                                class="btn btn-danger">
+                            Hủy đơn
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- DELETE MODAL -->
+
+    <div class="modal fade"
+         id="deleteModal-@order.Id"
+         tabindex="-1">
+
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+
+                <form asp-area="Admin"
+                      asp-controller="Order"
+                      asp-action="Delete"
+                      method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <div class="modal-header">
+
+                        <h5>
+                            Xóa đơn hàng
+                        </h5>
+
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal">
+                        </button>
+
+                    </div>
+
+                    <div class="modal-body">
+
+                        <input type="hidden"
+                               name="id"
+                               value="@order.Id" />
+
+                        Bạn có chắc muốn xóa đơn hàng
+                        <b>#@order.Id</b> ?
+
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button type="button"
+                                class="btn btn-secondary"
+                                data-bs-dismiss="modal">
+                            Hủy
+                        </button>
+
+                        <button type="submit"
+                                class="btn btn-dark">
+                            Xóa
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+}

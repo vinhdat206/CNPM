@@ -1,0 +1,100 @@
+@using System.Text.Json
+
+@{
+    ViewData["Title"] = "Báo cáo";
+    ViewData["PageTitle"] = "Báo cáo chi tiết";
+
+    var topProductNamesJson = JsonSerializer.Serialize(ViewBag.TopProductNames);
+    var topProductSalesJson = JsonSerializer.Serialize(ViewBag.TopProductSales);
+
+    var orderStatusLabelsJson = JsonSerializer.Serialize(ViewBag.OrderStatusLabels);
+    var orderStatusValuesJson = JsonSerializer.Serialize(ViewBag.OrderStatusValues);
+
+    var productRevenueNamesJson = JsonSerializer.Serialize(ViewBag.ProductRevenueNames);
+    var productRevenueValuesJson = JsonSerializer.Serialize(ViewBag.ProductRevenueValues);
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin/report.css" />
+}
+
+<div class="report-filter">
+    <div>
+        <label>Từ ngày</label>
+        <input type="date" />
+    </div>
+
+    <div>
+        <label>Đến ngày</label>
+        <input type="date" />
+    </div>
+
+    <button>
+        <i class="fas fa-filter"></i>
+        Lọc báo cáo
+    </button>
+
+    <button class="export-btn">
+        <i class="fas fa-file-excel"></i>
+        Xuất Excel
+    </button>
+</div>
+
+<div class="report-charts">
+    <div class="chart-box">
+        <h3>Top sản phẩm bán chạy</h3>
+        <canvas id="topProductChart"></canvas>
+    </div>
+
+    <div class="chart-box">
+        <h3>Đơn hàng theo trạng thái</h3>
+        <canvas id="orderStatusChart"></canvas>
+    </div>
+</div>
+
+<div class="report-charts mt-25">
+    <div class="chart-box">
+        <h3>Doanh thu theo sản phẩm</h3>
+        <canvas id="productRevenueChart"></canvas>
+    </div>
+
+    <div class="chart-box">
+        <h3>Top khách hàng</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Khách hàng</th>
+                    <th>Số đơn</th>
+                    <th>Tổng chi tiêu</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var customer in ViewBag.TopCustomers)
+                {
+                    <tr>
+                        <td>@customer.Name</td>
+                        <td>@customer.Orders</td>
+                        <td>@customer.TotalSpent.ToString("N0") ₫</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        window.topProductNames = @Html.Raw(topProductNamesJson);
+        window.topProductSales = @Html.Raw(topProductSalesJson);
+
+        window.orderStatusLabels = @Html.Raw(orderStatusLabelsJson);
+        window.orderStatusValues = @Html.Raw(orderStatusValuesJson);
+
+        window.productRevenueNames = @Html.Raw(productRevenueNamesJson);
+        window.productRevenueValues = @Html.Raw(productRevenueValuesJson);
+    </script>
+
+    <script src="~/js/admin/report.js"></script>
+}

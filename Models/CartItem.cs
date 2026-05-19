@@ -15,9 +15,9 @@ namespace CNPMFastFood.Models
         public decimal Price { get; set; }
 
         // Số lượng
-        public int Quantity { get; set; }
+        public int Quantity { get; set; } = 1;
 
         // Ảnh sản phẩm
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
     }
 }

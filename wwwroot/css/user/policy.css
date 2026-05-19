@@ -1,0 +1,33 @@
+.policy-page {
+    background: #fff5f5;
+    padding: 20px 0;
+}
+
+.policy-page h1 {
+    color: #dc3545;
+    font-weight: 700;
+}
+
+.policy-page .card {
+    border: none;
+    border-radius: 18px;
+    background: #ffffff;
+}
+
+.policy-page .card h3 {
+    color: #dc3545;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.policy-page .card p {
+    color: #444;
+    font-size: 15.5px;
+    line-height: 1.8;
+    margin-bottom: 10px;
+}
+
+.policy-page b {
+    color: #333;
+}
