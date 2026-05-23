@@ -1,0 +1,285 @@
+@{
+    ViewData["Title"] = "Thông tin cá nhân";
+}
+
+@section Styles{
+    <style>
+
+        /* ================= PROFILE PAGE ================= */
+
+        .profile-card {
+            border: none;
+            border-radius: 24px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .profile-header i {
+            font-size: 75px;
+            color: #dc3545;
+        }
+
+        .profile-header h2 {
+            margin-top: 15px;
+            font-weight: 700;
+            color: #222;
+        }
+
+        .profile-box {
+            border-radius: 20px;
+            padding: 30px;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .profile-box:hover {
+            transform: translateY(-3px);
+        }
+
+        .profile-info {
+            background: #f8f9fa;
+            border: 1px solid #eee;
+        }
+
+        .profile-password {
+            background: #fff;
+            border: 1px solid #eee;
+        }
+
+        .profile-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #dc3545;
+        }
+
+        .profile-title i {
+            margin-right: 10px;
+        }
+
+        .profile-box p {
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: #444;
+        }
+
+        .profile-box strong {
+            color: #111;
+        }
+
+        .profile-password .form-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .profile-password .form-control {
+            height: 50px;
+            border-radius: 14px;
+            border: 1px solid #ddd;
+            transition: all 0.3s ease;
+        }
+
+        .profile-password .form-control:focus {
+            border-color: #dc3545;
+            box-shadow: 0 0 0 0.15rem rgba(220,53,69,.15);
+        }
+
+        .profile-password button {
+            height: 50px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .profile-password button:hover {
+            transform: translateY(-2px);
+        }
+
+        .alert {
+            border-radius: 14px;
+            font-weight: 500;
+        }
+
+        /* MOBILE */
+        @@media (max-width: 768px) {
+
+            .profile-box {
+                padding: 20px;
+            }
+
+            .profile-header i {
+                font-size: 60px;
+            }
+
+            .profile-title {
+                font-size: 20px;
+            }
+
+        }
+
+    </style>
+}
+
+<div class="container py-5">
+
+    <div class="card shadow profile-card">
+
+        <div class="card-body p-5">
+
+            <!-- HEADER -->
+            <div class="profile-header">
+
+                <i class="fa-solid fa-user-circle"></i>
+
+                <h2>
+                    Thông tin cá nhân
+                </h2>
+
+            </div>
+
+            <!-- ALERT -->
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success mb-4">
+                    @TempData["Success"]
+                </div>
+            }
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger mb-4">
+                    @TempData["Error"]
+                </div>
+            }
+
+            <div class="row g-4">
+
+                <!-- PROFILE INFO -->
+                <div class="col-lg-6">
+
+                    <div class="profile-box profile-info">
+
+                        <h5 class="profile-title">
+
+                            <i class="fa-solid fa-user"></i>
+
+                            Thông tin tài khoản
+
+                        </h5>
+
+                        <p>
+                            <strong>Tên đăng nhập:</strong>
+                            @User.Identity.Name
+                        </p>
+
+                        <p>
+                            <strong>Email:</strong>
+                            @User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value
+                        </p>
+
+                        <p>
+                            <strong>Vai trò:</strong>
+                            @User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value
+                        </p>
+
+                        <p>
+                            <strong>User ID:</strong>
+                            @User.FindFirst("UserId")?.Value
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <!-- CHANGE PASSWORD -->
+                <div class="col-lg-6">
+
+                    <div class="profile-box profile-password">
+
+                        <h5 class="profile-title">
+
+                            <i class="fa-solid fa-lock"></i>
+
+                            Đổi mật khẩu
+
+                        </h5>
+
+                        <form asp-controller="Auth"
+                              asp-action="ChangePassword"
+                              method="post">
+
+                            @Html.AntiForgeryToken()
+
+                            <!-- OLD PASSWORD -->
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Mật khẩu cũ
+                                </label>
+
+                                <input type="password"
+                                       name="OldPassword"
+                                       class="form-control"
+                                       placeholder="Nhập mật khẩu cũ"
+                                       required />
+
+                            </div>
+
+                            <!-- NEW PASSWORD -->
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Mật khẩu mới
+                                </label>
+
+                                <input type="password"
+                                       name="NewPassword"
+                                       class="form-control"
+                                       placeholder="Nhập mật khẩu mới"
+                                       required />
+
+                            </div>
+
+                            <!-- CONFIRM PASSWORD -->
+                            <div class="mb-4">
+
+                                <label class="form-label">
+                                    Xác nhận mật khẩu mới
+                                </label>
+
+                                <input type="password"
+                                       name="ConfirmPassword"
+                                       class="form-control"
+                                       placeholder="Nhập lại mật khẩu mới"
+                                       required />
+
+                            </div>
+
+                            <!-- BUTTON -->
+                            <button type="submit"
+                                    class="btn btn-danger w-100">
+
+                                <i class="fa-solid fa-key me-2"></i>
+
+                                Đổi mật khẩu
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

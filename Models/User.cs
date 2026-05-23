@@ -24,5 +24,11 @@ namespace CNPMFastFood.Models
         // Vai trò
         // admin hoặc user
         public string Role { get; set; }
+        
+        // Khóa / mở khóa tài khoản
+        public bool IsBlocked { get; set; } = false;
+
+        // Bắt user đổi mật khẩu sau khi đăng nhập
+        public bool ForceChangePassword { get; set; } = false;
     }
 }

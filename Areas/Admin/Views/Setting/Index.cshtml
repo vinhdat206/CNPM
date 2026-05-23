@@ -1,215 +1,519 @@
-@* ========================================
-   FILE: Areas/Admin/Views/Setting/Index.cshtml
-   ======================================== *@
+@model CNPMFastFood.Models.Setting
 
 @{
-// Tiêu đề tab trình duyệt
-ViewData["Title"] = "Cài đặt";
-
-// Tiêu đề hiển thị ở header admin layout
-ViewData["PageTitle"] = "Cài đặt hệ thống";
+    ViewData["Title"] = "Cài đặt";
+    ViewData["PageTitle"] = "Cài đặt hệ thống";
 }
 
-@* CSS riêng cho trang Cài đặt *@
 @section Styles {
-<link rel="stylesheet" href="~/css/admin/setting.css" />
+    <link rel="stylesheet"
+          href="~/css/admin/setting.css" />
 }
 
-@* Thông báo sau khi lưu thành công *@
+<!-- ================= ALERT ================= -->
+
 @if (TempData["Success"] != null)
 {
-<div class="setting-alert">
-    <i class="fas fa-check-circle"></i>
-    @TempData["Success"]
-</div>
+    <div class="setting-alert">
+
+        <i class="fas fa-check-circle"></i>
+
+        <span>
+            @TempData["Success"]
+        </span>
+
+    </div>
 }
 
-@* Form gửi dữ liệu về SettingController/Save *@
+<!-- ================= FORM ================= -->
+
 <form asp-area="Admin"
       asp-controller="Setting"
       asp-action="Save"
-      method="post">
+      method="post"
+      enctype="multipart/form-data">
+
+    @Html.AntiForgeryToken()
+
+    <!-- ID setting -->
+    <input type="hidden"
+           asp-for="Id" />
+
+    <!-- VALIDATION -->
+    <div asp-validation-summary="ModelOnly"
+         class="text-danger mb-3">
+    </div>
 
     <div class="setting-grid">
 
-        @* =============================
-           THÔNG TIN CỬA HÀNG
-           ============================= *@
+        <!-- =====================================
+             STORE INFORMATION
+             ===================================== -->
 
         <div class="setting-card">
+
             <div class="setting-card-header">
+
                 <i class="fas fa-store"></i>
-                <h3>Thông tin cửa hàng</h3>
+
+                <div>
+
+                    <h3>Thông tin cửa hàng</h3>
+
+                    <p>
+                        Cập nhật thông tin hiển thị
+                        trên website.
+                    </p>
+
+                </div>
+
             </div>
 
-            <div class="form-group">
-                <label>Tên cửa hàng</label>
-                <input type="text"
-                       name="StoreName"
-                       value="@ViewBag.StoreName" />
-            </div>
+            <!-- =============================
+                 STORE NAME
+                 ============================= -->
 
             <div class="form-group">
-                <label>Email</label>
-                <input type="email"
-                       name="StoreEmail"
-                       value="@ViewBag.StoreEmail" />
+
+                <label asp-for="StoreName">
+                    Tên cửa hàng
+                </label>
+
+                <input asp-for="StoreName"
+                       type="text"
+                       placeholder="Nhập tên cửa hàng" />
+
+                <span asp-validation-for="StoreName"
+                      class="text-danger">
+                </span>
+
             </div>
 
-            <div class="form-group">
-                <label>Số điện thoại</label>
-                <input type="text"
-                       name="StorePhone"
-                       value="@ViewBag.StorePhone" />
-            </div>
+            <!-- =============================
+                 LOGO
+                 ============================= -->
 
             <div class="form-group">
-                <label>Địa chỉ</label>
-                <textarea name="StoreAddress">@ViewBag.StoreAddress</textarea>
+
+                <label>
+                    Logo cửa hàng
+                </label>
+
+                <!-- Upload file -->
+                <input type="file"
+                       name="LogoFile"
+                       class="form-control" />
+
+                <!-- Hiển thị logo hiện tại -->
+                @if (!string.IsNullOrEmpty(Model.LogoUrl))
+                {
+                    <div class="mt-3">
+
+                        <img src="@Model.LogoUrl"
+                             alt="Logo"
+                             style="
+                                width:120px;
+                                height:120px;
+                                object-fit:cover;
+                                border-radius:16px;
+                                border:1px solid #ddd;
+                                padding:8px;
+                                background:#fff;
+                                box-shadow:0 4px 12px rgba(0,0,0,0.08);" />
+
+                    </div>
+                }
+
             </div>
+
+            <!-- =============================
+                 EMAIL
+                 ============================= -->
+
+            <div class="form-group">
+
+                <label asp-for="StoreEmail">
+                    Email
+                </label>
+
+                <input asp-for="StoreEmail"
+                       type="email"
+                       placeholder="Nhập email" />
+
+                <span asp-validation-for="StoreEmail"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+            <!-- =============================
+                 PHONE
+                 ============================= -->
+
+            <div class="form-group">
+
+                <label asp-for="StorePhone">
+                    Số điện thoại
+                </label>
+
+                <input asp-for="StorePhone"
+                       type="text"
+                       placeholder="Nhập số điện thoại" />
+
+            </div>
+
+            <!-- =============================
+                 ADDRESS
+                 ============================= -->
+
+            <div class="form-group">
+
+                <label asp-for="StoreAddress">
+                    Địa chỉ
+                </label>
+
+                <textarea asp-for="StoreAddress"
+                          placeholder="Nhập địa chỉ">
+                </textarea>
+
+            </div>
+
+            <!-- =============================
+                 OPEN CLOSE TIME
+                 ============================= -->
 
             <div class="form-row">
-                <div class="form-group">
-                    <label>Giờ mở cửa</label>
-                    <input type="time"
-                           name="OpenTime"
-                           value="@ViewBag.OpenTime" />
-                </div>
+
+                <!-- OPEN -->
 
                 <div class="form-group">
-                    <label>Giờ đóng cửa</label>
-                    <input type="time"
-                           name="CloseTime"
-                           value="@ViewBag.CloseTime" />
+
+                    <label asp-for="OpenTime">
+                        Giờ mở cửa
+                    </label>
+
+                    <input asp-for="OpenTime"
+                           type="time" />
+
                 </div>
+
+                <!-- CLOSE -->
+
+                <div class="form-group">
+
+                    <label asp-for="CloseTime">
+                        Giờ đóng cửa
+                    </label>
+
+                    <input asp-for="CloseTime"
+                           type="time" />
+
+                </div>
+
             </div>
+
         </div>
 
-        @* =============================
-           CÀI ĐẶT ĐƠN HÀNG
-           ============================= *@
+        <!-- =====================================
+             ORDER SETTINGS
+             ===================================== -->
 
         <div class="setting-card">
+
             <div class="setting-card-header">
+
                 <i class="fas fa-receipt"></i>
-                <h3>Cài đặt đơn hàng</h3>
+
+                <div>
+
+                    <h3>Cài đặt đơn hàng</h3>
+
+                    <p>
+                        Thiết lập phí giao hàng
+                        và điều kiện đặt món.
+                    </p>
+
+                </div>
+
             </div>
+
+            <!-- =============================
+                 SHIPPING FEE
+                 ============================= -->
 
             <div class="form-group">
-                <label>Phí giao hàng</label>
-                <input type="number"
-                       name="ShippingFee"
-                       value="@ViewBag.ShippingFee" />
+
+                <label asp-for="ShippingFee">
+                    Phí giao hàng
+                </label>
+
+                <div class="input-group">
+
+                    <input asp-for="ShippingFee"
+                           type="text"
+                           class="form-control"
+                           value="@Model.ShippingFee.ToString("N0")" />
+
+                    <span class="input-group-text">
+                        VNĐ
+                    </span>
+
+                </div>
+
+                <small>
+                    Đây là phí ship áp dụng cho mỗi đơn hàng.
+                </small>
+
             </div>
+
+            <!-- =============================
+                 MIN ORDER
+                 ============================= -->
 
             <div class="form-group">
-                <label>Đơn hàng tối thiểu</label>
-                <input type="number"
-                       name="MinimumOrderAmount"
-                       value="@ViewBag.MinimumOrderAmount" />
+
+                <label asp-for="MinimumOrderAmount">
+                    Đơn hàng tối thiểu
+                </label>
+
+                <div class="input-group">
+
+                    <input asp-for="MinimumOrderAmount"
+                           type="text"
+                           class="form-control"
+                           value="@Model.MinimumOrderAmount.ToString("N0")" />
+
+                    <span class="input-group-text">
+                        VNĐ
+                    </span>
+
+                </div>
+
+                <small>
+                    Khách phải đặt tối thiểu số tiền này để thanh toán.
+                </small>
+
             </div>
+
+            <!-- =============================
+                 DELIVERY TIME
+                 ============================= -->
 
             <div class="form-group">
-                <label>Thời gian giao dự kiến</label>
-                <input type="number"
-                       name="EstimatedDeliveryMinutes"
-                       value="@ViewBag.EstimatedDeliveryMinutes" />
 
-                <small>Đơn vị: phút</small>
+                <label asp-for="EstimatedDeliveryMinutes">
+                    Thời gian giao dự kiến
+                </label>
+
+                <div class="input-group">
+
+                    <input asp-for="EstimatedDeliveryMinutes"
+                           type="text"
+                           class="form-control"
+                           value="@Model.EstimatedDeliveryMinutes" />
+
+                    <span class="input-group-text">
+                        phút
+                    </span>
+
+                </div>
+
+                <small>
+                    Thời gian giao hàng trung bình cho mỗi đơn.
+                </small>
+
             </div>
+
         </div>
 
-        @* =============================
-           CÀI ĐẶT THANH TOÁN
-           ============================= *@
+        <!-- =====================================
+             PAYMENT SETTINGS
+             ===================================== -->
 
         <div class="setting-card">
+
             <div class="setting-card-header">
+
                 <i class="fas fa-credit-card"></i>
-                <h3>Cài đặt thanh toán</h3>
+
+                <div>
+
+                    <h3>Cài đặt thanh toán</h3>
+
+                    <p>
+                        Bật hoặc tắt các phương thức thanh toán.
+                    </p>
+
+                </div>
+
             </div>
 
+            <!-- COD -->
+
             <div class="toggle-row">
+
                 <div>
-                    <strong>Thanh toán khi nhận hàng</strong>
-                    <p>Cho phép khách hàng thanh toán COD</p>
+
+                    <strong>
+                        Thanh toán khi nhận hàng
+                    </strong>
+
+                    <p>
+                        Cho phép khách hàng thanh toán COD.
+                    </p>
+
                 </div>
 
                 <label class="switch">
-                    <input type="checkbox"
-                           name="IsCodEnabled"
-                           checked="@ViewBag.IsCodEnabled" />
+
+                    <input asp-for="IsCodEnabled"
+                           type="checkbox" />
 
                     <span class="slider"></span>
+
                 </label>
+
             </div>
 
+            <!-- BANK -->
+
             <div class="toggle-row">
+
                 <div>
-                    <strong>Chuyển khoản ngân hàng</strong>
-                    <p>Cho phép khách hàng thanh toán chuyển khoản</p>
+
+                    <strong>
+                        Chuyển khoản ngân hàng
+                    </strong>
+
+                    <p>
+                        Cho phép khách hàng thanh toán chuyển khoản.
+                    </p>
+
                 </div>
 
                 <label class="switch">
-                    <input type="checkbox"
-                           name="IsBankTransferEnabled"
-                           checked="@ViewBag.IsBankTransferEnabled" />
+
+                    <input asp-for="IsBankTransferEnabled"
+                           type="checkbox" />
 
                     <span class="slider"></span>
+
                 </label>
+
             </div>
+
         </div>
 
-        @* =============================
-           TÀI KHOẢN ADMIN
-           ============================= *@
+        <!-- =====================================
+             ADMIN ACCOUNT
+             ===================================== -->
 
         <div class="setting-card">
+
             <div class="setting-card-header">
+
                 <i class="fas fa-user-shield"></i>
-                <h3>Tài khoản admin</h3>
+
+                <div>
+
+                    <h3>Tài khoản admin</h3>
+
+                    <p>
+                        Đổi mật khẩu quản trị hệ thống.
+                    </p>
+
+                </div>
+
             </div>
 
+            <!-- CURRENT PASSWORD -->
+
             <div class="form-group">
-                <label>Mật khẩu hiện tại</label>
+
+                <label>
+                    Mật khẩu hiện tại
+                </label>
+
                 <input type="password"
                        name="CurrentPassword"
                        placeholder="Nhập mật khẩu hiện tại" />
+
             </div>
 
+            <!-- NEW PASSWORD -->
+
             <div class="form-group">
-                <label>Mật khẩu mới</label>
+
+                <label>
+                    Mật khẩu mới
+                </label>
+
                 <input type="password"
                        name="NewPassword"
                        placeholder="Nhập mật khẩu mới" />
+
             </div>
 
+            <!-- CONFIRM PASSWORD -->
+
             <div class="form-group">
-                <label>Xác nhận mật khẩu mới</label>
+
+                <label>
+                    Xác nhận mật khẩu mới
+                </label>
+
                 <input type="password"
                        name="ConfirmNewPassword"
                        placeholder="Nhập lại mật khẩu mới" />
+
             </div>
+
+            <small class="password-note">
+
+                Nếu không muốn đổi mật khẩu,
+                hãy để trống tất cả ô phía trên.
+
+            </small>
+
         </div>
 
     </div>
 
-    @* Nút thao tác *@
+    <!-- =====================================
+         ACTION BUTTONS
+         ===================================== -->
+
     <div class="setting-actions">
-        <button type="reset" class="btn-cancel">
+
+        <button type="reset"
+                class="btn-cancel">
+
             <i class="fas fa-rotate-left"></i>
+
             Hủy
+
         </button>
 
-        <button type="submit" class="btn-save">
+        <button type="submit"
+                class="btn-save">
+
             <i class="fas fa-save"></i>
+
             Lưu cài đặt
+
         </button>
+
     </div>
 
 </form>
 
-@* JS riêng cho trang Cài đặt *@
 @section Scripts {
-<script src="~/js/admin/setting.js"></script>
+
+    <!-- VALIDATION -->
+
+    <partial name="_ValidationScriptsPartial" />
+
+    <!-- PAGE JS -->
+
+    <script src="~/js/admin/setting.js"></script>
 }

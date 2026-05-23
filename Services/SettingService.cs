@@ -1,98 +1,148 @@
-// =============================
-// FILE: Services/SettingService.cs
-// =============================
-
 using CNPMFastFood.Data;
+using CNPMFastFood.Models;
 
 namespace CNPMFastFood.Services
 {
     public class SettingService
     {
-        // AppDbContext dùng để làm việc với database
+        // Kết nối database
         private readonly AppDbContext _context;
 
-        // Constructor: inject AppDbContext vào service
         public SettingService(AppDbContext context)
         {
             _context = context;
         }
 
-        // =============================
-        // THÔNG TIN CỬA HÀNG
-        // =============================
+        // =========================================
+        // LẤY THÔNG TIN CÀI ĐẶT
+        // =========================================
 
-        // Lấy tên cửa hàng
-        public string GetStoreName()
+        public Setting GetSetting()
         {
-            return "CNPM Fast Food";
+            // Lấy setting đầu tiên trong database
+            var setting = _context.Settings.FirstOrDefault();
+
+            // Nếu chưa có dữ liệu
+            // thì tạo setting mặc định
+            if (setting == null)
+            {
+                setting = new Setting
+                {
+                    // Tên cửa hàng mặc định
+                    StoreName = "",
+
+                    // Email mặc định
+                    StoreEmail = "escfood@gmail.com",
+
+                    // SĐT mặc định
+                    StorePhone = "0123 456 789",
+
+                    // Địa chỉ mặc định
+                    StoreAddress = "123 EscFood Street, Ha Noi City",
+
+                    // Giờ mở cửa
+                    OpenTime = "08:00",
+
+                    // Giờ đóng cửa
+                    CloseTime = "22:00",
+
+                    // Logo mặc định
+                    LogoUrl = "/images/Logo/LogoESC.",
+
+                    // Phí ship mặc định
+                    ShippingFee = 20000,
+
+                    // Đơn tối thiểu
+                    MinimumOrderAmount = 50000,
+
+                    // Thời gian giao dự kiến
+                    EstimatedDeliveryMinutes = 30,
+
+                    // Bật COD
+                    IsCodEnabled = true,
+
+                    // Tắt chuyển khoản
+                    IsBankTransferEnabled = false
+                };
+
+                // Thêm vào database
+                _context.Settings.Add(setting);
+
+                // Lưu database
+                _context.SaveChanges();
+            }
+
+            return setting;
         }
 
-        // Lấy email cửa hàng
-        public string GetStoreEmail()
+        // =========================================
+        // CẬP NHẬT CÀI ĐẶT
+        // =========================================
+
+        public void UpdateSetting(Setting model)
         {
-            return "fastfood@gmail.com";
-        }
+            // Lấy setting hiện tại
+            var setting = GetSetting();
 
-        // Lấy số điện thoại cửa hàng
-        public string GetStorePhone()
-        {
-            return "0123 456 789";
-        }
+            // =========================================
+            // THÔNG TIN CỬA HÀNG
+            // =========================================
 
-        // Lấy địa chỉ cửa hàng
-        public string GetStoreAddress()
-        {
-            return "Ha Noi ";
-        }
+            setting.StoreName = model.StoreName;
 
-        // Lấy giờ mở cửa
-        public string GetOpenTime()
-        {
-            return "08:00";
-        }
+            setting.StoreEmail = model.StoreEmail;
 
-        // Lấy giờ đóng cửa
-        public string GetCloseTime()
-        {
-            return "22:00";
-        }
+            setting.StorePhone = model.StorePhone;
 
-        // =============================
-        // CÀI ĐẶT ĐƠN HÀNG
-        // =============================
+            setting.StoreAddress = model.StoreAddress;
 
-        // Lấy phí giao hàng
-        public decimal GetShippingFee()
-        {
-            return 20000;
-        }
+            setting.OpenTime = model.OpenTime;
 
-        // Lấy giá trị đơn hàng tối thiểu
-        public decimal GetMinimumOrderAmount()
-        {
-            return 50000;
-        }
+            setting.CloseTime = model.CloseTime;
 
-        // Lấy thời gian giao hàng dự kiến
-        public int GetEstimatedDeliveryMinutes()
-        {
-            return 30;
-        }
+            // =========================================
+            // LOGO
+            // =========================================
 
-        // =============================
-        // CÀI ĐẶT THANH TOÁN
-        // =============================
+            // Nếu có upload logo mới
+            // thì cập nhật logo
+            if (!string.IsNullOrEmpty(model.LogoUrl))
+            {
+                setting.LogoUrl = model.LogoUrl;
+            }
 
-        // Kiểm tra có bật thanh toán COD không
-        public bool IsCodEnabled()
-        {
-            return true;
-        }
+            // =========================================
+            // CÀI ĐẶT ĐƠN HÀNG
+            // =========================================
 
-        // Kiểm tra có bật chuyển khoản ngân hàng không
-        public bool IsBankTransferEnabled()
-        {
-            return false;
+            // Phí ship
+            setting.ShippingFee = model.ShippingFee;
+
+            // Đơn tối thiểu
+            setting.MinimumOrderAmount =
+                model.MinimumOrderAmount;
+
+            // Thời gian giao hàng
+            setting.EstimatedDeliveryMinutes =
+                model.EstimatedDeliveryMinutes;
+
+            // =========================================
+            // THANH TOÁN
+            // =========================================
+
+            // COD
+            setting.IsCodEnabled =
+                model.IsCodEnabled;
+
+            // Chuyển khoản
+            setting.IsBankTransferEnabled =
+                model.IsBankTransferEnabled;
+
+            // =========================================
+            // LƯU DATABASE
+            // =========================================
+
+            _context.SaveChanges();
         }
     }
 }

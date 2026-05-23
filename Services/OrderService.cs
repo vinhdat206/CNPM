@@ -13,12 +13,19 @@ namespace CNPMFastFood.Services
             _context = context;
         }
 
-        public void CreateOrder(Order order, List<CartItem> cart, int userId)
+        public void CreateOrder(
+            Order order,
+            List<CartItem> cart,
+            int userId,
+            decimal shippingFee)
         {
             order.OrderDate = DateTime.Now;
             order.Status = "Pending";
             order.UserId = userId;
-            order.TotalAmount = cart.Sum(x => x.Price * x.Quantity);
+
+            order.SubTotal = cart.Sum(x => x.Price * x.Quantity);
+            order.ShippingFee = shippingFee;
+            order.TotalAmount = order.SubTotal + order.ShippingFee;
 
             _context.Orders.Add(order);
             _context.SaveChanges();
@@ -28,7 +35,7 @@ namespace CNPMFastFood.Services
                 var detail = new OrderDetail
                 {
                     OrderId = order.Id,
-                    ProductId = item.Id,
+                    ProductId = item.ProductId,
                     ProductName = item.Name,
                     Price = item.Price,
                     Quantity = item.Quantity,
@@ -76,7 +83,7 @@ namespace CNPMFastFood.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task CancelOrderAsync(int id)
+        public async Task CancelOrderAsync(int id, string cancelReason)
         {
             var order = await _context.Orders.FindAsync(id);
 
@@ -84,6 +91,8 @@ namespace CNPMFastFood.Services
                 return;
 
             order.Status = "Cancelled";
+            order.CancelReason = cancelReason;
+
             await _context.SaveChangesAsync();
         }
 

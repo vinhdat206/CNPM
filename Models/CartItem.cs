@@ -1,23 +1,30 @@
-// File: Models/CartItem.cs
-// Mô tả: Item trong giỏ hàng
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CNPMFastFood.Models
 {
     public class CartItem
     {
-        // Id sản phẩm
-        public int Id { get; set; }
+        // khóa chính auto tăng
+        [Key]
+        public int CartItemId { get; set; }
 
-        // Tên sản phẩm
-        public string Name { get; set; }
+        // id sản phẩm
+        public int ProductId { get; set; }
 
-        // Giá sản phẩm
+        // user id
+        public int? UserId { get; set; }
+
+        public string Name { get; set; } = string.Empty;
+
         public decimal Price { get; set; }
 
-        // Số lượng
         public int Quantity { get; set; } = 1;
 
-        // Ảnh sản phẩm
         public string? ImageUrl { get; set; }
+
+        [NotMapped]
+        public decimal TotalPrice =>
+            Price * Quantity;
     }
 }

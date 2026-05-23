@@ -8,11 +8,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
-    </ItemGroup>
-
-    <ItemGroup>
         <PackageReference Include="BCrypt.Net-Next" Version="4.1.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="8.0.27" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.27" />
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.23" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.23" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.23" />
@@ -37,6 +35,7 @@
     <ItemGroup>
       <Folder Include="wwwroot\images\Products\BanhMi\" />
       <Folder Include="wwwroot\images\Products\Burger\" />
+      <Folder Include="wwwroot\images\Products\Drink\" />
       <Folder Include="wwwroot\images\Products\FrenchFries\" />
       <Folder Include="wwwroot\images\Products\FriedChicken\" />
       <Folder Include="wwwroot\images\Products\GaRan\" />

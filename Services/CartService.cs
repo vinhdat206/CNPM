@@ -1,234 +1,170 @@
-// File: Services/CartService.cs
-// Mô tả:
-// Xử lý toàn bộ logic giỏ hàng
-
-using CNPMFastFood.Helpers;
+using CNPMFastFood.Data;
 using CNPMFastFood.Models;
 
 namespace CNPMFastFood.Services
 {
     public class CartService
     {
-        // =========================
-        // SESSION KEY
-        // =========================
-
-        private const string CART_KEY = "cart";
-
-        // =========================
-        // HTTP CONTEXT
-        // =========================
-
-        private readonly IHttpContextAccessor
-            _httpContextAccessor;
-
-        // =========================
-        // CONSTRUCTOR
-        // =========================
+        private readonly AppDbContext _context;
+        private readonly SettingService _settingService;
 
         public CartService(
-            IHttpContextAccessor httpContextAccessor)
+            AppDbContext context,
+            SettingService settingService)
         {
-            _httpContextAccessor =
-                httpContextAccessor;
+            _context = context;
+            _settingService = settingService;
         }
 
-        // =========================
-        // GET SESSION
-        // =========================
-
-        private ISession Session =>
-            _httpContextAccessor
-                .HttpContext!
-                .Session;
-
-        // =========================
         // GET CART
-        // Lấy toàn bộ giỏ hàng
-        // =========================
 
-        public List<CartItem> GetCart()
+        public Cart GetCart(int userId)
         {
-            var cart =
-                Session.GetObject<List<CartItem>>(
-                    CART_KEY);
+            var items = _context.CartItems
+                .Where(x => x.UserId == userId)
+                .ToList();
 
-            // Nếu chưa có cart
-            // thì tạo mới
-
-            if (cart == null)
+            return new Cart
             {
-                cart = new List<CartItem>();
-            }
-
-            return cart;
+                UserId = userId.ToString(),
+                Items = items,
+                ShippingFee = GetShippingFee()
+            };
         }
 
-        // =========================
-        // SAVE CART
-        // Lưu cart vào session
-        // =========================
-
-        public void SaveCart(
-            List<CartItem> cart)
-        {
-            Session.SetObject(
-                CART_KEY,
-                cart);
-        }
-
-        // =========================
         // ADD TO CART
-        // Thêm sản phẩm vào giỏ
-        // =========================
 
         public void AddToCart(
-            CartItem item)
+            CartItem item,
+            int userId)
         {
-            // Lấy cart hiện tại
-
-            var cart = GetCart();
-
-            // Kiểm tra sản phẩm đã tồn tại chưa
-
-            var existingItem =
-                cart.FirstOrDefault(
-                    x => x.Id == item.Id);
-
-            // Nếu quantity <= 0
-            // mặc định = 1
-
-            int quantity =
-                item.Quantity <= 0
-                ? 1
-                : item.Quantity;
-
-            // Nếu sản phẩm đã tồn tại
-            // cộng thêm quantity
+            var existingItem = _context.CartItems
+                .FirstOrDefault(x =>
+                    x.UserId == userId &&
+                    x.ProductId == item.ProductId);
 
             if (existingItem != null)
             {
-                existingItem.Quantity += quantity;
+                existingItem.Quantity += item.Quantity;
             }
-
-            // Nếu chưa tồn tại
-            // thêm mới vào cart
-
             else
             {
-                item.Quantity = quantity;
+                item.UserId = userId;
 
-                cart.Add(item);
+                _context.CartItems.Add(item);
             }
 
-            // Lưu session
-
-            SaveCart(cart);
+            _context.SaveChanges();
         }
 
-        // =========================
         // INCREASE
-        // Tăng số lượng
-        // =========================
 
-        public void Increase(int id)
+        public void Increase(
+            int productId,
+            int userId)
         {
-            var cart = GetCart();
+            var item = _context.CartItems
+                .FirstOrDefault(x =>
+                    x.UserId == userId &&
+                    x.ProductId == productId);
 
-            var item =
-                cart.FirstOrDefault(
-                    x => x.Id == id);
+            if (item == null)
+                return;
 
-            if (item != null)
-            {
-                item.Quantity++;
-            }
+            item.Quantity++;
 
-            SaveCart(cart);
+            _context.SaveChanges();
         }
 
-        // =========================
         // DECREASE
-        // Giảm số lượng
-        // =========================
 
-        public void Decrease(int id)
+        public void Decrease(
+            int productId,
+            int userId)
         {
-            var cart = GetCart();
+            var item = _context.CartItems
+                .FirstOrDefault(x =>
+                    x.UserId == userId &&
+                    x.ProductId == productId);
 
-            var item =
-                cart.FirstOrDefault(
-                    x => x.Id == id);
+            if (item == null)
+                return;
 
-            if (item != null)
+            item.Quantity--;
+
+            if (item.Quantity <= 0)
             {
-                item.Quantity--;
-
-                // Nếu quantity <= 0
-                // xóa khỏi cart
-
-                if (item.Quantity <= 0)
-                {
-                    cart.Remove(item);
-                }
+                _context.CartItems.Remove(item);
             }
 
-            SaveCart(cart);
+            _context.SaveChanges();
         }
 
-        // =========================
         // REMOVE
-        // Xóa sản phẩm
-        // =========================
 
-        public void Remove(int id)
+        public void Remove(
+            int productId,
+            int userId)
         {
-            var cart = GetCart();
+            var item = _context.CartItems
+                .FirstOrDefault(x =>
+                    x.UserId == userId &&
+                    x.ProductId == productId);
 
-            var item =
-                cart.FirstOrDefault(
-                    x => x.Id == id);
+            if (item == null)
+                return;
 
-            if (item != null)
-            {
-                cart.Remove(item);
-            }
+            _context.CartItems.Remove(item);
 
-            SaveCart(cart);
+            _context.SaveChanges();
         }
 
-        // =========================
-        // TOTAL
-        // Tổng tiền
-        // =========================
-
-        public decimal GetTotal()
-        {
-            return GetCart()
-                .Sum(x =>
-                    x.Price * x.Quantity);
-        }
-
-        // =========================
-        // COUNT
-        // Tổng số lượng sản phẩm
-        // =========================
-
-        public int GetCount()
-        {
-            return GetCart()
-                .Sum(x => x.Quantity);
-        }
-
-        // =========================
         // CLEAR
-        // Xóa toàn bộ cart
-        // =========================
 
-        public void Clear()
+        public void Clear(int userId)
         {
-            SaveCart(
-                new List<CartItem>());
+            var items = _context.CartItems
+                .Where(x => x.UserId == userId)
+                .ToList();
+
+            _context.CartItems.RemoveRange(items);
+
+            _context.SaveChanges();
+        }
+
+        // TOTAL
+
+        public decimal GetTotal(int userId)
+        {
+            return _context.CartItems
+                .Where(x => x.UserId == userId)
+                .Sum(x => x.Price * x.Quantity);
+        }
+
+        // SHIPPING
+
+        public decimal GetShippingFee()
+        {
+            var setting = _settingService.GetSetting();
+
+            return setting.ShippingFee;
+        }
+
+        // GRAND TOTAL
+
+        public decimal GetGrandTotal(int userId)
+        {
+            return GetTotal(userId)
+                   + GetShippingFee();
+        }
+
+        // COUNT
+
+        public int GetCount(int userId)
+        {
+            return _context.CartItems
+                .Where(x => x.UserId == userId)
+                .Sum(x => x.Quantity);
         }
     }
 }

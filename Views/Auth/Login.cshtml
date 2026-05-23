@@ -149,10 +149,9 @@
 
                     </label>
 
-                    <a href="javascript:void(0)">
-
+                    <a asp-controller="Auth"
+                       asp-action="ForgotPassword">
                         Quên mật khẩu?
-
                     </a>
 
                 </div>
@@ -184,26 +183,24 @@
             <!-- ================= SOCIAL LOGIN ================= -->
 
             <div class="social-login">
-
-                <!-- FACEBOOK -->
-                <button type="button"
-                        class="facebook-btn">
-
+                
+                <a asp-controller="Auth"
+                   asp-action="ExternalLogin"
+                   asp-route-provider="Facebook"
+                   class="facebook-btn">
                     <i class="fab fa-facebook-f"></i>
-
                     Facebook
+                </a>
 
-                </button>
-
-                <!-- GOOGLE -->
-                <button type="button"
-                        class="google-btn">
-
+                <a asp-controller="Auth"
+                   asp-action="ExternalLogin"
+                   asp-route-provider="Google"
+                   class="google-btn">
                     <i class="fab fa-google"></i>
-
                     Google
+                </a>
 
-                </button>
+
 
             </div>
 

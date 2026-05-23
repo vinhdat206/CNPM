@@ -1,4 +1,4 @@
-@model List<CNPMFastFood.Models.CartItem>
+@model CNPMFastFood.Models.Cart
 
 @{
     ViewData["Title"] = "Giỏ hàng";
@@ -9,140 +9,73 @@
 <html lang="vi">
 
 <head>
-
     <meta charset="utf-8" />
 
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0" />
 
-    <title>
-
-        Giỏ hàng
-
-    </title>
-
-    <!-- FONT AWESOME -->
+    <title>Giỏ hàng</title>
 
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- CART CSS -->
-
     <link rel="stylesheet"
           href="~/css/cart.css" />
-
 </head>
 
 <body>
 
 <div class="cart-container">
 
-    <!-- ================= HEADER ================= -->
-
     <div class="cart-header">
-
         <h1>
-
             <i class="fa-solid fa-cart-shopping"></i>
-
             Giỏ hàng của bạn
-
         </h1>
 
-        <a href="/"
-           class="back-btn">
-
+        <a href="/" class="back-btn">
             <i class="fa-solid fa-arrow-left"></i>
-
             Tiếp tục mua sắm
-
         </a>
-
     </div>
 
-    <!-- ================= CART ITEMS ================= -->
-
-    @if (Model.Count > 0)
+    @if (Model.Items.Count > 0)
     {
         <div class="cart-items">
 
-            @foreach (var item in Model)
+            @foreach (var item in Model.Items)
             {
-                <!-- ITEM -->
-
-                <div class="cart-item"
-                     data-id="@item.Id">
-
-                    <!-- IMAGE -->
+                <div class="cart-item" data-id="@item.ProductId">
 
                     <img src="@item.ImageUrl"
                          class="item-image" />
 
-                    <!-- INFO -->
-
                     <div class="item-info">
-
                         <h3 class="item-name">
-
                             @item.Name
-
                         </h3>
 
-                        <!-- PRICE -->
-
                         <p class="item-price">
-
                             @item.Price.ToString("N0") ₫
-
                         </p>
-
                     </div>
-
-                    <!-- QUANTITY -->
 
                     <div class="quantity-control">
-
-                        <!-- DECREASE -->
-
-                        <button class="qty-btn decrease-btn">
-
-                            -
-
-                        </button>
-
-                        <!-- QUANTITY -->
+                        <button class="qty-btn decrease-btn">-</button>
 
                         <span class="quantity">
-
                             @item.Quantity
-
                         </span>
 
-                        <!-- INCREASE -->
-
-                        <button class="qty-btn increase-btn">
-
-                            +
-
-                        </button>
-
+                        <button class="qty-btn increase-btn">+</button>
                     </div>
-
-                    <!-- SUBTOTAL -->
 
                     <div class="item-total">
-
-                        @((item.Price * item.Quantity)
-                            .ToString("N0")) ₫
-
+                        @((item.Price * item.Quantity).ToString("N0")) ₫
                     </div>
 
-                    <!-- REMOVE -->
-
                     <button class="remove-btn">
-
                         <i class="fa-solid fa-trash"></i>
-
                     </button>
 
                 </div>
@@ -150,76 +83,52 @@
 
         </div>
 
-        <!-- ================= SUMMARY ================= -->
-
         <div class="cart-summary">
 
-            <h2>
-
-                Tổng cộng
-
-            </h2>
+            <h2>Tổng cộng</h2>
 
             <div class="summary-row">
-
-                <span>
-
-                    Tổng tiền:
-
-                </span>
-
-                <!-- FIX FORMAT MONEY -->
-
-                <strong id="totalPrice">
-
-                    @(Model.Sum(x =>
-                        x.Price * x.Quantity)
-                        .ToString("N0")) ₫
-
+                <span>Giá sản phẩm:</span>
+                <strong>
+                    @Model.SubTotal.ToString("N0") ₫
                 </strong>
-
             </div>
 
-            <!-- CHECKOUT -->
+            <div class="summary-row">
+                <span>Phí ship:</span>
+                <strong>
+                    @Model.ShippingFee.ToString("N0") ₫
+                </strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Tổng tiền:</span>
+                <strong id="totalPrice">
+                    @Model.GrandTotal.ToString("N0") ₫
+                </strong>
+            </div>
 
             <a asp-controller="Order"
                asp-action="Checkout"
                class="checkout-btn">
-
                 <i class="fa-solid fa-credit-card"></i>
-
                 Thanh toán
-
             </a>
 
         </div>
     }
     else
     {
-        <!-- ================= EMPTY CART ================= -->
-
         <div class="empty-cart">
-
             <i class="fa-solid fa-cart-shopping"></i>
 
-            <h2>
+            <h2>Giỏ hàng trống</h2>
 
-                Giỏ hàng trống
-
-            </h2>
-
-            <p>
-
-                Hãy thêm món ăn yêu thích của bạn
-
-            </p>
-
+            <p>Hãy thêm món ăn yêu thích của bạn</p>
         </div>
     }
 
 </div>
-
-<!-- ================= CART JS ================= -->
 
 <script src="~/js/cart.js"></script>
 

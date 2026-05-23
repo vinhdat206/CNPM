@@ -1,13 +1,20 @@
 @model CNPMFastFood.Models.ContactMessage
+@inject CNPMFastFood.Services.SettingService SettingService
+
+@{
+    var setting = SettingService.GetSetting();
+}
 
 @{
     ViewData["Title"] = "Liên hệ";
 }
+
 <link rel="stylesheet"
       href="~/css/user/contact.css" />
+
 <div class="container mt-5">
 
-    <h1 class="text-center mb-3">📞 Liên hệ FastFood</h1>
+    <h1 class="text-center mb-3">&#128222; Liên hệ EscFood </h1>
 
     <p class="text-center text-muted mb-5">
         Chúng tôi luôn sẵn sàng hỗ trợ bạn. Hãy gửi câu hỏi hoặc góp ý cho chúng tôi!
@@ -19,27 +26,26 @@
         <div class="col-md-5">
             <div class="card shadow-sm p-4 h-100">
 
-                <h4 class="mb-4">📍 Thông tin cửa hàng</h4>
+                <h4 class="mb-4">&#128205; Thông tin cửa hàng</h4>
 
                 <p>
                     <b>Địa chỉ:</b><br>
-                    123 FastFood Street<br>
-                    Ha Noi City
+                    @setting.StoreAddress
                 </p>
 
                 <p>
-                    <b>📞 Điện thoại:</b><br>
-                    0123 456 789
+                    <b>&#128222; Điện thoại:</b><br>
+                    @setting.StorePhone
                 </p>
 
                 <p>
-                    <b>✉ Email:</b><br>
-                    fastfood@gmail.com
+                    <b>&#9993; Email:</b><br>
+                    @setting.StoreEmail
                 </p>
 
                 <p>
-                    <b>🕒 Giờ mở cửa:</b><br>
-                    08:00 - 22:00 mỗi ngày
+                    <b>&#128347; Giờ mở cửa:</b><br>
+                    @setting.OpenTime - @setting.CloseTime
                 </p>
 
             </div>
@@ -49,7 +55,7 @@
         <div class="col-md-7">
             <div class="card shadow-sm p-4">
 
-                <h4 class="mb-4">📩 Gửi tin nhắn</h4>
+                <h4 class="mb-4">&#128233; Gửi tin nhắn EscFood</h4>
 
                 @if(ViewBag.Success != null)
                 {
@@ -77,11 +83,11 @@
 
                     <div class="mb-3">
                         <label class="form-label">Nội dung</label>
-                        <textarea asp-for="Message" class="form-control" rows="4" placeholder="Nhập nội dung liên hệ"></textarea>
+                        <textarea asp-for="Message" class="form-control" rows="4" placeholder="Nhập nội dung liên hệ EscFood"></textarea>
                     </div>
 
                     <button type="submit" class="btn btn-danger w-100">
-                        Gửi liên hệ
+                        Gửi liên hệ EscFood
                     </button>
 
                 </form>

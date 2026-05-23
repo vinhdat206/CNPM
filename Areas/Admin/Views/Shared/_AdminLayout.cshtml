@@ -98,6 +98,31 @@
 
             </a>
 
+            <!-- FEEDBACK -->
+
+            <a asp-area="Admin"
+               asp-controller="Feedback"
+               asp-action="Index"
+               class="menu-item @(currentArea == "Admin" && currentController == "Feedback" ? "active" : "")">
+
+                <i class="fas fa-star"></i>
+
+                <span>Feedback</span>
+
+            </a>
+            
+            <!--KHÁCH HÀNG-->
+            <a asp-area="Admin"
+               asp-controller="Customer"
+               asp-action="Index"
+               class="menu-item @(currentArea == "Admin" && currentController == "Customer" ? "active" : "")">
+
+                <i class="fas fa-users"></i>
+
+                <span>Khách hàng</span>
+
+            </a>
+
             <!-- CONTACT -->
 
             <a asp-area="Admin"

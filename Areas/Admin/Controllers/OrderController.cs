@@ -60,11 +60,18 @@ namespace CNPMFastFood.Areas.Admin.Controllers
         }
 
         // POST: /Admin/Order/Cancel
+        // POST: /Admin/Order/Cancel
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Cancel(int id)
+        public async Task<IActionResult> Cancel(int id, string cancelReason)
         {
-            await _orderService.CancelOrderAsync(id);
+            if (string.IsNullOrWhiteSpace(cancelReason))
+            {
+                TempData["Error"] = "Vui lòng nhập lý do hủy đơn!";
+                return RedirectToAction(nameof(Index));
+            }
+
+            await _orderService.CancelOrderAsync(id, cancelReason);
 
             TempData["Success"] = "Đã hủy đơn hàng!";
 

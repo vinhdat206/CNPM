@@ -53,6 +53,28 @@ builder.Services
                 }
             }
         };
+    })
+
+    // GOOGLE LOGIN
+    .AddGoogle(options =>
+    {
+        options.ClientId =
+            builder.Configuration["Authentication:Google:ClientId"];
+
+        options.ClientSecret =
+            builder.Configuration["Authentication:Google:ClientSecret"];
+    })
+
+    //FACEBOOK LOGIN
+    .AddFacebook(options =>
+    {
+        options.AppId =
+            builder.Configuration["Authentication:Facebook:AppId"];
+
+        options.AppSecret =
+            builder.Configuration["Authentication:Facebook:AppSecret"];
+
+        options.Scope.Add("email");
     });
 
 // AUTHORIZATION
@@ -69,6 +91,9 @@ builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<DashboardService>();
 builder.Services.AddScoped<ReportService>();
+builder.Services.AddScoped<SettingService>();
+// Đăng ký CustomerService để Controller có thể sử dụng thông qua ICustomerService
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<SettingService>();
 
 // VIETNAM CULTURE

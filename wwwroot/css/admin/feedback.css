@@ -1,0 +1,150 @@
+/* ===== PAGE ===== */
+h2 {
+    font-weight: 700;
+    color: #222;
+}
+
+/* ===== TABLE ===== */
+.table {
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.table thead th {
+    vertical-align: middle;
+    text-align: center;
+    font-weight: 600;
+}
+
+.table tbody td {
+    vertical-align: middle;
+}
+
+/* ===== PRODUCT NAME ===== */
+.product-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #222;
+}
+
+/* ===== REVIEW PREVIEW ===== */
+.review-preview {
+    line-height: 1.5;
+}
+
+.review-preview strong {
+    color: #111;
+}
+
+.review-preview .comment {
+    margin-top: 4px;
+    color: #444;
+}
+
+.review-preview .date {
+    font-size: 13px;
+    color: #888;
+}
+
+/* ===== STAR ===== */
+.text-warning i {
+    margin-right: 2px;
+    font-size: 14px;
+}
+
+/* ===== BUTTON ===== */
+.btn-primary {
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-weight: 500;
+}
+
+.btn-danger {
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.btn-sm i {
+    margin-right: 4px;
+}
+
+/* ===== CARD EFFECT ===== */
+.table tbody tr {
+    transition: all 0.2s ease;
+}
+
+.table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+/* ===== MODAL ===== */
+.modal-content {
+    border-radius: 14px;
+    overflow: hidden;
+    border: none;
+}
+
+.modal-header {
+    padding: 14px 20px;
+}
+
+.modal-title {
+    font-weight: 600;
+}
+
+.modal-body {
+    background: #fafafa;
+}
+
+/* ===== MODAL TABLE ===== */
+.modal-body .table {
+    margin-bottom: 0;
+    background: white;
+}
+
+.modal-body .table td,
+.modal-body .table th {
+    padding: 12px;
+}
+
+/* ===== EMPTY STATE ===== */
+.alert-warning {
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+/* ===== SCROLL MODAL ===== */
+.modal-dialog-scrollable .modal-body {
+    max-height: 70vh;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+
+    .table {
+        font-size: 14px;
+    }
+
+    .btn-primary,
+    .btn-danger {
+        font-size: 13px;
+    }
+
+    .modal-dialog {
+        margin: 10px;
+    }
+}
+
+.product-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+#searchProduct {
+    max-width: 400px;
+    border-radius: 10px;
+}

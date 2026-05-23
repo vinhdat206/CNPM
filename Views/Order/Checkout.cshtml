@@ -1,4 +1,4 @@
-@model List<CNPMFastFood.Models.CartItem>
+@model CNPMFastFood.Models.Cart
 
 @{
     ViewData["Title"] = "Thanh toán";
@@ -16,9 +16,7 @@
           content="width=device-width, initial-scale=1.0" />
 
     <title>
-
         Thanh toán
-
     </title>
 
     <!-- FONT AWESOME -->
@@ -34,10 +32,6 @@
 </head>
 
 <body>
-
-<!-- =========================
-     CONTAINER
-========================= -->
 
 <div class="checkout-container">
 
@@ -57,13 +51,6 @@
          FORM
     ========================= -->
 
-    <!--
-    submit tới:
-
-    OrderController
-    -> PlaceOrder()
-    -->
-
     <form method="post"
           asp-action="PlaceOrder"
           asp-controller="Order"
@@ -76,9 +63,7 @@
         <div>
 
             <label>
-
                 Họ tên khách hàng
-
             </label>
 
             <input type="text"
@@ -95,9 +80,7 @@
         <div>
 
             <label>
-
                 Số điện thoại
-
             </label>
 
             <input type="text"
@@ -114,9 +97,7 @@
         <div>
 
             <label>
-
                 Địa chỉ giao hàng
-
             </label>
 
             <input type="text"
@@ -125,6 +106,42 @@
                    required />
 
         </div>
+        
+        <!-- =========================
+        PAYMENT METHOD
+        ========================= -->
+
+        <div class="payment-method">
+
+            <label class="payment-title">
+                Phương thức thanh toán
+            </label>
+
+            <!-- COD -->
+
+            <div class="payment-option">
+
+               
+
+                <label for="cod">
+
+                    <i class="fa-solid fa-money-bill-wave"></i>
+
+                    Thanh toán khi nhận hàng (COD)
+
+                </label>
+                
+                <input type="radio"
+                       id="cod"
+                       name="PaymentMethod"
+                       value="COD"
+                       checked />
+                
+
+            </div>
+
+        </div>
+
 
         <!-- =========================
              PRODUCT TABLE
@@ -136,35 +153,15 @@
 
                 <tr>
 
-                    <th>
+                    <th>Hình ảnh</th>
 
-                        Hình ảnh
+                    <th>Sản phẩm</th>
 
-                    </th>
+                    <th>Số lượng</th>
 
-                    <th>
+                    <th>Giá</th>
 
-                        Sản phẩm
-
-                    </th>
-
-                    <th>
-
-                        Số lượng
-
-                    </th>
-
-                    <th>
-
-                        Giá
-
-                    </th>
-
-                    <th>
-
-                        Thành tiền
-
-                    </th>
+                    <th>Thành tiền</th>
 
                 </tr>
 
@@ -172,7 +169,7 @@
 
             <tbody>
 
-                @foreach (var item in Model)
+                @foreach (var item in Model.Items)
                 {
                     <tr>
 
@@ -188,34 +185,26 @@
                         <!-- NAME -->
 
                         <td>
-
                             @item.Name
-
                         </td>
 
                         <!-- QUANTITY -->
 
                         <td>
-
                             @item.Quantity
-
                         </td>
 
                         <!-- PRICE -->
 
                         <td>
-
-                            @(item.Price.ToString("N0")) ₫
-
+                            @item.Price.ToString("N0") ₫
                         </td>
 
                         <!-- TOTAL -->
 
                         <td>
-
                             @((item.Price * item.Quantity)
-                            .ToString("N0")) ₫
-
+                                .ToString("N0")) ₫
                         </td>
 
                     </tr>
@@ -231,14 +220,32 @@
 
         <div class="total-box">
 
-            Tổng tiền:
+            <div>
+                Giá sản phẩm:
+                <strong>
+                    @Model.SubTotal.ToString("N0") ₫
+                </strong>
+            </div>
 
-            @(Model.Sum(x =>
-                x.Price * x.Quantity)
-                .ToString("N0")) ₫
+            <div>
+                Phí ship:
+                <strong>
+                    @Model.ShippingFee.ToString("N0") ₫
+                </strong>
+            </div>
+
+            <hr />
+
+            <div>
+                Tổng tiền:
+                <strong>
+                    @Model.GrandTotal.ToString("N0") ₫
+                </strong>
+            </div>
 
         </div>
 
+        
         <!-- =========================
              BUTTON
         ========================= -->

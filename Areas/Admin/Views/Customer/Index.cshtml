@@ -1,0 +1,468 @@
+@model List<CNPMFastFood.Models.User>
+
+@{
+    ViewData["Title"] = "Quản lý khách hàng";
+    ViewData["PageTitle"] = "Quản lý khách hàng";
+}
+
+@section Styles {
+    <link rel="stylesheet"
+          href="~/css/admin/customer.css" />
+}
+
+<div class="container-fluid">
+
+    <div class="customer-card">
+
+        <!-- HEADER -->
+
+        <div class="customer-header">
+
+            <h4>
+                <i class="fas fa-users"></i>
+                Danh sách tài khoản
+            </h4>
+
+            <!-- SEARCH -->
+
+            <form method="get"
+                  class="search-box">
+
+                <input type="text"
+                       name="keyword"
+                       value="@ViewBag.Keyword"
+                       class="form-control"
+                       placeholder="Tìm username, email, role..." />
+
+                <button type="submit"
+                        class="btn btn-danger">
+
+                    <i class="fas fa-search"></i>
+                    Tìm
+
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- CHECK DATA -->
+
+        @if (Model == null || !Model.Any())
+        {
+            <div class="alert alert-warning">
+
+                Không có tài khoản nào.
+
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+
+                <table class="table
+                              table-bordered
+                              table-hover
+                              align-middle">
+
+                    <!-- TABLE HEADER -->
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>Username</th>
+
+                            <th>Email</th>
+
+                            <th>Role</th>
+
+                            <th>Đổi Role</th>
+
+                            <th>Trạng thái</th>
+
+                            <th>Thao tác</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <!-- TABLE BODY -->
+
+                    <tbody>
+
+                        @foreach (var user in Model)
+                        {
+                            <tr>
+
+                                <!-- ID -->
+
+                                <td>
+
+                                    #@user.Id
+
+                                </td>
+
+                                <!-- USERNAME -->
+
+                                <td>
+
+                                    @user.Username
+
+                                </td>
+
+                                <!-- EMAIL -->
+
+                                <td>
+
+                                    @user.Email
+
+                                </td>
+
+                                <!-- ROLE -->
+
+                                <td>
+
+                                    @if (user.Role == "admin")
+                                    {
+                                        <span class="badge bg-danger text-white">
+
+                                            Admin
+
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-primary text-white">
+
+                                            User
+
+                                        </span>
+                                    }
+
+                                </td>
+
+                                <!-- UPDATE ROLE -->
+
+                                <td>
+
+                                    <form asp-action="UpdateRole"
+                                          method="post"
+                                          class="d-flex gap-2 justify-content-center">
+
+                                        @Html.AntiForgeryToken()
+
+                                        <input type="hidden"
+                                               name="id"
+                                               value="@user.Id" />
+
+                                        <select name="role"
+                                                class="form-select form-select-sm"
+                                                style="width:110px;">
+
+                                            @if (user.Role == "admin")
+                                            {
+                                                <option value="admin"
+                                                        selected>
+
+                                                    Admin
+
+                                                </option>
+
+                                                <option value="user">
+
+                                                    User
+
+                                                </option>
+                                            }
+                                            else
+                                            {
+                                                <option value="admin">
+
+                                                    Admin
+
+                                                </option>
+
+                                                <option value="user"
+                                                        selected>
+
+                                                    User
+
+                                                </option>
+                                            }
+
+                                        </select>
+
+                                        <button type="submit"
+                                                class="btn btn-warning btn-sm">
+
+                                            Lưu
+
+                                        </button>
+
+                                    </form>
+
+                                </td>
+
+                                <!-- STATUS -->
+
+                                <td>
+
+                                    @if (user.IsBlocked)
+                                    {
+                                        <span class="badge bg-danger text-white">
+
+                                            Đã khóa
+
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-success text-white">
+
+                                            Hoạt động
+
+                                        </span>
+                                    }
+
+                                </td>
+
+                                <!-- ACTION -->
+
+                                <td>
+
+                                    <div class="action-buttons">
+
+                                        <!-- DETAIL -->
+
+                                        <button type="button"
+                                                class="btn btn-info btn-sm text-white"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#userModal-@user.Id">
+
+                                            <i class="fas fa-eye"></i>
+
+                                        </button>
+
+                                        <!-- BLOCK / UNBLOCK -->
+
+                                        @if (user.IsBlocked)
+                                        {
+                                            <form asp-action="Unblock"
+                                                  asp-route-id="@user.Id"
+                                                  method="post">
+
+                                                @Html.AntiForgeryToken()
+
+                                                <button type="submit"
+                                                        class="btn btn-success btn-sm">
+
+                                                    <i class="fas fa-unlock"></i>
+
+                                                </button>
+
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <form asp-action="Block"
+                                                  asp-route-id="@user.Id"
+                                                  method="post">
+
+                                                @Html.AntiForgeryToken()
+
+                                                <button type="submit"
+                                                        class="btn btn-warning btn-sm">
+
+                                                    <i class="fas fa-lock"></i>
+
+                                                </button>
+
+                                            </form>
+                                        }
+
+                                        <!-- DELETE -->
+
+                                        <form asp-action="Delete"
+                                              asp-route-id="@user.Id"
+                                              method="post"
+                                              onsubmit="return confirm(
+                                              'Bạn có chắc muốn xóa tài khoản này?');">
+
+                                            @Html.AntiForgeryToken()
+
+                                            <button type="submit"
+                                                    class="btn btn-danger btn-sm">
+
+                                                <i class="fas fa-trash"></i>
+
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            <!-- USER DETAIL MODAL -->
+
+                            <div class="modal fade"
+                                 id="userModal-@user.Id"
+                                 tabindex="-1">
+
+                                <div class="modal-dialog modal-dialog-centered">
+
+                                    <div class="modal-content border-0 shadow">
+
+                                        <!-- HEADER -->
+
+                                        <div class="modal-header bg-danger text-white">
+
+                                            <h5 class="modal-title">
+
+                                                <i class="fas fa-user"></i>
+
+                                                Chi tiết tài khoản
+
+                                            </h5>
+
+                                            <button type="button"
+                                                    class="btn-close btn-close-white"
+                                                    data-bs-dismiss="modal">
+                                            </button>
+
+                                        </div>
+
+                                        <!-- BODY -->
+
+                                        <div class="modal-body">
+
+                                            <div class="detail-item">
+
+                                                <span>ID:</span>
+
+                                                <strong>
+
+                                                    #@user.Id
+
+                                                </strong>
+
+                                            </div>
+
+                                            <div class="detail-item">
+
+                                                <span>Username:</span>
+
+                                                <strong>
+
+                                                    @user.Username
+
+                                                </strong>
+
+                                            </div>
+
+                                            <div class="detail-item">
+
+                                                <span>Email:</span>
+
+                                                <strong>
+
+                                                    @user.Email
+
+                                                </strong>
+
+                                            </div>
+
+                                            <div class="detail-item">
+
+                                                <span>Password:</span>
+
+                                                <strong>
+                                                    @user.Password
+                                                </strong>
+
+                                            </div>
+
+                                            <div class="detail-item">
+
+                                                <span>Role:</span>
+
+                                                @if (user.Role == "admin")
+                                                {
+                                                    <span class="badge bg-danger text-white">
+
+                                                        Admin
+
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-primary text-white">
+
+                                                        User
+
+                                                    </span>
+                                                }
+
+                                            </div>
+
+                                            <div class="detail-item">
+
+                                                <span>Trạng thái:</span>
+
+                                                @if (user.IsBlocked)
+                                                {
+                                                    <span class="badge bg-danger text-white">
+
+                                                        Đã khóa
+
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-success text-white">
+
+                                                        Hoạt động
+
+                                                    </span>
+                                                }
+
+                                            </div>
+
+                                        </div>
+
+                                        <!-- FOOTER -->
+
+                                        <div class="modal-footer">
+
+                                            <button type="button"
+                                                    class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">
+
+                                                Đóng
+
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        }
+
+    </div>
+
+</div>

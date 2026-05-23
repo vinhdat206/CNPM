@@ -1,11 +1,60 @@
-<h1>
+@{
+    
+    ViewData["Title"] = "Success";
+}
 
-    Đặt hàng thành công 🎉
+<link rel="stylesheet" href="~/css/success.css" />
 
-</h1>
+<div class="success-page">
 
-<a href="/">
+    <div class="success-card">
 
-    Quay về trang chủ
+        <div class="success-icon">
 
-</a>
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="50"
+                 height="50"
+                 fill="none"
+                 viewBox="0 0 24 24"
+                 stroke="currentColor"
+                 stroke-width="2.5"
+                 class="check-icon">
+
+                <path stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M5 13l4 4L19 7" />
+
+            </svg>
+
+        </div>
+
+        <h1 class="success-title">
+            Thành công!
+        </h1>
+
+        <p class="success-text">
+
+            Hành động của bạn đã được xử lý thành công.
+            Cảm ơn bạn đã sử dụng dịch vụ.
+
+        </p>
+
+        <div class="success-buttons">
+
+            <a href="/" class="home-btn">
+                Về trang chủ
+            </a>
+
+            <a asp-controller="Order"
+               asp-action="History"
+               class="history-btn">
+
+                Xem chi tiết
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

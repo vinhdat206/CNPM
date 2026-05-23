@@ -1,102 +1,343 @@
+/* ================= FULL WIDTH JOLLIBEE SWIPER BANNER ================= */
+
+.banner-section {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    background: #fff7e6;
+    padding: 25px 0 35px;
+    overflow: hidden;
+}
+
+.homeBannerSwiper {
+    width: 100%;
+    overflow: visible;
+    position: relative;
+}
+
+.homeBannerSwiper .swiper-wrapper {
+    align-items: center;
+}
+
+.homeBannerSwiper .swiper-slide {
+    width: 76%;
+    height: 520px;
+
+    border-radius: 24px;
+    overflow: hidden;
+
+    opacity: 0.45;
+
+    transition: opacity 0.45s ease;
+
+    background: #fff;
+}
+
+.homeBannerSwiper .swiper-slide-active {
+    opacity: 1;
+}
+
+.homeBannerSwiper .swiper-slide-prev,
+.homeBannerSwiper .swiper-slide-next {
+    opacity: 0.6;
+}
+
+.banner-img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+
+    display: block;
+}
+
+
+/* ================= BANNER BUTTON ================= */
+
+.homeBannerSwiper .banner-btn {
+    width: 65px;
+    height: 65px;
+
+    background: #ffd21f;
+    border: 3px solid #e60012;
+
+    border-radius: 50%;
+
+    color: #e60012;
+
+    transition: 0.3s;
+
+    z-index: 20;
+}
+
+.homeBannerSwiper .banner-btn:hover {
+    background: #ffbf00;
+}
+
+.homeBannerSwiper .banner-btn::after {
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.homeBannerSwiper .swiper-button-prev {
+    left: 100px;
+}
+
+.homeBannerSwiper .swiper-button-next {
+    right: 100px;
+}
+
+
+/* ================= BANNER DOTS ================= */
+
+.homeBannerSwiper .banner-dots {
+    position: static;
+    margin-top: 18px;
+}
+
+.homeBannerSwiper .swiper-pagination-bullet {
+    width: 13px;
+    height: 13px;
+
+    background: transparent;
+
+    border: 2px solid #aaa;
+
+    opacity: 1;
+}
+
+.homeBannerSwiper .swiper-pagination-bullet-active {
+    width: 30px;
+
+    border-radius: 20px;
+
+    background: #e60012;
+    border-color: #e60012;
+}
+
+
 /* ================= PRODUCT CARD ================= */
 
-.product-card{
-    border:none;
-    border-radius:12px;
-    overflow:hidden;
-    transition:0.3s;
-    display:flex;
-    flex-direction:column;
-    background:#fff;
+.product-card {
+    border: none;
+    border-radius: 14px;
+    overflow: hidden;
+
+    transition: 0.3s;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #fff;
 }
 
-.product-card:hover{
-    transform:translateY(-6px);
-    box-shadow:0 12px 25px rgba(0,0,0,0.15);
+.product-card:hover {
+    transform: translateY(-6px);
+
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
 }
 
 
-/* ================= IMAGE ================= */
+/* ================= PRODUCT IMAGE ================= */
 
-.product-img{
-    width:100%;
-    height:220px;
-    overflow:hidden;
+.product-img {
+    width: 100%;
+    height: 220px;
+
+    overflow: hidden;
+
+    background: #f8f8f8;
 }
 
-.product-img img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    transition:0.35s;
+.product-img img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition: 0.35s;
 }
 
-.product-card:hover .product-img img{
-    transform:scale(1.06);
+.product-card:hover .product-img img {
+    transform: scale(1.06);
 }
 
 
 /* ================= DIVIDER ================= */
 
-.product-card hr{
-    margin:0;
-    border:none;
-    height:1px;
-    background:#eee;
+.product-card hr {
+    margin: 0;
+
+    border: none;
+
+    height: 1px;
+
+    background: #eee;
 }
 
 
 /* ================= TEXT ================= */
 
-.card-body{
-    padding:15px;
-    text-align:center;
+.card-body {
+    padding: 15px;
+
+    text-align: center;
 }
 
-.card-body h6{
-    font-weight:600;
-    margin-bottom:8px;
-    min-height:40px;
+.card-body h6 {
+    font-weight: 600;
+
+    margin-bottom: 8px;
+
+    min-height: 42px;
+
+    font-size: 15px;
 }
 
-.card-body p{
-    margin-bottom:12px;
+.card-body p {
+    margin-bottom: 12px;
 }
 
 
 /* ================= BUTTON ================= */
 
-.buy-now-btn{
-    display:inline-block;
-    padding:8px 18px;
-    border:2px solid #198754;
-    border-radius:25px;
-    color:#198754;
-    font-weight:600;
-    background:white;
-    transition:0.25s;
-    text-decoration:none;
+.buy-now-btn {
+    display: inline-block;
+
+    padding: 8px 18px;
+
+    border: 2px solid #198754;
+    border-radius: 25px;
+
+    color: #198754;
+
+    font-weight: 600;
+
+    background: white;
+
+    transition: 0.25s;
+
+    text-decoration: none;
 }
 
-.buy-now-btn:hover{
-    background:#198754;
-    color:white;
+.buy-now-btn:hover {
+    background: #198754;
+
+    color: white;
+}
+
+
+/* ================= FEATURED CAROUSEL ================= */
+
+.featured-carousel {
+    position: relative;
+}
+
+.featured-carousel .carousel-inner,
+.featured-carousel .carousel-item {
+    min-height: 850px;
+}
+
+.featured-wrapper {
+    background: #fff;
+
+    border-radius: 20px;
+
+    padding: 30px;
+
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+
+    min-height: 850px;
+}
+
+.featured-wrapper .row {
+    height: 100%;
+}
+
+
+/* ================= FEATURED BUTTON ================= */
+
+.featured-carousel .carousel-control-prev,
+.featured-carousel .carousel-control-next {
+    width: 50px;
+
+    top: 50%;
+    bottom: auto;
+
+    transform: translateY(-50%);
+}
+
+.featured-carousel .carousel-control-prev-icon,
+.featured-carousel .carousel-control-next-icon {
+    background-color: #dc3545;
+
+    border-radius: 50%;
+
+    padding: 18px;
 }
 
 
 /* ================= RESPONSIVE ================= */
 
-@media (max-width:576px){
-    .product-img{
-        height:160px;
+@media (max-width: 1200px) {
+
+    .homeBannerSwiper .swiper-slide {
+        width: 88%;
+        height: 420px;
     }
 
-    .card-body h6{
-        font-size:14px;
+    .homeBannerSwiper .swiper-button-prev {
+        left: 25px;
     }
 
-    .buy-now-btn{
-        padding:6px 12px;
-        font-size:13px;
+    .homeBannerSwiper .swiper-button-next {
+        right: 25px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .banner-section {
+        padding: 10px 0 25px;
+    }
+
+    .homeBannerSwiper .swiper-slide {
+        width: 92%;
+        height: 260px;
+    }
+
+    .homeBannerSwiper .banner-btn {
+        width: 45px;
+        height: 45px;
+    }
+
+    .homeBannerSwiper .banner-btn::after {
+        font-size: 18px;
+    }
+
+    .homeBannerSwiper .swiper-button-prev {
+        left: 12px;
+    }
+
+    .homeBannerSwiper .swiper-button-next {
+        right: 12px;
+    }
+
+    .product-img {
+        height: 160px;
+    }
+
+    .card-body h6 {
+        font-size: 14px;
+        min-height: auto;
+    }
+
+    .buy-now-btn {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+
+    .featured-wrapper {
+        padding: 20px;
     }
 }

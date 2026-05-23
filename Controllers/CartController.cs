@@ -1,6 +1,4 @@
 // File: Controllers/CartController.cs
-// Mô tả:
-// Điều hướng giỏ hàng
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,20 +18,26 @@ namespace CNPMFastFood.Controllers
             _cartService = cartService;
         }
 
-        // =========================
-        // CART PAGE
-        // =========================
+        private int GetUserId()
+        {
+            var userIdClaim = User.FindFirst("UserId")?.Value;
+
+            if (string.IsNullOrEmpty(userIdClaim))
+            {
+                throw new Exception("Không tìm thấy UserId trong tài khoản đăng nhập.");
+            }
+
+            return int.Parse(userIdClaim);
+        }
 
         public IActionResult Index()
         {
-            var cart = _cartService.GetCart();
+            int userId = GetUserId();
+
+            var cart = _cartService.GetCart(userId);
 
             return View(cart);
         }
-
-        // =========================
-        // ADD TO CART
-        // =========================
 
         public IActionResult Add(
             int id,
@@ -42,86 +46,74 @@ namespace CNPMFastFood.Controllers
             string imageUrl,
             int quantity = 1)
         {
+            int userId = GetUserId();
+
             var item = new CartItem
             {
-                Id = id,
+                ProductId = id,
                 Name = name,
                 Price = price,
                 ImageUrl = imageUrl,
                 Quantity = quantity
             };
 
-            _cartService.AddToCart(item);
+            _cartService.AddToCart(item, userId);
 
             return RedirectToAction("Index", "Cart");
         }
-
-        // =========================
-        // INCREASE QUANTITY
-        // AJAX
-        // =========================
 
         [HttpPost]
         public IActionResult Increase(int id)
         {
-            _cartService.Increase(id);
+            int userId = GetUserId();
 
-            return Json(new
-            {
-                success = true,
-                cart = _cartService.GetCart(),
-                total = _cartService.GetTotal(),
-                count = _cartService.GetCount()
-            });
+            _cartService.Increase(id, userId);
+
+            return JsonResult(userId);
         }
-
-        // =========================
-        // DECREASE QUANTITY
-        // AJAX
-        // =========================
 
         [HttpPost]
         public IActionResult Decrease(int id)
         {
-            _cartService.Decrease(id);
+            int userId = GetUserId();
 
-            return Json(new
-            {
-                success = true,
-                cart = _cartService.GetCart(),
-                total = _cartService.GetTotal(),
-                count = _cartService.GetCount()
-            });
+            _cartService.Decrease(id, userId);
+
+            return JsonResult(userId);
         }
-
-        // =========================
-        // REMOVE ITEM
-        // AJAX
-        // =========================
 
         [HttpPost]
         public IActionResult Remove(int id)
         {
-            _cartService.Remove(id);
+            int userId = GetUserId();
+
+            _cartService.Remove(id, userId);
+
+            return JsonResult(userId);
+        }
+
+        public IActionResult Clear()
+        {
+            int userId = GetUserId();
+
+            _cartService.Clear(userId);
+
+            return RedirectToAction("Index", "Cart");
+        }
+
+        private JsonResult JsonResult(int userId)
+        {
+            var cart = _cartService.GetCart(userId);
 
             return Json(new
             {
                 success = true,
-                cart = _cartService.GetCart(),
-                total = _cartService.GetTotal(),
-                count = _cartService.GetCount()
+                cart,
+                total = _cartService.GetTotal(userId),
+                shippingFee = _cartService.GetShippingFee(),
+                grandTotal = _cartService.GetGrandTotal(userId),
+                count = _cartService.GetCount(userId)
             });
-        }
-
-        // =========================
-        // CLEAR CART
-        // =========================
-
-        public IActionResult Clear()
-        {
-            _cartService.Clear();
-
-            return RedirectToAction("Index", "Cart");
         }
     }
 }

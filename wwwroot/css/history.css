@@ -1,0 +1,98 @@
+
+.order-history-page {
+    max-width: 1100px;
+}
+
+.order-history-page h2 {
+    letter-spacing: 0.5px;
+}
+
+.order-history-page .table {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+
+.order-history-page .table th {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 15px;
+}
+
+.order-history-page .table td {
+    vertical-align: middle;
+}
+
+.order-history-page .table-hover tbody tr:hover {
+    background-color: #fff5f5;
+    transition: 0.2s;
+}
+
+.order-history-page .btn-danger {
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.order-history-page .btn-danger:hover {
+    transform: translateY(-2px);
+}
+
+.order-history-page .badge {
+    font-size: 13px;
+    padding: 7px 12px;
+    border-radius: 20px;
+}
+
+.order-history-page .modal-content {
+    border-radius: 18px;
+    overflow: hidden;
+    border: none;
+}
+
+.order-history-page .modal-header {
+    border-bottom: none;
+}
+
+.order-history-page .modal-title {
+    font-weight: bold;
+}
+
+.order-history-page .modal-body {
+    background: #fffafa;
+}
+
+.order-history-page .modal-body h5 {
+    border-left: 4px solid #dc3545;
+    padding-left: 10px;
+}
+
+.order-history-page .modal-body img {
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.order-history-page .modal-body img:hover {
+    transform: scale(1.08);
+}
+
+.order-history-page .modal-footer {
+    background: #f8f9fa;
+}
+
+@media (max-width: 768px) {
+    .order-history-page h2 {
+        font-size: 24px;
+    }
+
+    .order-history-page .table {
+        font-size: 14px;
+    }
+
+    .order-history-page .btn-danger {
+        font-size: 13px;
+        padding: 5px 10px;
+    }
+}

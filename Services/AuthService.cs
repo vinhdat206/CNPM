@@ -13,21 +13,44 @@ namespace CNPMFastFood.Services
         }
 
         // ================= REGISTER =================
-
         public void Register(User user)
         {
-            // Không cho user tự tạo role admin
-            // Dù form có gửi Role = "admin" thì vẫn ép thành "user"
             user.Role = "user";
-
-            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
 
             _context.Users.Add(user);
             _context.SaveChanges();
         }
 
-        // ================= LOGIN =================
+        // ================= REGISTER EXTERNAL USER =================
+        // Dùng cho Google/Facebook login
+        public User RegisterExternalUser(string email, string? name)
+        {
+            var username = email.Split('@')[0];
 
+            if (UsernameExists(username))
+            {
+                username = username + "_" + Guid.NewGuid().ToString("N")[..6];
+            }
+
+            var password = Guid.NewGuid().ToString("N");
+
+            var user = new User
+            {
+                Username = username,
+                Email = email,
+                Password = password,
+                ConfirmPassword = password,
+                Role = "user",
+                IsBlocked = false
+            };
+
+            _context.Users.Add(user);
+            _context.SaveChanges();
+
+            return user;
+        }
+
+        // ================= LOGIN =================
         public User? Login(string account, string password)
         {
             var user = _context.Users
@@ -36,31 +59,24 @@ namespace CNPMFastFood.Services
                     x.Email == account);
 
             if (user == null)
+            {
                 return null;
+            }
 
             if (string.IsNullOrEmpty(user.Password))
+            {
                 return null;
+            }
 
-            try
+            if (password == user.Password)
             {
-                bool check = BCrypt.Net.BCrypt.Verify(
-                    password,
-                    user.Password);
+                return user;
+            }
 
-                return check ? user : null;
-            }
-            catch (BCrypt.Net.SaltParseException)
-            {
-                return null;
-            }
-            catch
-            {
-                return null;
-            }
+            return null;
         }
 
         // ================= CHECK USERNAME =================
-
         public bool UsernameExists(string username)
         {
             return _context.Users
@@ -68,11 +84,47 @@ namespace CNPMFastFood.Services
         }
 
         // ================= CHECK EMAIL =================
-
         public bool EmailExists(string email)
         {
             return _context.Users
                 .Any(x => x.Email == email);
+        }
+
+        // ================= GET USER BY EMAIL =================
+        public User? GetByEmail(string email)
+        {
+            return _context.Users
+                .FirstOrDefault(x => x.Email == email);
+        }
+
+        // ================= RESET PASSWORD =================
+        public bool ResetPassword(string email, string newPassword)
+        {
+            var user = _context.Users
+                .FirstOrDefault(x => x.Email == email);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            user.Password = newPassword;
+
+            _context.SaveChanges();
+
+            return true;
+        }
+        
+        public User? GetById(int id)
+        {
+            return _context.Users
+                .FirstOrDefault(x => x.Id == id);
+        }
+
+        public void Update(User user)
+        {
+            _context.Users.Update(user);
+            _context.SaveChanges();
         }
     }
 }

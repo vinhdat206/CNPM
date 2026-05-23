@@ -1,78 +1,71 @@
 ﻿@using Newtonsoft.Json
 @using CNPMFastFood.Models
 @using Microsoft.AspNetCore.Http
+@inject CNPMFastFood.Services.SettingService SettingService
+
+@{
+    var setting = SettingService.GetSetting();
+}
 
 <!DOCTYPE html>
 <html lang="vi">
 
 <head>
-
     <meta charset="utf-8" />
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0" />
 
-    <title>@ViewData["Title"] - FastFood</title>
+    <title>@ViewData["Title"] - EscFood</title>
 
-    <!-- BOOTSTRAP -->
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
-    <!-- SITE CSS -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
     <link rel="stylesheet"
           href="~/css/site.css" />
 
-    <!-- FONT AWESOME -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     @RenderSection("Styles", required: false)
-
 </head>
 
 <body>
 
 <div id="toastBox" class="toast-box"></div>
 
-<!-- ================= NAVBAR ================= -->
-
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
-
     <div class="container">
 
-        <!-- LOGO -->
         <a class="navbar-brand d-flex align-items-center"
            asp-controller="Home"
            asp-action="Index">
 
-            <img src="~/images/Logo/Logo.PNG"
-                 alt="FastFood Logo"
+            <img src="@setting.LogoUrl"
+                 alt="EscFood Logo"
                  style="height:50px; margin-right:8px;">
 
             <span class="fw-bold text-danger">
-                FastFood
+                @setting.StoreName
             </span>
-
         </a>
 
-        <!-- TOGGLE -->
         <button class="navbar-toggler"
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#navbarNav">
 
             <span class="navbar-toggler-icon"></span>
-
         </button>
 
-        <!-- MENU -->
         <div class="collapse navbar-collapse"
              id="navbarNav">
 
             <ul class="navbar-nav mx-auto main-menu">
 
-                <!-- HOME -->
                 <li class="nav-item">
-
                     <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString()=="Home"
                                          && ViewContext.RouteData.Values["Action"]?.ToString()=="Index"
                                          ? "active-menu" : "")"
@@ -80,78 +73,55 @@
                        asp-action="Index">
 
                         <i class="fa-solid fa-house"></i>
-
                         Trang chủ
-
                     </a>
-
                 </li>
 
-                <!-- ABOUT -->
                 <li class="nav-item">
-
                     <a class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString()=="About"
                                          ? "active-menu" : "")"
                        asp-controller="Home"
                        asp-action="About">
 
                         Giới thiệu
-
                     </a>
-
                 </li>
 
-                <!-- PRODUCT -->
                 <li class="nav-item">
-
                     <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString()=="Menu"
                                            ? "active-menu" : "")"
                        asp-controller="Menu"
                        asp-action="Index">
 
                         Sản phẩm
-
                     </a>
-
                 </li>
 
-                <!-- CONTACT -->
                 <li class="nav-item">
-
                     <a class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString()=="Contact"
                                          ? "active-menu" : "")"
                        asp-controller="Home"
                        asp-action="Contact">
 
                         Liên hệ
-
                     </a>
-
                 </li>
 
-                <!-- POLICY -->
                 <li class="nav-item">
-
                     <a class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString()=="Policy"
                                          ? "active-menu" : "")"
                        asp-controller="Home"
                        asp-action="Policy">
 
                         Chính sách
-
                     </a>
-
                 </li>
 
             </ul>
 
-            <!-- ================= RIGHT SIDE ================= -->
-
             <div class="d-flex align-items-center">
 
-                <!-- SEARCH -->
                 <div class="search-wrapper me-3 position-relative">
-
                     <div class="search-box">
 
                         <input type="text"
@@ -160,166 +130,517 @@
                                autocomplete="off" />
 
                         <button type="button">
-
                             <i class="fa-solid fa-magnifying-glass"></i>
-
                         </button>
 
                     </div>
 
                     <div id="searchResultBox"
                          class="search-result-box"></div>
-
                 </div>
 
-                <!-- CART -->
                 <a asp-controller="Cart"
                    asp-action="Index"
                    class="cart-icon me-3">
 
                     <i class="fa-solid fa-cart-shopping"
                        style="color:black;"></i>
-
                 </a>
 
-                
-                <!-- ================= ACCOUNT ================= -->
-
+                <!-- ACCOUNT -->
                 <div class="dropdown ms-2 user-dropdown">
 
-                    <a class="nav-link user-icon"
+                    <a class="nav-link user-icon dropdown-toggle"
                        href="#"
-                       id="accountDropdown">
+                       id="accountDropdown"
+                       role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">
 
                         <i class="fas fa-user-circle fs-5"></i>
-
                     </a>
 
-                    <ul class="dropdown-menu dropdown-menu-end">
+                    <ul class="dropdown-menu dropdown-menu-end"
+                        aria-labelledby="accountDropdown">
 
                         @if (!User.Identity.IsAuthenticated)
                         {
-                        <li>
+                            <li>
+                                <a class="dropdown-item"
+                                   asp-controller="Auth"
+                                   asp-action="Login">
 
-                            <a class="dropdown-item"
-                               asp-controller="Auth"
-                               asp-action="Login">
+                                    <i class="fa-solid fa-right-to-bracket me-2"></i>
+                                    Login
+                                </a>
+                            </li>
 
-                                <i class="fa-solid fa-right-to-bracket me-2"></i>
-                                Login
+                            <li>
+                                <a class="dropdown-item"
+                                   asp-controller="Auth"
+                                   asp-action="Register">
 
-                            </a>
-
-                        </li>
-
-                        <li>
-
-                            <a class="dropdown-item"
-                               asp-controller="Auth"
-                               asp-action="Register">
-
-                                <i class="fa-solid fa-user-plus me-2"></i>
-                                Register
-
-                            </a>
-
-                        </li>
+                                    <i class="fa-solid fa-user-plus me-2"></i>
+                                    Register
+                                </a>
+                            </li>
                         }
                         else
                         {
-                        <li>
+                            <li>
+                                <span class="dropdown-item text-danger fw-bold">
 
-                <span class="dropdown-item text-danger fw-bold">
+                                    <i class="fa-solid fa-user me-2"></i>
+                                    @User.Identity.Name
+                                </span>
+                            </li>
 
-                    <i class="fa-solid fa-user me-2"></i>
+                            <li>
+                                <a class="dropdown-item"
+                                   asp-controller="Auth"
+                                   asp-action="Profile">
 
-                    @User.Identity.Name
+                                    <i class="fa-solid fa-id-card me-2"></i>
+                                    Thông tin cá nhân
+                                </a>
+                            </li>
 
-                </span>
+                            <li>
+                                <a class="dropdown-item"
+                                   href="/Order/History">
 
-                        </li>
+                                    <i class="fa-solid fa-box me-2"></i>
+                                    Lịch sử đơn
+                                </a>
+                            </li>
 
-                        <li>
+                            @if (User.IsInRole("admin"))
+                            {
+                                <li>
+                                    <a class="dropdown-item"
+                                       href="/Admin/Dashboard">
 
-                            <a class="dropdown-item"
-                               href="/Order/History">
+                                        <i class="fa-solid fa-user-gear me-2"></i>
+                                        Dashboard
+                                    </a>
+                                </li>
+                            }
 
-                                <i class="fa-solid fa-box me-2"></i>
+                            <li>
+                                <form asp-controller="Auth"
+                                      asp-action="Logout"
+                                      method="post">
 
-                                Lịch sử đơn
+                                    <button type="submit"
+                                            class="dropdown-item border-0 bg-transparent w-100 text-start">
 
-                            </a>
+                                        <i class="fa-solid fa-arrow-right-from-bracket me-2"></i>
+                                        Logout
+                                    </button>
 
-                        </li>
-
-                        @if (User.IsInRole("admin"))
-                        {
-                        <li>
-
-                            <a class="dropdown-item"
-                               href="/Admin/Dashboard">
-
-                                <i class="fa-solid fa-user-gear me-2"></i>
-
-                                Dashboard
-
-                            </a>
-
-                        </li>
-                        }
-
-                        <li>
-
-                            <a class="dropdown-item"
-                               asp-controller="Auth"
-                               asp-action="Logout">
-
-                                <i class="fa-solid fa-arrow-right-from-bracket me-2"></i>
-
-                                Logout
-
-                            </a>
-
-                        </li>
+                                </form>
+                            </li>
                         }
 
                     </ul>
-
                 </div>
-               
 
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    @RenderBody()
+</div>
+
+<footer class="modern-footer">
+
+    <div class="modern-footer-container">
+
+        <div class="footer-brand">
+
+            <div class="footer-logo">
+
+                <img src="@setting.LogoUrl"
+                     alt="EscFood Logo">
+
+                <h2>@setting.StoreName</h2>
+            </div>
+
+            <p>
+                Mang đến những món ăn ngon,
+                nhanh chóng và chất lượng mỗi ngày.
+            </p>
+
+            <div class="footer-social">
+
+                <a href="#">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+
+                <a href="#">
+                    <i class="fab fa-instagram"></i>
+                </a>
+
+                <a href="#">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+
+                <a href="#">
+                    <i class="fab fa-youtube"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="footer-links">
+
+            <h4>Khám phá</h4>
+
+            <a asp-controller="Home"
+               asp-action="Index">
+                Trang chủ
+            </a>
+
+            <a asp-controller="Menu"
+               asp-action="Index">
+                Sản phẩm
+            </a>
+
+            <a asp-controller="Home"
+               asp-action="About">
+                Giới thiệu
+            </a>
+
+            <a asp-controller="Home"
+               asp-action="Contact">
+                Liên hệ
+            </a>
+
+        </div>
+
+        <div class="footer-contact-box">
+
+            <h4>Liên hệ</h4>
+
+            <div class="contact-item">
+                <i class="fas fa-location-dot"></i>
+                <span>@setting.StoreAddress</span>
+            </div>
+
+            <div class="contact-item">
+                <i class="fas fa-phone"></i>
+                <span>@setting.StorePhone</span>
+            </div>
+
+            <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <span>@setting.StoreEmail</span>
+            </div>
+
+            <div class="contact-item">
+                <i class="fas fa-clock"></i>
+                <span>
+                    @setting.OpenTime - @setting.CloseTime
+                </span>
             </div>
 
         </div>
 
     </div>
 
-</nav>
-
-<!-- ================= CONTENT ================= -->
-
-<div class="container mt-4">
-
-    @RenderBody()
-
-</div>
-
-<!-- ================= FOOTER ================= -->
-
-<footer class="bg-dark text-white text-center mt-5 p-4">
-
-    <p>© 2026 FastFood Restaurant</p>
-
-    <p>Email: fastfood@gmail.com | Phone: 0123456789</p>
+    <div class="footer-copyright">
+        © 2026 EscFood Restaurant.
+        All rights reserved.
+    </div>
 
 </footer>
 
-<!-- ================= JS ================= -->
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+let searchSelectedProduct = null;
+
+const searchInput = document.getElementById("searchInput");
+const resultBox = document.getElementById("searchResultBox");
+
+searchInput.addEventListener("input", async function () {
+    const keyword = this.value.trim();
+
+    if (keyword === "") {
+        resultBox.innerHTML = "";
+        resultBox.style.display = "none";
+        return;
+    }
+
+    const response = await fetch(`/Menu/Search?keyword=${encodeURIComponent(keyword)}`);
+    const products = await response.json();
+
+    if (products.length === 0) {
+        resultBox.innerHTML = `<div class="search-item">Không tìm thấy sản phẩm</div>`;
+        resultBox.style.display = "block";
+        return;
+    }
+
+    resultBox.innerHTML = products.map(p => `
+        <div class="search-item"
+             onclick='showSearchProduct(${JSON.stringify(p)})'>
+
+            <img src="${p.image}"
+                 style="width:55px;height:55px;object-fit:cover;border-radius:12px;">
+
+            <div>
+                <div class="fw-bold">${p.name}</div>
+                <div class="text-danger">${Number(p.price).toLocaleString("vi-VN")} đ</div>
+            </div>
+
+        </div>
+    `).join("");
+
+    resultBox.style.display = "block";
+});
+
+function showSearchProduct(product) {
+    searchSelectedProduct = product;
+
+    document.getElementById("searchQty").value = 1;
+
+    document.getElementById("searchModalName").innerText = product.name;
+    document.getElementById("searchModalTitle").innerText = product.name;
+    document.getElementById("searchModalImage").src = product.image;
+    document.getElementById("searchModalPrice").innerText =
+        Number(product.price).toLocaleString("vi-VN") + " đ";
+
+    document.getElementById("searchModalDescription").innerText =
+        product.description ?? "Chưa có mô tả sản phẩm";
+
+    renderSearchRating(product);
+    renderSearchReviews(product);
+    updateSearchTotal();
+
+    resultBox.style.display = "none";
+
+    new bootstrap.Modal(
+        document.getElementById("searchProductModal")
+    ).show();
+}
+
+function renderSearchRating(product) {
+    let ratingBox = document.getElementById("searchModalRating");
+
+    let avg = Number(product.avgRating ?? 0);
+    let rounded = Math.round(avg);
+    let html = "";
+
+    for (let i = 1; i <= 5; i++) {
+        if (i <= rounded) {
+            html += `<i class="fa-solid fa-star"></i>`;
+        } else {
+            html += `<i class="fa-regular fa-star"></i>`;
+        }
+    }
+
+    html += `
+        <span class="text-dark ms-1">
+            ${avg.toFixed(1)} (${product.reviewCount ?? 0} đánh giá)
+        </span>
+    `;
+
+    ratingBox.innerHTML = html;
+}
+
+function renderSearchReviews(product) {
+    let reviewBox = document.getElementById("searchModalReviews");
+
+    if (!product.reviews || product.reviews.length === 0) {
+        reviewBox.innerHTML = `
+            <p class="text-muted mt-4 text-center">
+                Chưa có feedback nào.
+            </p>
+        `;
+        return;
+    }
+
+    let html = `
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="fw-bold mb-0">Feedback khách hàng</h6>
+        </div>
+    `;
+
+    product.reviews.forEach(r => {
+        html += `
+            <div class="border rounded p-3 mb-3 bg-light">
+
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <strong>${r.userName}</strong>
+                    <small class="text-muted">${r.createdAt}</small>
+                </div>
+
+                <div class="text-warning mb-2">
+                    ${renderStars(r.rating)}
+                </div>
+
+                <p class="mb-0 text-muted">
+                    ${r.comment ?? ""}
+                </p>
+
+            </div>
+        `;
+    });
+
+    reviewBox.innerHTML = html;
+}
+
+function renderStars(rating) {
+    let html = "";
+
+    for (let i = 1; i <= 5; i++) {
+        if (i <= rating) {
+            html += `<i class="fa-solid fa-star"></i>`;
+        } else {
+            html += `<i class="fa-regular fa-star"></i>`;
+        }
+    }
+
+    return html;
+}
+
+function increaseSearchQty() {
+    let qtyInput = document.getElementById("searchQty");
+    qtyInput.value = parseInt(qtyInput.value) + 1;
+    updateSearchTotal();
+}
+
+function decreaseSearchQty() {
+    let qtyInput = document.getElementById("searchQty");
+    let currentQty = parseInt(qtyInput.value);
+
+    if (currentQty > 1) {
+        qtyInput.value = currentQty - 1;
+    }
+
+    updateSearchTotal();
+}
+
+function updateSearchTotal() {
+    if (!searchSelectedProduct) return;
+
+    let qtyInput = document.getElementById("searchQty");
+    let totalBox = document.getElementById("searchTotalPrice");
+    let addCartBtn = document.getElementById("searchAddCartBtn");
+
+    let qty = parseInt(qtyInput.value);
+
+    if (isNaN(qty) || qty < 1) {
+        qty = 1;
+        qtyInput.value = 1;
+    }
+
+    let price = Number(searchSelectedProduct.price);
+    let total = qty * price;
+
+    totalBox.innerText =
+        total.toLocaleString("vi-VN") + " đ";
+
+    addCartBtn.href =
+        `/Cart/Add?id=${searchSelectedProduct.id}` +
+        `&name=${encodeURIComponent(searchSelectedProduct.name)}` +
+        `&price=${searchSelectedProduct.price}` +
+        `&imageUrl=${encodeURIComponent(searchSelectedProduct.image)}` +
+        `&quantity=${qty}`;
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 @RenderSection("Scripts", required: false)
 
-</body>
+<div class="modal fade" id="searchProductModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
 
+            <div class="modal-header border-0">
+                <h5 class="modal-title fw-bold text-danger" id="searchModalName"></h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body text-center">
+
+                <img id="searchModalImage"
+                     class="img-fluid rounded mb-3"
+                     style="max-height:250px;"
+                     alt="" />
+
+                <h4 class="fw-bold" id="searchModalTitle"></h4>
+
+                <div class="mb-2 text-warning" id="searchModalRating"></div>
+
+                <h5 class="text-danger fw-bold mb-3" id="searchModalPrice"></h5>
+
+                <p class="text-muted" id="searchModalDescription"></p>
+
+                <div class="mt-4 text-start" id="searchModalReviews"></div>
+
+                <div class="d-flex justify-content-center align-items-center gap-2 mt-4">
+
+                    <button type="button"
+                            class="btn btn-outline-secondary"
+                            onclick="decreaseSearchQty()">
+                        -
+                    </button>
+
+                    <input type="number"
+                           id="searchQty"
+                           value="1"
+                           min="1"
+                           class="form-control text-center"
+                           style="width:80px;"
+                           onchange="updateSearchTotal()" />
+
+                    <button type="button"
+                            class="btn btn-outline-secondary"
+                            onclick="increaseSearchQty()">
+                        +
+                    </button>
+
+                </div>
+
+                <div class="mt-4">
+                    <h5>
+                        Tổng tiền:
+                        <span class="text-danger fw-bold"
+                              id="searchTotalPrice"></span>
+                    </h5>
+                </div>
+
+            </div>
+
+            <div class="modal-footer border-0">
+
+                <a id="searchAddCartBtn"
+                   href="#"
+                   class="btn btn-danger w-100">
+
+                    <i class="fa-solid fa-cart-plus"></i>
+                    Xác nhận thêm vào giỏ
+                </a>
+
+                <button type="button"
+                        class="btn btn-secondary w-100"
+                        data-bs-dismiss="modal">
+                    Hủy
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
 </html>

@@ -29,7 +29,10 @@ namespace CNPMFastFood.Controllers
 
         public IActionResult Index()
         {
-            var products = _productService.GetAll();
+            var products = _productService.GetAll()
+                .Where(p => p.Featured == true)
+                .OrderByDescending(p => p.Id)
+                .ToList();
 
             return View(products);
         }

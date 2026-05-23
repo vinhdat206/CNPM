@@ -2,6 +2,7 @@
 // Mô tả:
 // Điều hướng trang checkout + đặt hàng
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using CNPMFastFood.Models;
@@ -9,113 +10,85 @@ using CNPMFastFood.Services;
 
 namespace CNPMFastFood.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
-        // Service giỏ hàng
         private readonly CartService _cartService;
 
-        // Service đặt hàng
         private readonly OrderService _orderService;
 
-        // Constructor
         public OrderController(
             CartService cartService,
             OrderService orderService)
         {
             _cartService = cartService;
-
             _orderService = orderService;
         }
 
-        // =========================
-        // CHECKOUT PAGE
-        // =========================
+        private int GetUserId()
+        {
+            return int.Parse(
+                User.FindFirst("UserId")!.Value
+            );
+        }
 
         public IActionResult Checkout()
         {
-            // lấy cart hiện tại
-            var cart = _cartService.GetCart();
+            int userId = GetUserId();
 
-            // truyền cart sang view
+            var cart =
+                _cartService.GetCart(userId);
+
+            cart.ShippingFee =
+                _cartService.GetShippingFee();
+
             return View(cart);
         }
-
-        // =========================
-        // PLACE ORDER
-        // =========================
 
         [HttpPost]
         public IActionResult PlaceOrder(Order order)
         {
-            // lấy cart
-            var cart = _cartService.GetCart();
+            int userId = GetUserId();
 
-            // nếu cart rỗng
-            if (cart.Count == 0)
+            var cart =
+                _cartService.GetCart(userId);
+
+            cart.ShippingFee =
+                _cartService.GetShippingFee();
+
+            if (cart.Items.Count == 0)
             {
                 return RedirectToAction(
                     "Index",
                     "Cart");
             }
 
-            // gọi service tạo order
-            var userId = int.Parse( User.FindFirst("UserId")!.Value); 
-            _orderService.CreateOrder( order, cart, userId);
+            _orderService.CreateOrder(
+                order,
+                cart.Items,
+                userId,
+                cart.ShippingFee);
 
-            // xóa cart sau khi đặt hàng
-            _cartService.Clear();
+            _cartService.Clear(userId);
 
-            // chuyển sang trang success
-            return RedirectToAction("Success");
+            return RedirectToAction(
+                "Success");
         }
-
-        // =========================
-        // SUCCESS PAGE
-        // =========================
 
         public IActionResult Success()
         {
             return View();
         }
-        
-        
-        // ===============================
-        // ORDER HISTORY
-        // ===============================
 
         public async Task<IActionResult> History()
         {
-            // Kiểm tra login
-            if (!User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction(
-                    "Login",
-                    "Auth");
-            }
+            int userId = GetUserId();
 
-            // Lấy UserId từ Claims
-            var userIdClaim =
-                User.FindFirst("UserId")?.Value;
-
-            if (string.IsNullOrEmpty(userIdClaim))
-            {
-                return RedirectToAction(
-                    "Login",
-                    "Auth");
-            }
-
-            // Convert sang int
-            int userId = int.Parse(userIdClaim);
-
-            // Lấy danh sách order
             var orders =
                 await _orderService
                     .GetOrderHistory(userId);
 
-            // Trả view
             return View(orders);
         }
-
-
     }
 }

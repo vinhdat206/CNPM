@@ -1,6 +1,4 @@
 // File: Models/Order.cs
-// Mô tả:
-// Lưu thông tin đơn hàng của khách hàng
 
 namespace CNPMFastFood.Models
 {
@@ -21,7 +19,13 @@ namespace CNPMFastFood.Models
         // Địa chỉ giao hàng
         public string Address { get; set; } = string.Empty;
 
-        // Tổng tiền đơn hàng
+        // Tổng giá sản phẩm
+        public decimal SubTotal { get; set; }
+
+        // Phí ship
+        public decimal ShippingFee { get; set; }
+
+        // Tổng tiền cuối cùng
         public decimal TotalAmount { get; set; }
 
         // Ngày đặt hàng
@@ -34,9 +38,10 @@ namespace CNPMFastFood.Models
         // Completed
         // Cancelled
         public string Status { get; set; } = "Pending";
+        public string? CancelReason { get; set; }
+        public string? PaymentMethod { get; set; }
 
         // Danh sách chi tiết đơn hàng
-        // 1 Order có nhiều OrderDetail
         public List<OrderDetail> OrderDetails { get; set; } = new();
     }
 }

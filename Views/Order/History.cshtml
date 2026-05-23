@@ -1,107 +1,422 @@
-
 @using System.Linq
-
-
 @model List<CNPMFastFood.Models.Order>
 
 @{
-    ViewData["Title"] = "Lịch sử đơn hàng";
+ViewData["Title"] = "Lịch sử đơn hàng";
 }
 
-<div class="container py-5">
+<link rel="stylesheet" href="css/history.css">
+
+<div class="container py-5 order-history-page">
 
     <h2 class="fw-bold text-danger mb-4">
-
         <i class="fa-solid fa-clock-rotate-left"></i>
-
         Lịch sử đơn hàng
-
     </h2>
+
+    @if (TempData["Success"] != null)
+    {
+    <div class="alert alert-success alert-dismissible fade show">
+        @TempData["Success"]
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert">
+        </button>
+    </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+    <div class="alert alert-danger alert-dismissible fade show">
+        @TempData["Error"]
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert">
+        </button>
+    </div>
+    }
 
     @if (!Model.Any())
     {
-        <div class="alert alert-warning">
-
-            Bạn chưa có đơn hàng nào.
-
-        </div>
+    <div class="alert alert-warning">
+        Bạn chưa có đơn hàng nào.
+    </div>
     }
     else
     {
-        <div class="table-responsive">
+    <div class="table-responsive">
 
-            <table class="table table-bordered table-hover">
+        <table class="table table-bordered table-hover align-middle">
 
-                <thead class="table-dark">
+            <thead class="table-dark">
+            <tr>
+                <th>Mã đơn</th>
+                <th>Ngày đặt</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+                <th>Chi tiết</th>
+            </tr>
+            </thead>
 
-                    <tr>
+            <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>#@item.Id</td>
 
-                        <th>Mã đơn</th>
+                <td>
+                    @item.OrderDate.ToString("dd/MM/yyyy HH:mm")
+                </td>
 
-                        <th>Ngày đặt</th>
+                <td class="text-danger fw-bold">
+                    @item.TotalAmount.ToString("N0") đ
+                </td>
 
-                        <th>Tổng tiền</th>
-
-                        <th>Trạng thái</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    @foreach (var item in Model)
+                <td>
+                    @if (item.Status == "Pending")
                     {
-                        <tr>
-
-                            <td>
-                                #@item.Id
-                            </td>
-
-                            <td>
-                                @item.OrderDate
-                                    .ToString("dd/MM/yyyy HH:mm")
-                            </td>
-
-                            <td class="text-danger fw-bold">
-
-                                @item.TotalAmount
-                                    .ToString("N0") đ
-
-                            </td>
-
-                            <td>
-
-                                @if (item.Status == "pending")
-                                {
-                                    <span class="badge bg-warning">
-                                        Chờ xử lý
-                                    </span>
-                                }
-                                else if (item.Status == "completed")
-                                {
-                                    <span class="badge bg-success">
-                                        Hoàn thành
-                                    </span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-secondary">
-                                        @item.Status
-                                    </span>
-                                }
-
-                            </td>
-
-                        </tr>
+                    <span class="badge bg-warning text-dark">Chờ xử lý</span>
                     }
+                    else if (item.Status == "Processing")
+                    {
+                    <span class="badge bg-primary">Đang xử lý</span>
+                    }
+                    else if (item.Status == "Shipping")
+                    {
+                    <span class="badge bg-info text-dark">Đang giao</span>
+                    }
+                    else if (item.Status == "Completed")
+                    {
+                    <span class="badge bg-success">Hoàn thành</span>
+                    }
+                    else if (item.Status == "Cancelled")
+                    {
+                    <span class="badge bg-danger">Đã hủy</span>
+                    }
+                    else
+                    {
+                    <span class="badge bg-secondary">@item.Status</span>
+                    }
+                </td>
 
-                </tbody>
+                <td>
+                    <button type="button"
+                            class="btn btn-sm btn-danger"
+                            data-bs-toggle="modal"
+                            data-bs-target="#orderModal-@item.Id">
+                        <i class="fa-solid fa-eye"></i>
+                        Xem
+                    </button>
 
-            </table>
+                    @if (item.Status == "Completed")
+                    {
+                    <button type="button"
+                            class="btn btn-sm btn-warning ms-1"
+                            data-bs-toggle="modal"
+                            data-bs-target="#reviewModal-@item.Id">
+                        <i class="fa-solid fa-star"></i>
+                        Feedback
+                    </button>
+                    }
+                </td>
+            </tr>
+            }
+            </tbody>
+
+        </table>
+
+    </div>
+
+    @foreach (var item in Model)
+    {
+    <div class="modal fade"
+         id="orderModal-@item.Id"
+         tabindex="-1"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+
+            <div class="modal-content">
+
+                <div class="modal-header bg-danger text-white">
+
+                    <h5 class="modal-title">
+                        <i class="fa-solid fa-receipt"></i>
+                        Chi tiết đơn hàng #@item.Id
+                    </h5>
+
+                    <button type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <h5 class="fw-bold text-danger mb-3">
+                        <i class="fa-solid fa-user"></i>
+                        Thông tin người đặt
+                    </h5>
+
+                    <div class="row mb-3">
+
+                        <div class="col-md-6 mb-2">
+                            <strong>Họ tên:</strong>
+                            @item.CustomerName
+                        </div>
+
+                        <div class="col-md-6 mb-2">
+                            <strong>Số điện thoại:</strong>
+                            @item.Phone
+                        </div>
+
+                        <div class="col-12 mb-2">
+                            <strong>Địa chỉ:</strong>
+                            @item.Address
+                        </div>
+
+                        <div class="col-md-6 mb-2">
+                            <strong>Ngày đặt:</strong>
+                            @item.OrderDate.ToString("dd/MM/yyyy HH:mm")
+                        </div>
+
+                        <div class="col-md-6 mb-2">
+                            <strong>Trạng thái:</strong>
+
+                            @if (item.Status == "Pending")
+                            {
+                            <span class="badge bg-warning text-dark">Chờ xử lý</span>
+                            }
+                            else if (item.Status == "Processing")
+                            {
+                            <span class="badge bg-primary">Đang xử lý</span>
+                            }
+                            else if (item.Status == "Shipping")
+                            {
+                            <span class="badge bg-info text-dark">Đang giao</span>
+                            }
+                            else if (item.Status == "Completed")
+                            {
+                            <span class="badge bg-success">Hoàn thành</span>
+                            }
+                            else if (item.Status == "Cancelled")
+                            {
+                            <span class="badge bg-danger">Đã hủy</span>
+                            }
+                            else
+                            {
+                            <span class="badge bg-secondary">@item.Status</span>
+                            }
+                        </div>
+
+                        <div class="col-md-6 mb-2">
+                            <strong>Phương thức thanh toán:</strong>
+                            @(string.IsNullOrEmpty(item.PaymentMethod)
+                            ? "COD"
+                            : item.PaymentMethod)
+                        </div>
+
+                        <div class="col-md-6 mb-2">
+                            <strong>Tình trạng:</strong>
+
+                            @if (item.Status == "Completed")
+                            {
+                            <span class="badge bg-success">Đã thanh toán</span>
+                            }
+                            else
+                            {
+                            <span class="badge bg-warning text-dark">Chưa thanh toán</span>
+                            }
+                        </div>
+
+                        @if (item.Status == "Cancelled" &&
+                        !string.IsNullOrEmpty(item.CancelReason))
+                        {
+                        <div class="col-12 mb-2">
+                            <strong>Lý do hủy:</strong>
+                            <span class="text-danger">
+                                            @item.CancelReason
+                                        </span>
+                        </div>
+                        }
+
+                    </div>
+
+                    <hr />
+
+                    <h5 class="fw-bold text-danger mb-3">
+                        <i class="fa-solid fa-burger"></i>
+                        Sản phẩm đã đặt
+                    </h5>
+
+                    <table class="table table-bordered align-middle">
+
+                        <thead class="table-light">
+                        <tr>
+                            <th>Ảnh</th>
+                            <th>Tên món</th>
+                            <th>Số lượng</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach (var detail in item.OrderDetails)
+                        {
+                        <tr>
+                            <td width="90">
+                                <img src="@detail.ImageUrl"
+                                     width="70"
+                                     height="70"
+                                     style="object-fit:cover;" />
+                            </td>
+
+                            <td>@detail.ProductName</td>
+
+                            <td>@detail.Quantity</td>
+                        </tr>
+                        }
+                        </tbody>
+
+                    </table>
+
+                    <hr />
+
+                    <h5 class="fw-bold text-danger mb-3">
+                        <i class="fa-solid fa-money-bill-wave"></i>
+                        Thông tin thanh toán
+                    </h5>
+
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Giá gốc sản phẩm:</span>
+                        <strong>@item.SubTotal.ToString("N0") đ</strong>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Phí ship:</span>
+                        <strong>@item.ShippingFee.ToString("N0") đ</strong>
+                    </div>
+
+                    <div class="d-flex justify-content-between border-top pt-3">
+                        <span class="fw-bold">Thành tiền:</span>
+
+                        <span class="fw-bold text-danger fs-5">
+                                    @item.TotalAmount.ToString("N0") đ
+                                </span>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Đóng
+                    </button>
+                </div>
+
+            </div>
 
         </div>
+
+    </div>
+
+    @if (item.Status == "Completed")
+    {
+    <div class="modal fade"
+         id="reviewModal-@item.Id"
+         tabindex="-1"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content">
+
+                <form asp-controller="Review"
+                      asp-action="Create"
+                      method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <div class="modal-header bg-warning">
+
+                        <h5 class="modal-title">
+                            <i class="fa-solid fa-star"></i>
+                            Đánh giá đơn hàng #@item.Id
+                        </h5>
+
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal">
+                        </button>
+
+                    </div>
+
+                    <div class="modal-body">
+
+                        <input type="hidden"
+                               name="orderId"
+                               value="@item.Id" />
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">
+                                Đánh giá
+                            </label>
+
+                            <select name="rating"
+                                    class="form-select"
+                                    required>
+                                <option value="">-- Chọn số sao --</option>
+                                <option value="5">⭐⭐⭐⭐⭐ - 5 sao</option>
+                                <option value="4">⭐⭐⭐⭐ - 4 sao</option>
+                                <option value="3">⭐⭐⭐ - 3 sao</option>
+                                <option value="2">⭐⭐ - 2 sao</option>
+                                <option value="1">⭐ - 1 sao</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">
+                                Bình luận
+                            </label>
+
+                            <textarea name="comment"
+                                      class="form-control"
+                                      rows="4"
+                                      required
+                                      placeholder="Nhập nhận xét của bạn..."></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button type="button"
+                                class="btn btn-secondary"
+                                data-bs-dismiss="modal">
+                            Đóng
+                        </button>
+
+                        <button type="submit"
+                                class="btn btn-warning">
+                            Gửi đánh giá
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+    }
+    }
     }
 
 </div>
 
+@section Scripts {
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+}
