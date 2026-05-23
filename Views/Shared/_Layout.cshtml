@@ -43,9 +43,7 @@
            asp-controller="Home"
            asp-action="Index">
 
-            <img src="@(string.IsNullOrEmpty(setting.LogoUrl) 
-                          ? Url.Content("~/images/Logo/LogoESC.png") 
-                          : Url.Content(setting.LogoUrl))"
+            <img src="@setting.LogoUrl"
                  alt="EscFood Logo"
                  style="height:50px; margin-right:8px;">
 
@@ -264,9 +262,7 @@
 
             <div class="footer-logo">
 
-                <img src="@(string.IsNullOrEmpty(setting.LogoUrl) 
-                              ? Url.Content("~/images/Logo/LogoESC.png") 
-                              : Url.Content(setting.LogoUrl))"
+                <img src="@setting.LogoUrl"
                      alt="EscFood Logo">
 
                 <h2>@setting.StoreName</h2>
