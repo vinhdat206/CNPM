@@ -12,12 +12,10 @@ using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// SQL SERVER
-builder.Services.AddDbContext<AppDbContext>(
-    options =>
-        options.UseSqlServer(
-            builder.Configuration.GetConnectionString("DefaultConnection")));
-
+// DATABASE: Local = SQL Server, Render = SQLite
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite(
+        builder.Configuration.GetConnectionString("SqliteConnection")));
 // MVC
 builder.Services.AddControllersWithViews();
 
