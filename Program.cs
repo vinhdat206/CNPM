@@ -12,21 +12,9 @@ using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var isRender = Environment.GetEnvironmentVariable("RENDER") != null;
-
 builder.Services.AddDbContext<AppDbContext>(options =>
-{
-    if (isRender)
-    {
-        options.UseSqlite(
-            builder.Configuration.GetConnectionString("SqliteConnection"));
-    }
-    else
-    {
-        options.UseSqlServer(
-            builder.Configuration.GetConnectionString("DefaultConnection"));
-    }
-});
+    options.UseSqlite(
+        builder.Configuration.GetConnectionString("SqliteConnection")));
 // MVC
 builder.Services.AddControllersWithViews();
 
