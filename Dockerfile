@@ -15,6 +15,8 @@ WORKDIR /app
 
 COPY --from=build /app/publish .
 
+ENV DOTNET_USE_POLLING_FILE_WATCHER=1
+ENV ASPNETCORE_ENVIRONMENT=Production
 ENV ASPNETCORE_URLS=http://+:8080
 
 ENTRYPOINT ["dotnet", "CNPMFastFood.dll"]
