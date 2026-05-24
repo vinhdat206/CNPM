@@ -110,6 +110,68 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function updateCart(data)
 {
-    // reload lại cart
-    location.reload();
+    // update tổng tiền
+    document.getElementById("cartTotal").innerText =
+        data.total.toLocaleString("vi-VN") + " đ";
+
+    // update phí ship
+    document.getElementById("shippingFee").innerText =
+        data.shippingFee.toLocaleString("vi-VN") + " đ";
+
+    // update grand total
+    document.getElementById("grandTotal").innerText =
+        data.grandTotal.toLocaleString("vi-VN") + " đ";
+
+    // update cart count
+    const cartCount =
+        document.getElementById("cartCount");
+
+    if (cartCount) {
+        cartCount.innerText = data.count;
+    }
+
+    // update từng item
+    data.cart.forEach(item => {
+
+        const cartItem =
+            document.querySelector(
+                `.cart-item[data-id='${item.productId}']`
+            );
+
+        if (!cartItem) return;
+
+        // qty
+        const qtyBox =
+            cartItem.querySelector(".qty-value");
+
+        if (qtyBox) {
+            qtyBox.innerText = item.quantity;
+        }
+
+        // subtotal
+        const subtotalBox =
+            cartItem.querySelector(".subtotal");
+
+        if (subtotalBox) {
+            subtotalBox.innerText =
+                (item.price * item.quantity)
+                    .toLocaleString("vi-VN") + " đ";
+        }
+
+    });
+
+    // nếu cart rỗng
+    if (data.cart.length === 0) {
+
+        const cartContainer =
+            document.getElementById("cartContainer");
+
+        if (cartContainer) {
+            cartContainer.innerHTML = `
+                <div class="text-center py-5">
+                    <h4>Giỏ hàng trống</h4>
+                </div>
+            `;
+        }
+    }
 }

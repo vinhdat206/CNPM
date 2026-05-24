@@ -341,3 +341,14 @@
         padding: 20px;
     }
 }
+
+.fly-img {
+    position: fixed;
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 50%;
+    z-index: 9999;
+    transition: all 0.8s ease-in-out;
+    pointer-events: none;
+}

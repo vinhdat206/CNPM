@@ -326,20 +326,16 @@
 
                 <div class="modal-footer border-0">
 
-                    <a id="addCartBtn-@item.Id"
-                       asp-controller="Cart"
-                       asp-action="Add"
-                       asp-route-id="@item.Id"
-                       asp-route-name="@item.Name"
-                       asp-route-price="@(item.Price.ToString(System.Globalization.CultureInfo.InvariantCulture))"
-                       asp-route-imageUrl="@item.ImageUrl"
-                       asp-route-quantity="1"
-                       class="btn btn-danger w-100">
-
+                    <button type="button"
+                            id="addCartBtn-@item.Id"
+                            class="btn btn-danger w-100 add-to-cart-animate"
+                            data-product-id="@item.Id"
+                            data-name="@item.Name"
+                            data-price="@item.Price"
+                            data-image="@item.ImageUrl">
                         <i class="fa-solid fa-cart-plus"></i>
                         Xác nhận thêm vào giỏ
-
-                    </a>
+                    </button>
 
                     <button type="button"
                             class="btn btn-secondary w-100"
@@ -434,9 +430,7 @@
     }
 
 </div>
-
 @section Scripts {
-
     <script>
     function increaseQty(id, price) {
         let qtyInput = document.getElementById("qty-" + id);
@@ -461,7 +455,6 @@
     function updateTotal(id, price) {
         let qtyInput = document.getElementById("qty-" + id);
         let totalBox = document.getElementById("total-" + id);
-        let addCartBtn = document.getElementById("addCartBtn-" + id);
 
         let qty = parseInt(qtyInput.value);
 
@@ -473,12 +466,6 @@
         let total = qty * price;
 
         totalBox.innerText = total.toLocaleString("vi-VN") + " đ";
-
-        let url = addCartBtn.getAttribute("href");
-
-        url = updateQueryStringParameter(url, "quantity", qty);
-
-        addCartBtn.setAttribute("href", url);
     }
 
     function updateQueryStringParameter(uri, key, value) {
@@ -498,28 +485,112 @@
             let productModal =
                 new bootstrap.Modal(
                     document.getElementById(
-                        'productModal-' + id
+                        "productModal-" + id
                     )
                 );
 
             productModal.show();
-
         }, 200);
     }
-    
-    
-</script>
 
-    <script>
+    function updateCartCount(count) {
+        const cartCount = document.getElementById("cartCount");
+
+        if (cartCount) {
+            cartCount.innerText = count;
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        document.querySelectorAll(".add-to-cart-animate").forEach(btn => {
+
+            btn.addEventListener("click", function (e) {
+                e.preventDefault();
+
+                const productId = this.dataset.productId;
+                const name = this.dataset.name;
+                const price = this.dataset.price;
+                const imageUrl = this.dataset.image;
+
+                const qtyInput = document.getElementById("qty-" + productId);
+                const quantity = qtyInput ? qtyInput.value : 1;
+
+                const modalEl = document.getElementById("productModal-" + productId);
+                const modal = bootstrap.Modal.getInstance(modalEl);
+
+                const productImg = modalEl.querySelector(".modal-body img");
+                const cartIcon = document.getElementById("cartIcon");
+
+                const formData = new FormData();
+
+                formData.append("id", productId);
+                formData.append("name", name);
+                formData.append("price", price);
+                formData.append("imageUrl", imageUrl);
+                formData.append("quantity", quantity);
+
+                fetch("/Cart/Add", {
+                    method: "POST",
+                    body: formData
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            updateCartCount(data.count);
+                        }
+                    });
+
+                if (!productImg || !cartIcon) {
+                    if (modal) {
+                        modal.hide();
+                    }
+
+                    return;
+                }
+
+                const imgRect = productImg.getBoundingClientRect();
+                const cartRect = cartIcon.getBoundingClientRect();
+
+                const flyImg = productImg.cloneNode(true);
+
+                flyImg.style.position = "fixed";
+                flyImg.style.left = imgRect.left + "px";
+                flyImg.style.top = imgRect.top + "px";
+                flyImg.style.width = imgRect.width + "px";
+                flyImg.style.height = imgRect.height + "px";
+                flyImg.style.zIndex = "9999";
+                flyImg.style.pointerEvents = "none";
+                flyImg.style.objectFit = "cover";
+                flyImg.style.borderRadius = "50%";
+                flyImg.style.transition = "all 0.8s ease-in-out";
+
+                document.body.appendChild(flyImg);
+
+                if (modal) {
+                    modal.hide();
+                }
+
+                setTimeout(() => {
+                    flyImg.style.left = cartRect.left + "px";
+                    flyImg.style.top = cartRect.top + "px";
+                    flyImg.style.width = "30px";
+                    flyImg.style.height = "30px";
+                    flyImg.style.opacity = "0.3";
+                }, 50);
+
+                setTimeout(() => {
+                    flyImg.remove();
+                }, 900);
+            });
+
+        });
+
         var homeBannerSwiper = new Swiper(".homeBannerSwiper", {
-
             loop: true,
-
             centeredSlides: true,
-
             slidesPerView: "auto",
             spaceBetween: 30,
-
             speed: 1000,
 
             autoplay: {
@@ -538,7 +609,6 @@
             },
 
             breakpoints: {
-
                 0: {
                     slidesPerView: 1.05,
                     spaceBetween: 10
@@ -553,11 +623,9 @@
                     slidesPerView: "auto",
                     spaceBetween: 30
                 }
-
             }
         });
-    </script>
 
-
-
+    });
+</script>
 }

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "AwPccymNaVH/5Ra33IF6xHZjjig9JB3I1HERUcILSt0=",
+  "Hash": "6MBL4CgeU32l5vGEPShKIffrM6KgWr9woAjdKIrSAhk=",
   "Source": "CNPMFastFood",
   "BasePath": "_content/CNPMFastFood",
   "Mode": "Default",
@@ -1556,12 +1556,12 @@
       "OriginalItemSpec": "wwwroot/css/user/register.css"
     },
     {
-      "Identity": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/favicon.ico",
+      "Identity": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/favicon1.ico",
       "SourceId": "CNPMFastFood",
       "SourceType": "Discovered",
       "ContentRoot": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/",
       "BasePath": "_content/CNPMFastFood",
-      "RelativePath": "favicon.ico",
+      "RelativePath": "favicon1.ico",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1572,7 +1572,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/favicon.ico"
+      "OriginalItemSpec": "wwwroot/favicon1.ico"
     },
     {
       "Identity": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Abouts/about1.png",

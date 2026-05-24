@@ -39,6 +39,7 @@ namespace CNPMFastFood.Controllers
             return View(cart);
         }
 
+        [HttpPost]
         public IActionResult Add(
             int id,
             string name,
@@ -58,8 +59,12 @@ namespace CNPMFastFood.Controllers
             };
 
             _cartService.AddToCart(item, userId);
+            HttpContext.Session.SetString(
+                "CartCount",
+                _cartService.GetCount(userId).ToString()
+            );
 
-            return RedirectToAction("Index", "Cart");
+            return JsonResult(userId);
         }
 
         [HttpPost]
