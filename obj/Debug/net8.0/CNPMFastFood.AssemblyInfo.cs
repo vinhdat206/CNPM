@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CNPMFastFood")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f59abdb69340bc39bf70f6ba2bd8bf27fb4a4e25")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9cd9dfbe46e230bbcfe1d3a3287daebf716477aa")]
 [assembly: System.Reflection.AssemblyProductAttribute("CNPMFastFood")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CNPMFastFood")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
