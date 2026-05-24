@@ -5,36 +5,26 @@
 }
 
 <div class="banner-section">
-
     <div class="swiper homeBannerSwiper">
-
         <div class="swiper-wrapper">
-
             <div class="swiper-slide">
                 <img src="~/images/banners/banner1.png" class="banner-img" />
             </div>
-
             <div class="swiper-slide">
                 <img src="~/images/banners/banner-new.png" class="banner-img" />
             </div>
-
             <div class="swiper-slide">
                 <img src="~/images/banners/banner2.png" class="banner-img" />
             </div>
-
             <div class="swiper-slide">
                 <img src="~/images/banners/banner3.png" class="banner-img" />
             </div>
-
         </div>
 
         <div class="swiper-button-prev banner-btn"></div>
         <div class="swiper-button-next banner-btn"></div>
-
         <div class="swiper-pagination banner-dots"></div>
-
     </div>
-
 </div>
 
 <div class="container mt-5">
@@ -45,8 +35,7 @@
 
     @{
     var productGroups = Model != null
-    ? Model
-    .Select((product, index) => new { product, index })
+    ? Model.Select((product, index) => new { product, index })
     .GroupBy(x => x.index / 8)
     .Select(g => g.Select(x => x.product).ToList())
     .ToList()
@@ -55,41 +44,32 @@
 
     @if (productGroups.Any())
     {
-    <div id="featuredCarousel"
-         class="carousel slide featured-carousel"
-         data-bs-ride="false">
-
+    <div id="featuredCarousel" class="carousel slide featured-carousel" data-bs-ride="false">
         <div class="carousel-inner">
 
             @for (int g = 0; g < productGroups.Count; g++)
             {
             <div class="carousel-item @(g == 0 ? "active" : "")">
-
                 <div class="featured-wrapper">
-
                     <div class="row">
 
                         @foreach (var item in productGroups[g])
                         {
                         <div class="col-lg-3 col-md-4 col-6 mb-4">
-
                             <div class="card product-card shadow-sm">
 
                                 <div class="product-img"
                                      data-bs-toggle="modal"
                                      data-bs-target="#productModal-@item.Id"
                                      style="cursor:pointer;">
-
                                     <img src="@item.ImageUrl"
                                          class="img-fluid"
                                          alt="@item.Name" />
-
                                 </div>
 
                                 <hr />
 
                                 <div class="card-body text-center">
-
                                     <h6>@item.Name</h6>
 
                                     <p class="text-danger fw-bold">
@@ -103,18 +83,14 @@
                                         <i class="fa-solid fa-cart-plus"></i>
                                         Thêm vào giỏ
                                     </button>
-
                                 </div>
 
                             </div>
-
                         </div>
                         }
 
                     </div>
-
                 </div>
-
             </div>
             }
 
@@ -126,21 +102,16 @@
                 type="button"
                 data-bs-target="#featuredCarousel"
                 data-bs-slide="prev">
-
             <span class="carousel-control-prev-icon"></span>
-
         </button>
 
         <button class="carousel-control-next"
                 type="button"
                 data-bs-target="#featuredCarousel"
                 data-bs-slide="next">
-
             <span class="carousel-control-next-icon"></span>
-
         </button>
         }
-
     </div>
 
     @foreach (var item in Model)
@@ -150,7 +121,6 @@
             <div class="modal-content border-0 shadow">
 
                 <div class="modal-header border-0">
-
                     <h5 class="modal-title fw-bold text-danger">
                         @item.Name
                     </h5>
@@ -159,7 +129,6 @@
                             class="btn-close"
                             data-bs-dismiss="modal">
                     </button>
-
                 </div>
 
                 <div class="modal-body text-center">
@@ -169,9 +138,7 @@
                          style="max-height:250px;"
                          alt="@item.Name" />
 
-                    <h4 class="fw-bold">
-                        @item.Name
-                    </h4>
+                    <h4 class="fw-bold">@item.Name</h4>
 
                     @{
                     double avgRating = item.Reviews != null && item.Reviews.Any()
@@ -184,7 +151,6 @@
                     }
 
                     <div class="mb-2 text-warning">
-
                         @for (int i = 1; i <= 5; i++)
                         {
                         if (i <= Math.Round(avgRating))
@@ -201,7 +167,6 @@
                                     @avgRating.ToString("0.0")
                             (@reviewCount đánh giá)
                                 </span>
-
                     </div>
 
                     <h5 class="text-danger fw-bold mb-3">
@@ -217,9 +182,7 @@
                     @if (item.Reviews != null && item.Reviews.Any())
                     {
                     <div class="mt-4 text-start">
-
                         <div class="d-flex justify-content-between align-items-center mb-3">
-
                             <h6 class="fw-bold mb-0">
                                 Feedback khách hàng
                             </h6>
@@ -228,33 +191,21 @@
                                     class="btn btn-sm btn-outline-danger"
                                     data-bs-toggle="modal"
                                     data-bs-target="#allReviewsModal-@item.Id">
-
                                 Xem tất cả
-
                             </button>
-
                         </div>
 
-                        @foreach (var review in item.Reviews
-                        .OrderByDescending(r => r.CreatedAt)
-                        .Take(2))
+                        @foreach (var review in item.Reviews.OrderByDescending(r => r.CreatedAt).Take(2))
                         {
                         <div class="border rounded p-3 mb-3 bg-light">
-
                             <div class="d-flex justify-content-between align-items-center mb-2">
-
-                                <strong>
-                                    @review.UserName
-                                </strong>
-
+                                <strong>@review.UserName</strong>
                                 <small class="text-muted">
                                     @review.CreatedAt.ToString("dd/MM/yyyy")
                                 </small>
-
                             </div>
 
                             <div class="text-warning mb-2">
-
                                 @for (int i = 1; i <= 5; i++)
                                 {
                                 if (i <= review.Rating)
@@ -266,16 +217,13 @@
                                 <i class="fa-regular fa-star"></i>
                                 }
                                 }
-
                             </div>
 
                             <p class="mb-0 text-muted">
                                 @review.Comment
                             </p>
-
                         </div>
                         }
-
                     </div>
                     }
                     else
@@ -286,7 +234,6 @@
                     }
 
                     <div class="d-flex justify-content-center align-items-center gap-2 mt-4">
-
                         <button type="button"
                                 class="btn btn-outline-secondary"
                                 onclick="decreaseQty(@item.Id, @item.Price)">
@@ -306,26 +253,23 @@
                                 onclick="increaseQty(@item.Id, @item.Price)">
                             +
                         </button>
-
                     </div>
 
                     <div class="mt-4">
-
                         <h5>
                             Tổng tiền:
-
-                            <span class="text-danger fw-bold"
-                                  id="total-@item.Id">
+                            <span class="text-danger fw-bold" id="total-@item.Id">
                                         @item.Price.ToString("N0") đ
                                     </span>
                         </h5>
-
                     </div>
 
                 </div>
 
                 <div class="modal-footer border-0">
 
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
+                    {
                     <button type="button"
                             id="addCartBtn-@item.Id"
                             class="btn btn-danger w-100 add-to-cart-animate"
@@ -336,6 +280,15 @@
                         <i class="fa-solid fa-cart-plus"></i>
                         Xác nhận thêm vào giỏ
                     </button>
+                    }
+                    else
+                    {
+                    <a asp-controller="Auth"
+                       asp-action="Login"
+                       class="btn btn-danger w-100">
+                        Đăng nhập để thêm vào giỏ
+                    </a>
+                    }
 
                     <button type="button"
                             class="btn btn-secondary w-100"
@@ -349,16 +302,11 @@
         </div>
     </div>
 
-    <div class="modal fade"
-         id="allReviewsModal-@item.Id"
-         tabindex="-1">
-
+    <div class="modal fade" id="allReviewsModal-@item.Id" tabindex="-1">
         <div class="modal-dialog modal-dialog-scrollable">
-
             <div class="modal-content">
 
                 <div class="modal-header">
-
                     <h5 class="modal-title">
                         Tất cả đánh giá
                     </h5>
@@ -369,29 +317,21 @@
                             data-bs-target="#productModal-@item.Id"
                             aria-label="Close">
                     </button>
-
                 </div>
 
                 <div class="modal-body">
-
                     @foreach (var review in item.Reviews.OrderByDescending(r => r.CreatedAt))
                     {
                     <div class="border rounded p-3 mb-3">
-
                         <div class="d-flex justify-content-between align-items-center mb-2">
-
-                            <strong>
-                                @review.UserName
-                            </strong>
+                            <strong>@review.UserName</strong>
 
                             <small class="text-muted">
                                 @review.CreatedAt.ToString("dd/MM/yyyy")
                             </small>
-
                         </div>
 
                         <div class="text-warning mb-2">
-
                             @for (int i = 1; i <= 5; i++)
                             {
                             if (i <= review.Rating)
@@ -403,22 +343,17 @@
                             <i class="fa-regular fa-star"></i>
                             }
                             }
-
                         </div>
 
                         <p class="mb-0">
                             @review.Comment
                         </p>
-
                     </div>
                     }
-
                 </div>
 
             </div>
-
         </div>
-
     </div>
     }
     }
@@ -430,8 +365,9 @@
     }
 
 </div>
+
 @section Scripts {
-    <script>
+<script>
     function increaseQty(id, price) {
         let qtyInput = document.getElementById("qty-" + id);
 
@@ -466,31 +402,6 @@
         let total = qty * price;
 
         totalBox.innerText = total.toLocaleString("vi-VN") + " đ";
-    }
-
-    function updateQueryStringParameter(uri, key, value) {
-        let re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-        let separator = uri.indexOf("?") !== -1 ? "&" : "?";
-
-        if (uri.match(re)) {
-            return uri.replace(re, "$1" + key + "=" + value + "$2");
-        }
-        else {
-            return uri + separator + key + "=" + value;
-        }
-    }
-
-    function showProductModal(id) {
-        setTimeout(() => {
-            let productModal =
-                new bootstrap.Modal(
-                    document.getElementById(
-                        "productModal-" + id
-                    )
-                );
-
-            productModal.show();
-        }, 200);
     }
 
     function updateCartCount(count) {
