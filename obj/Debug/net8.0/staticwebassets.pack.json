@@ -1,0 +1,617 @@
+{
+  "Files": [
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/obj/Debug/net8.0/scopedcss/projectbundle/CNPMFastFood.bundle.scp.css",
+      "PackagePath": "staticwebassets/CNPMFastFood.bundle.scp.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/admin/contact.css",
+      "PackagePath": "staticwebassets/css/admin/contact.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/admin/customer.css",
+      "PackagePath": "staticwebassets/css/admin/customer.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/admin/dashboard.css",
+      "PackagePath": "staticwebassets/css/admin/dashboard.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/admin/feedback.css",
+      "PackagePath": "staticwebassets/css/admin/feedback.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/admin/order.css",
+      "PackagePath": "staticwebassets/css/admin/order.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/admin/product.css",
+      "PackagePath": "staticwebassets/css/admin/product.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/admin/report.css",
+      "PackagePath": "staticwebassets/css/admin/report.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/admin/setting.css",
+      "PackagePath": "staticwebassets/css/admin/setting.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/cart.css",
+      "PackagePath": "staticwebassets/css/cart.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/checkout.css",
+      "PackagePath": "staticwebassets/css/checkout.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/history.css",
+      "PackagePath": "staticwebassets/css/history.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/site.css",
+      "PackagePath": "staticwebassets/css/site.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/success.css",
+      "PackagePath": "staticwebassets/css/success.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/user/contact.css",
+      "PackagePath": "staticwebassets/css/user/contact.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/user/home.css",
+      "PackagePath": "staticwebassets/css/user/home.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/user/login.css",
+      "PackagePath": "staticwebassets/css/user/login.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/user/policy.css",
+      "PackagePath": "staticwebassets/css/user/policy.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/user/product.css",
+      "PackagePath": "staticwebassets/css/user/product.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/css/user/register.css",
+      "PackagePath": "staticwebassets/css/user/register.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/favicon.ico",
+      "PackagePath": "staticwebassets/favicon.ico"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Abouts/about1.png",
+      "PackagePath": "staticwebassets/images/Abouts/about1.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Abouts/about2.png",
+      "PackagePath": "staticwebassets/images/Abouts/about2.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Abouts/about3.png",
+      "PackagePath": "staticwebassets/images/Abouts/about3.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Abouts/about4.png",
+      "PackagePath": "staticwebassets/images/Abouts/about4.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Abouts/about5.png",
+      "PackagePath": "staticwebassets/images/Abouts/about5.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Logo/Logo.png",
+      "PackagePath": "staticwebassets/images/Logo/Logo.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Logo/LogoESC.png",
+      "PackagePath": "staticwebassets/images/Logo/LogoESC.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/BanhMi/banh-mi-cha-lua.png",
+      "PackagePath": "staticwebassets/images/Products/BanhMi/banh-mi-cha-lua.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/BanhMi/banh-mi-pate.png",
+      "PackagePath": "staticwebassets/images/Products/BanhMi/banh-mi-pate.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/BanhMi/banh-mi-thit.png",
+      "PackagePath": "staticwebassets/images/Products/BanhMi/banh-mi-thit.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/BanhMi/banh-mi-trung.png",
+      "PackagePath": "staticwebassets/images/Products/BanhMi/banh-mi-trung.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/BanhMi/banh-mi-xiu-mai.png",
+      "PackagePath": "staticwebassets/images/Products/BanhMi/banh-mi-xiu-mai.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Burger/BBQ-Burger.png",
+      "PackagePath": "staticwebassets/images/Products/Burger/BBQ-Burger.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Burger/Bacon-Burger.png",
+      "PackagePath": "staticwebassets/images/Products/Burger/Bacon-Burger.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Burger/Cheeseburger.png",
+      "PackagePath": "staticwebassets/images/Products/Burger/Cheeseburger.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Burger/Chicken-Burger.png",
+      "PackagePath": "staticwebassets/images/Products/Burger/Chicken-Burger.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Burger/Classic-Burger.png",
+      "PackagePath": "staticwebassets/images/Products/Burger/Classic-Burger.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Burger/Double-Beef-Burger.png",
+      "PackagePath": "staticwebassets/images/Products/Burger/Double-Beef-Burger.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Burger/Hawaiian-Burger.png",
+      "PackagePath": "staticwebassets/images/Products/Burger/Hawaiian-Burger.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Burger/Mushroom-Swiss-Burger.png",
+      "PackagePath": "staticwebassets/images/Products/Burger/Mushroom-Swiss-Burger.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Burger/Spicy-Burger.png",
+      "PackagePath": "staticwebassets/images/Products/Burger/Spicy-Burger.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Burger/Veggie-Burger.png",
+      "PackagePath": "staticwebassets/images/Products/Burger/Veggie-Burger.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Drink/7up.png",
+      "PackagePath": "staticwebassets/images/Products/Drink/7up.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Drink/Coca.png",
+      "PackagePath": "staticwebassets/images/Products/Drink/Coca.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Drink/Trachanh.png",
+      "PackagePath": "staticwebassets/images/Products/Drink/Trachanh.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Drink/Tradao.png",
+      "PackagePath": "staticwebassets/images/Products/Drink/Tradao.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Drink/Trasua.png",
+      "PackagePath": "staticwebassets/images/Products/Drink/Trasua.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/FrenchFries/BBQ-Fries.png",
+      "PackagePath": "staticwebassets/images/Products/FrenchFries/BBQ-Fries.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/FrenchFries/Cheese-Fries.png",
+      "PackagePath": "staticwebassets/images/Products/FrenchFries/Cheese-Fries.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/FrenchFries/Classic-Fries.png",
+      "PackagePath": "staticwebassets/images/Products/FrenchFries/Classic-Fries.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/FrenchFries/Curly-Fries.png",
+      "PackagePath": "staticwebassets/images/Products/FrenchFries/Curly-Fries.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/FrenchFries/Potato-Wedges.png",
+      "PackagePath": "staticwebassets/images/Products/FrenchFries/Potato-Wedges.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/FriedChicken/BBQ-Chicken.png",
+      "PackagePath": "staticwebassets/images/Products/FriedChicken/BBQ-Chicken.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/FriedChicken/Crispy-Chicken.png",
+      "PackagePath": "staticwebassets/images/Products/FriedChicken/Crispy-Chicken.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/FriedChicken/Honey-Chicken.png",
+      "PackagePath": "staticwebassets/images/Products/FriedChicken/Honey-Chicken.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/FriedChicken/Korean-Fried-Chicken.png",
+      "PackagePath": "staticwebassets/images/Products/FriedChicken/Korean-Fried-Chicken.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/FriedChicken/Spicy-Chicken.png",
+      "PackagePath": "staticwebassets/images/Products/FriedChicken/Spicy-Chicken.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/GaRan/ga-gion-cay.png",
+      "PackagePath": "staticwebassets/images/Products/GaRan/ga-gion-cay.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/GaRan/ga-pho-mai.png",
+      "PackagePath": "staticwebassets/images/Products/GaRan/ga-pho-mai.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/GaRan/ga-ran-han-quoc.png",
+      "PackagePath": "staticwebassets/images/Products/GaRan/ga-ran-han-quoc.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/GaRan/ga-sot-mat-ong.png",
+      "PackagePath": "staticwebassets/images/Products/GaRan/ga-sot-mat-ong.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/GaRan/ga-truyen-thong.png",
+      "PackagePath": "staticwebassets/images/Products/GaRan/ga-truyen-thong.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/HotDog/BBQ-Dog.png",
+      "PackagePath": "staticwebassets/images/Products/HotDog/BBQ-Dog.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/HotDog/Bacon-Dog.png",
+      "PackagePath": "staticwebassets/images/Products/HotDog/Bacon-Dog.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/HotDog/Cheese-Dog.png",
+      "PackagePath": "staticwebassets/images/Products/HotDog/Cheese-Dog.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/HotDog/Chili-Dog.png",
+      "PackagePath": "staticwebassets/images/Products/HotDog/Chili-Dog.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/HotDog/Classic-Hot-Dog.png",
+      "PackagePath": "staticwebassets/images/Products/HotDog/Classic-Hot-Dog.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/MiLy/mi-cay-han-quoc.png",
+      "PackagePath": "staticwebassets/images/Products/MiLy/mi-cay-han-quoc.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/MiLy/mi-ly-bo-cay.png",
+      "PackagePath": "staticwebassets/images/Products/MiLy/mi-ly-bo-cay.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/MiLy/mi-ly-hai-san.png",
+      "PackagePath": "staticwebassets/images/Products/MiLy/mi-ly-hai-san.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/MiLy/mi-ly-kim-chi.png",
+      "PackagePath": "staticwebassets/images/Products/MiLy/mi-ly-kim-chi.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/MiLy/mi-ramen-nhat.png",
+      "PackagePath": "staticwebassets/images/Products/MiLy/mi-ramen-nhat.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Pizza/BBQ-Chicken-Pizza.png",
+      "PackagePath": "staticwebassets/images/Products/Pizza/BBQ-Chicken-Pizza.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Pizza/Hawaiian-Pizza.png",
+      "PackagePath": "staticwebassets/images/Products/Pizza/Hawaiian-Pizza.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Pizza/Margherita-Pizza.png",
+      "PackagePath": "staticwebassets/images/Products/Pizza/Margherita-Pizza.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Pizza/Pepperoni-Pizza.png",
+      "PackagePath": "staticwebassets/images/Products/Pizza/Pepperoni-Pizza.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Pizza/Seafood-Pizza.png",
+      "PackagePath": "staticwebassets/images/Products/Pizza/Seafood-Pizza.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Sandwich/ChickenSandwich.png",
+      "PackagePath": "staticwebassets/images/Products/Sandwich/ChickenSandwich.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Sandwich/ClubSandwich.png",
+      "PackagePath": "staticwebassets/images/Products/Sandwich/ClubSandwich.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Sandwich/EggSandwich.png",
+      "PackagePath": "staticwebassets/images/Products/Sandwich/EggSandwich.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Sandwich/Ham&CheeseSandwich.png",
+      "PackagePath": "staticwebassets/images/Products/Sandwich/Ham&CheeseSandwich.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/Products/Sandwich/TunaSandwich.png",
+      "PackagePath": "staticwebassets/images/Products/Sandwich/TunaSandwich.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/banners/banner-new.png",
+      "PackagePath": "staticwebassets/images/banners/banner-new.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/banners/banner1.png",
+      "PackagePath": "staticwebassets/images/banners/banner1.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/banners/banner2.png",
+      "PackagePath": "staticwebassets/images/banners/banner2.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/images/banners/banner3.png",
+      "PackagePath": "staticwebassets/images/banners/banner3.png"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/js/admin/dashboard.js",
+      "PackagePath": "staticwebassets/js/admin/dashboard.js"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/js/admin/report.js",
+      "PackagePath": "staticwebassets/js/admin/report.js"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/js/admin/setting.js",
+      "PackagePath": "staticwebassets/js/admin/setting.js"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/js/cart.js",
+      "PackagePath": "staticwebassets/js/cart.js"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/js/site.js",
+      "PackagePath": "staticwebassets/js/site.js"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/LICENSE",
+      "PackagePath": "staticwebassets/lib/bootstrap"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.css.map"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.min.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.css.map"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.min.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.min.css.map"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.js"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.js"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.js.map"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.min.js"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/js/bootstrap.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.js"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/js/bootstrap.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.js.map"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.min.js"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.min.js.map"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/jquery-validation-unobtrusive/LICENSE.txt",
+      "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/LICENSE.txt"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/jquery-validation/LICENSE.md",
+      "PackagePath": "staticwebassets/lib/jquery-validation/LICENSE.md"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/jquery-validation/dist/additional-methods.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/additional-methods.js"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/jquery-validation/dist/additional-methods.min.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/additional-methods.min.js"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/jquery-validation/dist/jquery.validate.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/jquery.validate.js"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/jquery-validation/dist/jquery.validate.min.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/jquery.validate.min.js"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/jquery/LICENSE.txt",
+      "PackagePath": "staticwebassets/lib/jquery/LICENSE.txt"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/jquery/dist/jquery.js",
+      "PackagePath": "staticwebassets/lib/jquery/dist/jquery.js"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/jquery/dist/jquery.min.js",
+      "PackagePath": "staticwebassets/lib/jquery/dist/jquery.min.js"
+    },
+    {
+      "Id": "/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/wwwroot/lib/jquery/dist/jquery.min.map",
+      "PackagePath": "staticwebassets/lib/jquery/dist/jquery.min.map"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.CNPMFastFood.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.CNPMFastFood.props",
+      "PackagePath": "build\\CNPMFastFood.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.CNPMFastFood.props",
+      "PackagePath": "buildMultiTargeting\\CNPMFastFood.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.CNPMFastFood.props",
+      "PackagePath": "buildTransitive\\CNPMFastFood.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

@@ -12,9 +12,10 @@ using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// SQL SERVER
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(
-        builder.Configuration.GetConnectionString("SqliteConnection")));
+        builder.Configuration.GetConnectionString("DefaultConnection")));
 // MVC
 builder.Services.AddControllersWithViews();
 
@@ -102,6 +103,11 @@ CultureInfo.DefaultThreadCurrentUICulture = culture;
 // BUILD APP
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
 // MIDDLEWARE
 app.UseStaticFiles();
 
@@ -124,10 +130,6 @@ app.MapControllerRoute(
     name: "default",
     pattern:
         "{controller=Home}/{action=Index}/{id?}");
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();
-}
+
 // RUN
 app.Run();
