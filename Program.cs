@@ -103,6 +103,15 @@ CultureInfo.DefaultThreadCurrentUICulture = culture;
 // BUILD APP
 var app = builder.Build();
 
+Console.WriteLine("CONTENT ROOT: " + app.Environment.ContentRootPath);
+Console.WriteLine("DB FULL PATH: " + Path.GetFullPath("food.db"));
+Console.WriteLine("DB EXISTS: " + File.Exists("food.db"));
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    Console.WriteLine("PRODUCT COUNT: " + db.Products.Count());
+}
 // MIDDLEWARE
 app.UseStaticFiles();
 
