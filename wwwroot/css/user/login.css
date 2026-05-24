@@ -308,3 +308,56 @@ form {
         align-items: flex-start;
     }
 }
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #555;
+    font-size: 16px;
+}
+
+.input-box {
+    position: relative;
+}
+
+.input-box input {
+    padding-right: 45px;
+}
+
+/* FACEBOOK */
+
+.facebook-btn {
+    background: #1877f2;
+    color: white;
+}
+
+/* GOOGLE */
+
+.google-btn {
+    background: #22c55e;
+    color: white;
+}
+
+.facebook-btn,
+.google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* ERROR */
+
+.alert-danger {
+    color: #dc2626;
+    background: #fee2e2;
+    border: 1px solid #fca5a5;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-top: 15px;
+    font-size: 14px;
+    font-weight: 500;
+}
