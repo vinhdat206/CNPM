@@ -117,19 +117,19 @@ form {
 
 .input-box {
     position: relative;
+    display: flex;
+    align-items: center;
 }
 
-.input-box i {
+.input-box > i {
     position: absolute;
     left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
     color: var(--ff-primary);
 }
 
 .input-box input {
     width: 100%;
-    padding: 15px 15px 15px 46px;
+    padding: 15px 48px 15px 46px;
     border: 1px solid var(--ff-border);
     border-radius: 14px;
     font-size: 15px;
@@ -141,6 +141,18 @@ form {
     outline: none;
     border-color: var(--ff-primary);
     box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.13);
+}
+
+.toggle-password {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #666;
+    font-size: 16px;
 }
 
 /* OPTIONS */
@@ -232,8 +244,6 @@ form {
     flex: 1;
     padding: 13px;
     border-radius: 14px;
-    border: 1px solid var(--ff-border);
-    background: #fff;
     cursor: pointer;
     font-weight: 700;
     transition: 0.25s ease;
@@ -241,14 +251,28 @@ form {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    color: var(--ff-text);
+    text-decoration: none;
 }
 
-.facebook-btn:hover,
+.facebook-btn {
+    background: #1877f2;
+    color: white !important;
+}
+
+.google-btn {
+    background: #22c55e;
+    color: white !important;
+}
+
+.facebook-btn:hover {
+    background: #1669d9;
+    color: white !important;
+    transform: translateY(-2px);
+}
+
 .google-btn:hover {
-    background: #fff5f5;
-    border-color: var(--ff-primary);
-    color: var(--ff-primary);
+    background: #16a34a;
+    color: white !important;
     transform: translateY(-2px);
 }
 
@@ -278,10 +302,15 @@ form {
 }
 
 /* ERROR */
-#loginError {
-    color: var(--ff-primary);
+.alert-danger {
+    color: #dc2626;
+    background: #fee2e2;
+    border: 1px solid #fca5a5;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-top: 15px;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 /* RESPONSIVE */
@@ -307,57 +336,4 @@ form {
         gap: 12px;
         align-items: flex-start;
     }
-}
-
-.toggle-password {
-    position: absolute;
-    right: 12px;
-    border: none;
-    background: none;
-    cursor: pointer;
-    color: #555;
-    font-size: 16px;
-}
-
-.input-box {
-    position: relative;
-}
-
-.input-box input {
-    padding-right: 45px;
-}
-
-/* FACEBOOK */
-
-.facebook-btn {
-    background: #1877f2;
-    color: white;
-}
-
-/* GOOGLE */
-
-.google-btn {
-    background: #22c55e;
-    color: white;
-}
-
-.facebook-btn,
-.google-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-/* ERROR */
-
-.alert-danger {
-    color: #dc2626;
-    background: #fee2e2;
-    border: 1px solid #fca5a5;
-    padding: 10px 14px;
-    border-radius: 8px;
-    margin-top: 15px;
-    font-size: 14px;
-    font-weight: 500;
 }

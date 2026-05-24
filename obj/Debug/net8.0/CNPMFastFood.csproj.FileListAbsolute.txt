@@ -180,3 +180,4 @@
 /Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/obj/Debug/net8.0/CNPMFastFood.pdb
 /Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/obj/Debug/net8.0/CNPMFastFood.genruntimeconfig.cache
 /Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/obj/Debug/net8.0/ref/CNPMFastFood.dll
+/Users/dovinhdat/Documents/BTL Back-End/CNPMFastFood/CNPMFastFood/bin/Debug/net8.0/food.db

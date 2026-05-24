@@ -49,14 +49,7 @@
         <Content Include="food.db">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-
-        <Content Include="food.db-shm">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-
-        <Content Include="food.db-wal">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
+        
     </ItemGroup>
 
 </Project>
