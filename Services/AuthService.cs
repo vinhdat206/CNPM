@@ -12,17 +12,18 @@ namespace CNPMFastFood.Services
             _context = context;
         }
 
-        // ================= REGISTER =================
         public void Register(User user)
         {
             user.Role = "user";
+
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.Password);
+            user.Password = hashedPassword;
+            user.ConfirmPassword = hashedPassword;
 
             _context.Users.Add(user);
             _context.SaveChanges();
         }
 
-        // ================= REGISTER EXTERNAL USER =================
-        // Dùng cho Google/Facebook login
         public User RegisterExternalUser(string email, string? name)
         {
             var username = email.Split('@')[0];
@@ -33,13 +34,14 @@ namespace CNPMFastFood.Services
             }
 
             var password = Guid.NewGuid().ToString("N");
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
 
             var user = new User
             {
                 Username = username,
                 Email = email,
-                Password = password,
-                ConfirmPassword = password,
+                Password = hashedPassword,
+                ConfirmPassword = hashedPassword,
                 Role = "user",
                 IsBlocked = false
             };
@@ -50,7 +52,6 @@ namespace CNPMFastFood.Services
             return user;
         }
 
-        // ================= LOGIN =================
         public User? Login(string account, string password)
         {
             var user = _context.Users
@@ -68,7 +69,7 @@ namespace CNPMFastFood.Services
                 return null;
             }
 
-            if (password == user.Password)
+            if (BCrypt.Net.BCrypt.Verify(password, user.Password))
             {
                 return user;
             }
@@ -76,28 +77,24 @@ namespace CNPMFastFood.Services
             return null;
         }
 
-        // ================= CHECK USERNAME =================
         public bool UsernameExists(string username)
         {
             return _context.Users
                 .Any(x => x.Username == username);
         }
 
-        // ================= CHECK EMAIL =================
         public bool EmailExists(string email)
         {
             return _context.Users
                 .Any(x => x.Email == email);
         }
 
-        // ================= GET USER BY EMAIL =================
         public User? GetByEmail(string email)
         {
             return _context.Users
                 .FirstOrDefault(x => x.Email == email);
         }
 
-        // ================= RESET PASSWORD =================
         public bool ResetPassword(string email, string newPassword)
         {
             var user = _context.Users
@@ -108,13 +105,16 @@ namespace CNPMFastFood.Services
                 return false;
             }
 
-            user.Password = newPassword;
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(newPassword);
+
+            user.Password = hashedPassword;
+            user.ConfirmPassword = hashedPassword;
 
             _context.SaveChanges();
 
             return true;
         }
-        
+
         public User? GetById(int id)
         {
             return _context.Users

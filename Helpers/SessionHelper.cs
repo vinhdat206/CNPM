@@ -1,41 +1,58 @@
 // File: Helpers/SessionHelper.cs
-// Mô tả: Lưu object vào Session
+// Mô tả:
+// Helper dùng để:
+// - Lưu object vào Session
+// - Lấy object từ Session
+// Session chỉ lưu string nên cần convert object <-> json
 
-using Microsoft.AspNetCore.Http;
-using System.Text.Json;
+using Microsoft.AspNetCore.Http; // Hỗ trợ Session
+using System.Text.Json; // Dùng để Serialize và Deserialize JSON
 
 namespace CNPMFastFood.Helpers
 {
+    // Static class chứa các hàm mở rộng cho Session
     public static class SessionHelper
     {
-        // ================= SAVE OBJECT =================
+        // =========================
+        // SAVE OBJECT TO SESSION
+        // Lưu object vào Session
+        // =========================
 
         public static void SetObject(
-            this ISession session,
-            string key,
-            object value)
+            this ISession session, // Session hiện tại
+            string key,            // Key dùng để lưu dữ liệu
+            object value)          // Object cần lưu
         {
-            // convert object -> json
-            session.SetString(
-                key,
-                JsonSerializer.Serialize(value));
+            // Convert object -> JSON string
+            var json = JsonSerializer.Serialize(value);
+
+            // Lưu JSON vào Session dưới dạng string
+            session.SetString(key, json);
         }
 
-        // ================= GET OBJECT =================
+        // =========================
+        // GET OBJECT FROM SESSION
+        // Lấy object từ Session
+        // =========================
 
         public static T GetObject<T>(
-            this ISession session,
-            string key)
+            this ISession session, // Session hiện tại
+            string key)            // Key dữ liệu cần lấy
         {
+            // Lấy dữ liệu string JSON từ Session
             var value = session.GetString(key);
 
-            // nếu null
+            // Nếu không tồn tại dữ liệu
             if (value == null)
             {
+                // Trả về giá trị mặc định của kiểu T
+                // Ví dụ:
+                // int -> 0
+                // object -> null
                 return default;
             }
 
-            // convert json -> object
+            // Convert JSON -> object kiểu T
             return JsonSerializer.Deserialize<T>(value);
         }
     }

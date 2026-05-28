@@ -12,18 +12,17 @@ using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// SQL SERVER
+// SQLITE
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 // MVC
 builder.Services.AddControllersWithViews();
 
 // COOKIE AUTHENTICATION
-builder.Services
-    .AddAuthentication(
-        CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
+// COOKIE AUTHENTICATION
+var authBuilder = builder.Services
+    .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
     {
         options.LoginPath = "/Auth/Login";
         options.LogoutPath = "/Auth/Logout";
@@ -42,7 +41,8 @@ builder.Services
                 var appStartId =
                     context.Principal?.FindFirst("AppStartId")?.Value;
 
-                if (appStartId != AppRuntime.AppStartId)
+                if (!string.IsNullOrEmpty(appStartId) &&
+                    appStartId != AppRuntime.AppStartId)
                 {
                     context.RejectPrincipal();
 
@@ -51,8 +51,42 @@ builder.Services
                 }
             }
         };
-    });
+    })
+    .AddCookie("External");
 
+var googleClientId = builder.Configuration["Authentication:Google:ClientId"];
+var googleClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+
+if (!string.IsNullOrWhiteSpace(googleClientId) &&
+    !string.IsNullOrWhiteSpace(googleClientSecret))
+{
+    authBuilder.AddGoogle("Google", options =>
+    {
+        options.ClientId = googleClientId;
+        options.ClientSecret = googleClientSecret;
+        options.SignInScheme = "External";
+        options.CallbackPath = "/signin-google";
+    });
+}
+
+var facebookAppId = builder.Configuration["Authentication:Facebook:AppId"];
+var facebookAppSecret = builder.Configuration["Authentication:Facebook:AppSecret"];
+
+if (!string.IsNullOrWhiteSpace(facebookAppId) &&
+    !string.IsNullOrWhiteSpace(facebookAppSecret))
+{
+    authBuilder.AddFacebook("Facebook", options =>
+    {
+        options.AppId = facebookAppId;
+        options.AppSecret = facebookAppSecret;
+        options.SignInScheme = "External";
+        options.CallbackPath = "/signin-facebook";
+
+        options.Scope.Add("email");
+        options.Fields.Add("name");
+        options.Fields.Add("email");
+    });
+}
 // AUTHORIZATION
 builder.Services.AddAuthorization();
 
@@ -81,15 +115,42 @@ CultureInfo.DefaultThreadCurrentUICulture = culture;
 // BUILD APP
 var app = builder.Build();
 
+
 Console.WriteLine("CONTENT ROOT: " + app.Environment.ContentRootPath);
 Console.WriteLine("DB FULL PATH: " + Path.GetFullPath("food.db"));
 Console.WriteLine("DB EXISTS: " + File.Exists("food.db"));
 
+// CREATE DEFAULT ADMIN
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+    // Nếu chưa có admin
+    if (!db.Users.Any(x => x.Role == "admin"))
+    {
+        var hashedPassword =
+            BCrypt.Net.BCrypt.HashPassword("@Admin123");
+
+        db.Users.Add(new CNPMFastFood.Models.User
+        {
+            Username = "admin",
+            Email = "adminescfood@gmail.com",
+
+            Password = hashedPassword,
+            ConfirmPassword = hashedPassword,
+
+            Role = "admin",
+            IsBlocked = false
+        });
+
+        db.SaveChanges();
+
+        Console.WriteLine("DEFAULT ADMIN CREATED");
+    }
+
     Console.WriteLine("PRODUCT COUNT: " + db.Products.Count());
 }
+
 // MIDDLEWARE
 app.UseStaticFiles();
 

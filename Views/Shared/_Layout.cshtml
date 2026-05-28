@@ -9,27 +9,17 @@
 
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>@ViewData["Title"] - EscFood</title>
 
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
-    <link rel="stylesheet"
-          href="~/css/site.css" />
-
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="~/favicon1.ico" />
-    
 
     @RenderSection("Styles", required: false)
 </head>
@@ -58,12 +48,10 @@
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#navbarNav">
-
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse"
-             id="navbarNav">
+        <div class="collapse navbar-collapse" id="navbarNav">
 
             <ul class="navbar-nav mx-auto main-menu">
 
@@ -73,7 +61,6 @@
                                          ? "active-menu" : "")"
                        asp-controller="Home"
                        asp-action="Index">
-
                         <i class="fa-solid fa-house"></i>
                         Trang chủ
                     </a>
@@ -84,7 +71,6 @@
                                          ? "active-menu" : "")"
                        asp-controller="Home"
                        asp-action="About">
-
                         Giới thiệu
                     </a>
                 </li>
@@ -94,7 +80,6 @@
                                            ? "active-menu" : "")"
                        asp-controller="Menu"
                        asp-action="Index">
-
                         Sản phẩm
                     </a>
                 </li>
@@ -104,7 +89,6 @@
                                          ? "active-menu" : "")"
                        asp-controller="Home"
                        asp-action="Contact">
-
                         Liên hệ
                     </a>
                 </li>
@@ -114,7 +98,6 @@
                                          ? "active-menu" : "")"
                        asp-controller="Home"
                        asp-action="Policy">
-
                         Chính sách
                     </a>
                 </li>
@@ -150,11 +133,11 @@
                        style="color:black;">
                     </i>
 
-                    
-
+                    <span id="cartCount">
+                        @(Context.Session.GetString("CartCount") ?? "0")
+                    </span>
                 </a>
 
-                <!-- ACCOUNT -->
                 <div class="dropdown ms-2 user-dropdown">
 
                     <a class="nav-link user-icon dropdown-toggle"
@@ -176,7 +159,6 @@
                                 <a class="dropdown-item"
                                    asp-controller="Auth"
                                    asp-action="Login">
-
                                     <i class="fa-solid fa-right-to-bracket me-2"></i>
                                     Login
                                 </a>
@@ -186,7 +168,6 @@
                                 <a class="dropdown-item"
                                    asp-controller="Auth"
                                    asp-action="Register">
-
                                     <i class="fa-solid fa-user-plus me-2"></i>
                                     Register
                                 </a>
@@ -196,7 +177,6 @@
                         {
                             <li>
                                 <span class="dropdown-item text-danger fw-bold">
-
                                     <i class="fa-solid fa-user me-2"></i>
                                     @User.Identity.Name
                                 </span>
@@ -206,7 +186,6 @@
                                 <a class="dropdown-item"
                                    asp-controller="Auth"
                                    asp-action="Profile">
-
                                     <i class="fa-solid fa-id-card me-2"></i>
                                     Thông tin cá nhân
                                 </a>
@@ -215,7 +194,6 @@
                             <li>
                                 <a class="dropdown-item"
                                    href="/Order/History">
-
                                     <i class="fa-solid fa-box me-2"></i>
                                     Lịch sử đơn
                                 </a>
@@ -226,7 +204,6 @@
                                 <li>
                                     <a class="dropdown-item"
                                        href="/Admin/Dashboard">
-
                                         <i class="fa-solid fa-user-gear me-2"></i>
                                         Dashboard
                                     </a>
@@ -306,25 +283,10 @@
 
             <h4>Khám phá</h4>
 
-            <a asp-controller="Home"
-               asp-action="Index">
-                Trang chủ
-            </a>
-
-            <a asp-controller="Menu"
-               asp-action="Index">
-                Sản phẩm
-            </a>
-
-            <a asp-controller="Home"
-               asp-action="About">
-                Giới thiệu
-            </a>
-
-            <a asp-controller="Home"
-               asp-action="Contact">
-                Liên hệ
-            </a>
+            <a asp-controller="Home" asp-action="Index">Trang chủ</a>
+            <a asp-controller="Menu" asp-action="Index">Sản phẩm</a>
+            <a asp-controller="Home" asp-action="About">Giới thiệu</a>
+            <a asp-controller="Home" asp-action="Contact">Liên hệ</a>
 
         </div>
 
@@ -349,9 +311,7 @@
 
             <div class="contact-item">
                 <i class="fas fa-clock"></i>
-                <span>
-                    @setting.OpenTime - @setting.CloseTime
-                </span>
+                <span>@setting.OpenTime - @setting.CloseTime</span>
             </div>
 
         </div>
@@ -400,7 +360,12 @@ searchInput.addEventListener("input", async function () {
 
             <div>
                 <div class="fw-bold">${p.name}</div>
-                <div class="text-danger">${Number(p.price).toLocaleString("vi-VN")} đ</div>
+                <div class="text-danger">
+                    ${Number(p.price).toLocaleString("vi-VN")} đ
+                </div>
+                <small class="${Number(p.stock ?? 0) > 0 ? 'text-success' : 'text-danger'}">
+                    ${Number(p.stock ?? 0) > 0 ? `Còn ${p.stock} sản phẩm` : 'Hết hàng'}
+                </small>
             </div>
 
         </div>
@@ -426,12 +391,59 @@ function showSearchProduct(product) {
     renderSearchRating(product);
     renderSearchReviews(product);
     updateSearchTotal();
+    updateSearchStockUI(product);
 
     resultBox.style.display = "none";
 
     new bootstrap.Modal(
         document.getElementById("searchProductModal")
     ).show();
+}
+
+function updateSearchStockUI(product) {
+    const addBtn = document.getElementById("searchAddCartBtn");
+    const qtyInput = document.getElementById("searchQty");
+
+    const stock = Number(product.stock ?? 0);
+
+    if (qtyInput) {
+        qtyInput.max = stock;
+        qtyInput.value = stock > 0 ? 1 : 0;
+    }
+
+    let oldStockText = document.getElementById("searchStockText");
+
+    if (oldStockText) {
+        oldStockText.remove();
+    }
+
+    const priceBox = document.getElementById("searchModalPrice");
+
+    const stockText = document.createElement("div");
+    stockText.id = "searchStockText";
+    stockText.className = stock > 0
+        ? "text-success fw-bold mb-3"
+        : "text-danger fw-bold mb-3";
+
+    stockText.innerText = stock > 0
+        ? `Còn ${stock} sản phẩm`
+        : "Hết hàng";
+
+    priceBox.insertAdjacentElement("afterend", stockText);
+
+    if (addBtn) {
+        if (stock <= 0) {
+            addBtn.disabled = true;
+            addBtn.innerHTML = `<i class="fa-solid fa-ban"></i> Hết hàng`;
+            addBtn.classList.remove("btn-danger");
+            addBtn.classList.add("btn-secondary");
+        } else {
+            addBtn.disabled = false;
+            addBtn.innerHTML = `<i class="fa-solid fa-cart-plus"></i> Xác nhận thêm vào giỏ`;
+            addBtn.classList.remove("btn-secondary");
+            addBtn.classList.add("btn-danger");
+        }
+    }
 }
 
 function renderSearchRating(product) {
@@ -479,7 +491,6 @@ function renderSearchReviews(product) {
     product.reviews.forEach(r => {
         html += `
             <div class="border rounded p-3 mb-3 bg-light">
-
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <strong>${r.userName}</strong>
                     <small class="text-muted">${r.createdAt}</small>
@@ -492,7 +503,6 @@ function renderSearchReviews(product) {
                 <p class="mb-0 text-muted">
                     ${r.comment ?? ""}
                 </p>
-
             </div>
         `;
     });
@@ -516,7 +526,25 @@ function renderStars(rating) {
 
 function increaseSearchQty() {
     let qtyInput = document.getElementById("searchQty");
-    qtyInput.value = parseInt(qtyInput.value) + 1;
+    let currentQty = parseInt(qtyInput.value);
+
+    let stock = Number(searchSelectedProduct?.stock ?? 0);
+
+    if (stock <= 0) {
+        alert("Sản phẩm đã hết hàng");
+        qtyInput.value = 0;
+        updateSearchTotal();
+        return;
+    }
+
+    if (currentQty >= stock) {
+        alert(`Chỉ còn ${stock} sản phẩm`);
+        qtyInput.value = stock;
+        updateSearchTotal();
+        return;
+    }
+
+    qtyInput.value = currentQty + 1;
     updateSearchTotal();
 }
 
@@ -536,28 +564,152 @@ function updateSearchTotal() {
 
     let qtyInput = document.getElementById("searchQty");
     let totalBox = document.getElementById("searchTotalPrice");
-    let addCartBtn = document.getElementById("searchAddCartBtn");
 
     let qty = parseInt(qtyInput.value);
+    let stock = Number(searchSelectedProduct.stock ?? 0);
 
-    if (isNaN(qty) || qty < 1) {
+    if (stock <= 0) {
+        qty = 0;
+        qtyInput.value = 0;
+    }
+
+    if (stock > 0 && (isNaN(qty) || qty < 1)) {
         qty = 1;
         qtyInput.value = 1;
+    }
+
+    if (stock > 0 && qty > stock) {
+        qty = stock;
+        qtyInput.value = stock;
+        alert(`Chỉ còn ${stock} sản phẩm`);
     }
 
     let price = Number(searchSelectedProduct.price);
     let total = qty * price;
 
-    totalBox.innerText =
-        total.toLocaleString("vi-VN") + " đ";
-
-    addCartBtn.href =
-        `/Cart/Add?id=${searchSelectedProduct.id}` +
-        `&name=${encodeURIComponent(searchSelectedProduct.name)}` +
-        `&price=${searchSelectedProduct.price}` +
-        `&imageUrl=${encodeURIComponent(searchSelectedProduct.image)}` +
-        `&quantity=${qty}`;
+    totalBox.innerText = total.toLocaleString("vi-VN") + " đ";
 }
+
+function updateCartCount(count) {
+    const cartCount = document.getElementById("cartCount");
+
+    if (cartCount) {
+        cartCount.innerText = count;
+    }
+}
+
+document.addEventListener("click", function (e) {
+    const btn = e.target.closest("#searchAddCartBtn");
+
+    if (!btn) {
+        return;
+    }
+
+    e.preventDefault();
+
+    if (!searchSelectedProduct) {
+        return;
+    }
+
+    const stock = Number(searchSelectedProduct.stock ?? 0);
+
+    if (stock <= 0) {
+        alert("Sản phẩm đã hết hàng");
+        return;
+    }
+
+    const qtyInput = document.getElementById("searchQty");
+    const quantity = parseInt(qtyInput ? qtyInput.value : 1);
+
+    if (quantity > stock) {
+        alert(`Chỉ còn ${stock} sản phẩm`);
+        return;
+    }
+
+    const productId = searchSelectedProduct.id;
+    const name = searchSelectedProduct.name;
+    const price = searchSelectedProduct.price;
+    const imageUrl = searchSelectedProduct.image;
+
+    const modalEl = document.getElementById("searchProductModal");
+    const modal = bootstrap.Modal.getInstance(modalEl);
+
+    const productImg = document.getElementById("searchModalImage");
+    const cartIcon = document.getElementById("cartIcon");
+
+    const formData = new FormData();
+
+    formData.append("id", productId);
+    formData.append("name", name);
+    formData.append("price", price);
+    formData.append("imageUrl", imageUrl);
+    formData.append("quantity", quantity);
+
+    fetch("/Cart/Add", {
+        method: "POST",
+        body: formData
+    })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                updateCartCount(data.count);
+
+                if (modal) {
+                    modal.hide();
+                }
+
+                flyToCart(productImg, cartIcon);
+            } else {
+                alert(data.message || "Không thể thêm sản phẩm vào giỏ hàng");
+            }
+        });
+});
+
+function flyToCart(productImg, cartIcon) {
+    if (!productImg || !cartIcon) {
+        return;
+    }
+
+    const imgRect = productImg.getBoundingClientRect();
+    const cartRect = cartIcon.getBoundingClientRect();
+
+    const flyImg = productImg.cloneNode(true);
+
+    flyImg.style.position = "fixed";
+    flyImg.style.left = imgRect.left + "px";
+    flyImg.style.top = imgRect.top + "px";
+    flyImg.style.width = imgRect.width + "px";
+    flyImg.style.height = imgRect.height + "px";
+    flyImg.style.zIndex = "9999";
+    flyImg.style.pointerEvents = "none";
+    flyImg.style.objectFit = "cover";
+    flyImg.style.borderRadius = "50%";
+    flyImg.style.transition = "all 0.8s ease-in-out";
+
+    document.body.appendChild(flyImg);
+
+    setTimeout(() => {
+        flyImg.style.left = cartRect.left + "px";
+        flyImg.style.top = cartRect.top + "px";
+        flyImg.style.width = "30px";
+        flyImg.style.height = "30px";
+        flyImg.style.opacity = "0.3";
+    }, 50);
+
+    setTimeout(() => {
+        flyImg.remove();
+    }, 900);
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetch("/Cart/Count")
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                updateCartCount(data.count);
+            }
+        });
+});
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -629,13 +781,23 @@ function updateSearchTotal() {
 
             <div class="modal-footer border-0">
 
-                <a id="searchAddCartBtn"
-                   href="#"
-                   class="btn btn-danger w-100">
-
-                    <i class="fa-solid fa-cart-plus"></i>
-                    Xác nhận thêm vào giỏ
-                </a>
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    <button type="button"
+                            id="searchAddCartBtn"
+                            class="btn btn-danger w-100">
+                        <i class="fa-solid fa-cart-plus"></i>
+                        Xác nhận thêm vào giỏ
+                    </button>
+                }
+                else
+                {
+                    <a asp-controller="Auth"
+                       asp-action="Login"
+                       class="btn btn-danger w-100">
+                        Đăng nhập để thêm vào giỏ
+                    </a>
+                }
 
                 <button type="button"
                         class="btn btn-secondary w-100"

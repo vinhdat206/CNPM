@@ -136,9 +136,10 @@ ViewData["Title"] = "Sản phẩm";
                     <button type="button"
                             class="buy-now-btn border-0"
                             data-bs-toggle="modal"
-                            data-bs-target="#productModal-@item.Id">
+                            data-bs-target="#productModal-@item.Id"
+                            @(item.Stock <= 0 ? "disabled" : "")>
                         <i class="fa-solid fa-cart-plus"></i>
-                        Thêm vào giỏ
+                        @(item.Stock > 0 ? "Thêm vào giỏ" : "Hết hàng")
                     </button>
 
                 </div>
@@ -267,21 +268,25 @@ ViewData["Title"] = "Sản phẩm";
 
                             <button type="button"
                                     class="btn btn-outline-secondary"
-                                    onclick="decreaseQty(@item.Id, @item.Price)">
+                                    onclick="decreaseQty(@item.Id, @item.Price, @item.Stock)"
+                                    @(item.Stock <= 0 ? "disabled" : "")>
                                 -
                             </button>
 
                             <input type="number"
                                    id="qty-@item.Id"
-                                   value="1"
-                                   min="1"
+                                   value="@(item.Stock > 0 ? 1 : 0)"
+                                   min="@(item.Stock > 0 ? 1 : 0)"
+                                   max="@item.Stock"
                                    class="form-control text-center"
                                    style="width:80px;"
-                                   onchange="updateTotal(@item.Id, @item.Price)" />
+                                   onchange="updateTotal(@item.Id, @item.Price, @item.Stock)"
+                                   @(item.Stock <= 0 ? "disabled" : "") />
 
                             <button type="button"
                                     class="btn btn-outline-secondary"
-                                    onclick="increaseQty(@item.Id, @item.Price)">
+                                    onclick="increaseQty(@item.Id, @item.Price, @item.Stock)"
+                                    @(item.Stock <= 0 ? "disabled" : "")>
                                 +
                             </button>
 
@@ -292,7 +297,7 @@ ViewData["Title"] = "Sản phẩm";
                                 Tổng tiền:
                                 <span class="text-danger fw-bold"
                                       id="total-@item.Id">
-                                            @item.Price.ToString("N0") đ
+                                            @(item.Stock > 0 ? item.Price.ToString("N0") + " đ" : "0 đ")
                                         </span>
                             </h5>
                         </div>
@@ -309,9 +314,11 @@ ViewData["Title"] = "Sản phẩm";
                                 data-product-id="@item.Id"
                                 data-name="@item.Name"
                                 data-price="@item.Price"
-                                data-image="@imageUrl">
+                                data-image="@imageUrl"
+                                data-stock="@item.Stock"
+                                @(item.Stock <= 0 ? "disabled" : "")>
                             <i class="fa-solid fa-cart-plus"></i>
-                            Xác nhận thêm vào giỏ
+                            @(item.Stock > 0 ? "Xác nhận thêm vào giỏ" : "Hết hàng")
                         </button>
                         }
                         else
@@ -509,15 +516,30 @@ ViewData["Title"] = "Sản phẩm";
         ajaxLoadFromUrl(location.href);
     });
 
-    function increaseQty(id, price) {
+    function increaseQty(id, price, stock) {
         let qtyInput = document.getElementById("qty-" + id);
 
-        qtyInput.value = parseInt(qtyInput.value) + 1;
+        let currentQty = parseInt(qtyInput.value);
 
-        updateTotal(id, price);
+        if (stock <= 0) {
+            qtyInput.value = 0;
+            updateTotal(id, price, stock);
+            return;
+        }
+
+        if (currentQty >= stock) {
+            alert(`Chỉ còn ${stock} sản phẩm`);
+            qtyInput.value = stock;
+            updateTotal(id, price, stock);
+            return;
+        }
+
+        qtyInput.value = currentQty + 1;
+
+        updateTotal(id, price, stock);
     }
 
-    function decreaseQty(id, price) {
+    function decreaseQty(id, price, stock) {
         let qtyInput = document.getElementById("qty-" + id);
 
         let currentQty = parseInt(qtyInput.value);
@@ -526,18 +548,29 @@ ViewData["Title"] = "Sản phẩm";
             qtyInput.value = currentQty - 1;
         }
 
-        updateTotal(id, price);
+        updateTotal(id, price, stock);
     }
 
-    function updateTotal(id, price) {
+    function updateTotal(id, price, stock) {
         let qtyInput = document.getElementById("qty-" + id);
         let totalBox = document.getElementById("total-" + id);
 
         let qty = parseInt(qtyInput.value);
 
-        if (isNaN(qty) || qty < 1) {
+        if (stock <= 0) {
+            qty = 0;
+            qtyInput.value = 0;
+        }
+
+        if (stock > 0 && (isNaN(qty) || qty < 1)) {
             qty = 1;
             qtyInput.value = 1;
+        }
+
+        if (stock > 0 && qty > stock) {
+            qty = stock;
+            qtyInput.value = stock;
+            alert(`Chỉ còn ${stock} sản phẩm`);
         }
 
         let total = qty * price;
@@ -580,9 +613,20 @@ ViewData["Title"] = "Sản phẩm";
         const name = btn.dataset.name;
         const price = btn.dataset.price;
         const imageUrl = btn.dataset.image;
+        const stock = Number(btn.dataset.stock);
 
         const qtyInput = document.getElementById("qty-" + productId);
-        const quantity = qtyInput ? qtyInput.value : 1;
+        const quantity = Number(qtyInput ? qtyInput.value : 1);
+
+        if (stock <= 0) {
+            alert("Sản phẩm đã hết hàng");
+            return;
+        }
+
+        if (quantity > stock) {
+            alert(`Chỉ còn ${stock} sản phẩm`);
+            return;
+        }
 
         const modalEl = document.getElementById("productModal-" + productId);
         const modal = bootstrap.Modal.getInstance(modalEl);
@@ -606,6 +650,9 @@ ViewData["Title"] = "Sản phẩm";
             .then(data => {
                 if (data.success) {
                     updateCartCount(data.count);
+                } else {
+                    alert(data.message || "Không thể thêm sản phẩm vào giỏ hàng");
+                    return;
                 }
             });
 

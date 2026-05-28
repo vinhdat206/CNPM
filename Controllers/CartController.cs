@@ -1,10 +1,8 @@
-// File: Controllers/CartController.cs
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
 using CNPMFastFood.Models;
 using CNPMFastFood.Services;
+using CNPMFastFood.Data;
 
 namespace CNPMFastFood.Controllers
 {
@@ -12,10 +10,14 @@ namespace CNPMFastFood.Controllers
     public class CartController : Controller
     {
         private readonly CartService _cartService;
+        private readonly AppDbContext _context;
 
-        public CartController(CartService cartService)
+        public CartController(
+            CartService cartService,
+            AppDbContext context)
         {
             _cartService = cartService;
+            _context = context;
         }
 
         private int GetUserId()
@@ -49,6 +51,36 @@ namespace CNPMFastFood.Controllers
         {
             int userId = GetUserId();
 
+            var product = _context.Products
+                .FirstOrDefault(p => p.Id == id);
+
+            if (product == null)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Không tìm thấy sản phẩm"
+                });
+            }
+
+            if (product.Stock <= 0)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Sản phẩm đã hết hàng"
+                });
+            }
+
+            if (quantity > product.Stock)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = $"Chỉ còn {product.Stock} sản phẩm"
+                });
+            }
+
             var item = new CartItem
             {
                 ProductId = id,
@@ -59,6 +91,7 @@ namespace CNPMFastFood.Controllers
             };
 
             _cartService.AddToCart(item, userId);
+
             HttpContext.Session.SetString(
                 "CartCount",
                 _cartService.GetCount(userId).ToString()
@@ -71,6 +104,32 @@ namespace CNPMFastFood.Controllers
         public IActionResult Increase(int id)
         {
             int userId = GetUserId();
+
+            var product = _context.Products
+                .FirstOrDefault(p => p.Id == id);
+
+            if (product == null)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Không tìm thấy sản phẩm"
+                });
+            }
+
+            var cart = _cartService.GetCart(userId);
+
+            var cartItem = cart.Items
+                .FirstOrDefault(x => x.ProductId == id);
+
+            if (cartItem != null && cartItem.Quantity >= product.Stock)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = $"Chỉ còn {product.Stock} sản phẩm"
+                });
+            }
 
             _cartService.Increase(id, userId);
 
@@ -95,6 +154,18 @@ namespace CNPMFastFood.Controllers
             _cartService.Remove(id, userId);
 
             return JsonResult(userId);
+        }
+
+        [HttpGet]
+        public IActionResult Count()
+        {
+            int userId = GetUserId();
+
+            return Json(new
+            {
+                success = true,
+                count = _cartService.GetCount(userId)
+            });
         }
 
         public IActionResult Clear()
